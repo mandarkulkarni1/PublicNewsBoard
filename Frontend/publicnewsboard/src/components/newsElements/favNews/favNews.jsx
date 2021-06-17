@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import './styles.css'
+import "./styles.css";
 const FavNews = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     async function init() {
-      const url = "http://localhost:8080/readers/news/";
+      const url = "http://localhost:8080/readers/news/top10";
       const response = await fetch(url);
       const { data } = await response.json();
       setData(data);
@@ -22,15 +22,15 @@ const FavNews = () => {
           {/* =========================================================================== */}
           {data.map((news) => (
             <div className="col-2 m-1" key={news.newsId}>
-              <div className="card" >
-                <div className="shadow" >
+              <div className="card">
+                <div className="shadow">
                   <div className="card-body" id="cardd">
-                    <h6 className="card-title">
-                      {news.title}
-                    </h6>
-                  </div>
-                  <div className="card-footer">
-                    <small className="text-muted">{news.category.charAt(0).toUpperCase()} </small>
+                    <img
+                      className="card-img-top"
+                      src="https://picsum.photos/200"
+                      height="80px"
+                    ></img>
+                    <h6 className="card-title my-1">{news.title}</h6>
                   </div>
                 </div>
               </div>
