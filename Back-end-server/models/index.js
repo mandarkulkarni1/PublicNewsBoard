@@ -1,4 +1,5 @@
-const dbConfig=require('../db.config')
+const dbConfig=require('../db.config');
+
 
 const Sequelize=require('sequelize');
 

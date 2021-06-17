@@ -10,6 +10,7 @@ db.sequelize.sync();
 
 const adminRouter = require("./routes/admin/admin");
 const reporterRouter = require("./routes/reporters/reporters");
+const readerRouter =  require("./routes/readers/readers")
 
 function authorized(request, response, next) {
   if (
@@ -45,10 +46,11 @@ const app = express();
 app.use(cors("*"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(authorized);
+// app.use(authorized);
 
 app.use("/reporters", reporterRouter);
 app.use("/admin", adminRouter);
+app.use("/readers",readerRouter);
 
 app.listen("8080", () => {
   console.log("Server is running at port number 8080");
