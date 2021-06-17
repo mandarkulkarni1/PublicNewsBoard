@@ -19,5 +19,7 @@ db.Sequelize=Sequelize;
 db.sequelize=sequelize;
 
 db.Reporters=require('./reporter.model.js')(sequelize,Sequelize);
-db.Admin=require('./admin.model')(sequelize,Sequelize)
+db.Admin=require('./admin.model')(sequelize,Sequelize);
+db.Readers=require('./readers.model')(sequelize,Sequelize);
+db.ReportedNews=require('./reportedNews.model')(sequelize,Sequelize);
 module.exports=db;
