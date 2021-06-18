@@ -77,7 +77,7 @@ function Reporter() {
   <div className="right">
             <h2>Press Tools</h2>
             <div style={{height:"100px"}}>
-            <Button color="primary" >Upload News</Button>  <div className="time">{new Date().toLocaleString() + ""}</div>
+            <Button color="primary" ><a href="/addNews">Upload News</a></Button>  <div className="time">{new Date().toLocaleString() + ""}</div>
   </div>
   <div> 
             <h4>Top Stories</h4> 

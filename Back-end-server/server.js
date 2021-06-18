@@ -48,6 +48,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(authorized);
 
+app.use(express.static('images/'))
+
 app.use("/reporters", reporterRouter);
 app.use("/admin", adminRouter);
 app.use("/readers",readerRouter);

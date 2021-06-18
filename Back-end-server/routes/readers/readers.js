@@ -3,6 +3,7 @@ const dbData = require("../../databaseCredential");
 const utils = require("./../../utils");
 const db = require("../../models");
 const News = db.News;
+const fs = require("fs");
 
 const router = express.Router();
 
@@ -22,19 +23,14 @@ router.get("/news", (req, res) => {
 });
 
 
-
-
-// router.get("/news", (req, res) => {
-//   News.findAll()
-//     .then((data) => {
-//       res.send(data);
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: err.message || "Some error occurred while retrieving news.",
-//       });
-//     });
-// });
+//----------------------------------------------------------------------------------------------------//
+//                                 Get Images of news
+//----------------------------------------------------------------------------------------------------//
+router.get("/image/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const file = fs.readFileSync(__dirname + "/../../images/" +filename);
+  res.send(file);
+});
 
 //----------------------------------------------------------------------------------------------------//
 //                                 Update views count

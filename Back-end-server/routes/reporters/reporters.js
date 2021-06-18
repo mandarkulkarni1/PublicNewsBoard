@@ -9,33 +9,9 @@ const jwt = require("jsonwebtoken");
 const Reporters = db.Reporters;
 const News = db.News;
 const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "images/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-const fs = require("fs");
-var upload = multer({ storage: storage });
+const upload=multer({dest: 'images/'})
 
-router.post("/uploadImage", upload.single("image"), (req, res, next) => {
-  var fileinfo = req.file.filename;
-  const newsId = 1;
-  const statement = `UPDATE news SET image ='${fileinfo}' where newsId=${newsId}`;
 
-  dbData.query(statement, (err, data) => {
-    res.send(utils.createResult(err, data));
-  });
-});
-
-router.get("/image/:filename", (req, res) => {
-  const filename = req.params.filename;
-  console.log(filename);
-  const file = fs.readFileSync(__dirname + "../../images/" + filename);
-  res.send(file);
-});
 
 router.post("/signup", (request, response) => {
   //  const {password}=request.body.password
@@ -136,5 +112,15 @@ router.post("/addNews/:reporterId",  (req, res) => {
       });
     });
 });
+router.post("/uploadImage/:newsId",upload.single("image"),(req, res, next) => {
+  var fileName = req.file.filename;
+  const newsId = req.params.newsId;
+  const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
+
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+}
+);
 
 module.exports = router;
