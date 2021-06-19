@@ -82,7 +82,7 @@ export default function SimpleModal({open}) {
         console.log(error);
       });
 
-      history.push('/');
+      history.push('/reporter');
   };
 
   const fileInput = useRef();

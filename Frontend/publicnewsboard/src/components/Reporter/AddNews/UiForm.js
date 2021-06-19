@@ -56,6 +56,9 @@ function UiForm() {
     article: "",
   });
 
+  const reporter = JSON.parse(sessionStorage.getItem("user"));
+
+  console.log(reporter.repoterId)
   function handleInputChange(e) {
     //console.log(e.target.value)
     setFormData({
@@ -64,14 +67,12 @@ function UiForm() {
     });
   }
 
-  const id = 1;
-
   const handleSubmit = (e) => {
  
     e.preventDefault();
     console.log(formData);
     axios
-      .post(`http://localhost:8080/reporters/addNews/${id}`, formData)
+      .post(`http://localhost:8080/reporters/addNews/${reporter.repoterId}`, formData)
       .then((res) => {
         setNewsId(res.data.newsId);
       })
@@ -171,7 +172,7 @@ function UiForm() {
                 />
               </Grid>
               <Grid item xs={12} md={9}>
-                <Button className={classes.button}><a className="back" href="/"> Back</a></Button>
+                <Button className={classes.button}><a className="back" href="/reporter"> Back</a></Button>
               </Grid>
               <Grid item xs={12} md={3}>
                 <Button

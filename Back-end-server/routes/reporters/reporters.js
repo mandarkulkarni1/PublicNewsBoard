@@ -64,9 +64,11 @@ router.post("/signin", (req, res) => {
           );
           result["status"] = "success";
           result["data"] = {
+            reporterId:reporters['reporterId'],
             userName: reporters["userName"],
             phone: reporters["phone"],
             token: token,
+            
           };
         }
         console.log(result);
