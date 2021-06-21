@@ -59,18 +59,6 @@ router.get("/news/top10", (req, res) => {
   });
 
 });
-//----------------------------------------------------------------------------------------------------//
-//                                 Get News Categorywise
-//----------------------------------------------------------------------------------------------------//
-router.get("/news/:category", (req, res) => {
-  const category = req.params.category;
 
-  const statement = `SELECT * FROM news where category=${category}`;
-  
-  dbData.query(statement, (err, data) => {
-    res.send(utils.createResult(err, data));
-  });
-
-});
 
 module.exports = router;

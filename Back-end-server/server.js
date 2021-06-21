@@ -6,8 +6,6 @@ const secretKey = require("./secretKey");
 const utils = require("./utils");
 const jwt = require("jsonwebtoken");
 
-db.sequelize.sync();
-
 const adminRouter = require("./routes/admin/admin");
 const reporterRouter = require("./routes/reporters/reporters");
 const readerRouter =  require("./routes/readers/readers")
@@ -46,6 +44,8 @@ const app = express();
 app.use(cors("*"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+db.sequelize.sync();
+
 // app.use(authorized);
 
 app.use(express.static('images/'))

@@ -86,7 +86,7 @@ function UiForm() {
       .post(`http://localhost:8080/reporters/addNews/${reporter.reporterId}`, formData)
       .then((res) => {
         console.log("form submit:"+   res);
-        setNewsId(res.data);
+        // setNewsId(res.data);
       })
       .catch((error) => {
         console.log(error);
