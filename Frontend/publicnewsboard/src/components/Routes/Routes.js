@@ -1,5 +1,7 @@
 import { Route, Switch } from "react-router-dom";
-import LoginRegisterPage from "../Login/LoginRegisterPage";
+import Login from '../Login/Login'
+import AddReporter from "../Login/AddReporter";
+import VideoUpload from '../Reporter/VideoUpload'
 import Reporter from "../Reporter/Reporter";
 import UiForm from "../Reporter/AddNews/UiForm";
 import SimpleModal from "../Reporter/UploadImage/UploadImageModal";
@@ -14,7 +16,7 @@ function Routes() {
         <News />
       </Route>
       <Route path="/login">
-        <LoginRegisterPage />
+         <Login/>
       </Route>
       <Route path="/reporter">
         <Reporter />
@@ -25,6 +27,12 @@ function Routes() {
       <Route path="/imgModal">
         <SimpleModal open={true} />
       </Route>
+      <Route path="/videoUpload" >
+        <VideoUpload openModal='true'/>
+      </Route>
+      <Route path="/addReporter" >
+          <AddReporter/>
+       </Route>
     </Switch>
   );
 }

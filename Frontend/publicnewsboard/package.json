@@ -18,7 +18,15 @@
     "react-toastify": "^7.0.4",
     "reactjs-toastr": "^1.1.0",
     "react-router-dom": "^5.2.0",
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "@popperjs/core": "^2.9.2",
+    "font-awesome": "^4.7.0",
+    "fontawesome": "^5.6.3",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
+    "react-dropzone": "^11.3.2",
+    "react-modal": "^3.14.3",
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
