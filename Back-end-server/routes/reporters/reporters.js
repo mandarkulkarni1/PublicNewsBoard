@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+
 const dbData = require("../../databaseCredential");
 const utils = require("./../../utils");
 const crypto = require("crypto-js");
@@ -8,34 +8,12 @@ const secretKey = require("../../secretKey");
 const jwt = require("jsonwebtoken");
 const Reporters = db.Reporters;
 const News = db.News;
+
 const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "images/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
+const upload = multer({ dest: "images/" });
 const fs = require("fs");
-var upload = multer({ storage: storage });
 
-router.post("/uploadImage", upload.single("image"), (req, res, next) => {
-  var fileinfo = req.file.filename;
-  const newsId = 1;
-  const statement = `UPDATE news SET image ='${fileinfo}' where newsId=${newsId}`;
-
-  dbData.query(statement, (err, data) => {
-    res.send(utils.createResult(err, data));
-  });
-});
-
-router.get("/image/:filename", (req, res) => {
-  const filename = req.params.filename;
-  console.log(filename);
-  const file = fs.readFileSync(__dirname + "../../images/" + filename);
-  res.send(file);
-});
+const router = express.Router();
 
 router.post("/signup", (request, response) => {
   //  const {password}=request.body.password
@@ -88,6 +66,7 @@ router.post("/signin", (req, res) => {
           );
           result["status"] = "success";
           result["data"] = {
+            reporterId: reporters["reporterId"],
             userName: reporters["userName"],
             phone: reporters["phone"],
             token: token,
@@ -100,19 +79,26 @@ router.post("/signin", (req, res) => {
   });
 });
 
-router.get("/", (req, res) => {
-  const statement = `select * from reporters`;
+router.post("/uploadImage", upload.single("image"), (req, res, next) => {
+  var fileinfo = req.file.filename;
+  const newsId = 1;
+  const statement = `UPDATE news SET image ='${fileinfo}' where newsId=${newsId}`;
 
   dbData.query(statement, (err, data) => {
     res.send(utils.createResult(err, data));
   });
 });
 
-router.post("/addNews/:reporterId",  (req, res) => {
+router.get("/image/:filename", (req, res) => {
+  const filename = req.params.filename;
+  console.log(filename);
+  const file = fs.readFileSync(__dirname + "/../../images/" + filename);
+  res.send(file);
+});
+
+router.post("/addNews/:reporterId", (req, res) => {
   const { category, title, article, city, locality } = req.body;
   const reporterId = req.params.reporterId;
-  const publish_date = new Date().getDate();
-
 
   const body = {
     category: category,
@@ -120,9 +106,7 @@ router.post("/addNews/:reporterId",  (req, res) => {
     article: article,
     city: city,
     locality: locality,
-    publish_date: publish_date,
     reporterId: reporterId,
-    
   };
 
   News.create(body)
