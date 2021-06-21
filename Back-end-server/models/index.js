@@ -1,4 +1,5 @@
-const dbConfig=require('../db.config');
+const dbConfig = require("../db.config");
+
 
 const Sequelize=require('sequelize');
 
@@ -12,11 +13,12 @@ const sequelize=new Sequelize(dbConfig.DB,dbConfig.USER,dbConfig.PASSWORD,{
         acquire: dbConfig.pool.acquire,
         idle: dbConfig.pool.idle 
     }
+
 });
 
-const db={};
-db.Sequelize=Sequelize;
-db.sequelize=sequelize;
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
 db.Reporters=require('./reporter.model')(sequelize,Sequelize);
 db.Admin=require('./admin.model')(sequelize,Sequelize);
@@ -24,3 +26,4 @@ db.News=require('./news.model')(sequelize,Sequelize);
 db.Readers=require('./readers.model')(sequelize,Sequelize);
 db.ReportedNews=require('./reportedNews.model')(sequelize,Sequelize);
 module.exports=db;
+
