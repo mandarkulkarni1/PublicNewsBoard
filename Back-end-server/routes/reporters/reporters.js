@@ -1,11 +1,11 @@
 const express = require("express");
-
 const dbData = require("../../databaseCredential");
 const utils = require("./../../utils");
 const crypto = require("crypto-js");
 const db = require("../../models");
 const secretKey = require("../../secretKey");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
 const Reporters = db.Reporters;
 const News = db.News;
 
@@ -72,7 +72,7 @@ router.post("/signin", (req, res) => {
             token: token,
           };
         }
-        console.log(result);
+        // console.log(result);
       }
     }
     res.send(result);
@@ -108,6 +108,15 @@ router.post("/addNews/:reporterId", (req, res) => {
     locality: locality,
     reporterId: reporterId,
   };
+  // console.log(body);
+
+  // const statement = `INSERT INTO news (category,title,article,city,locality,reporterId)
+  //                     values ('${category}','${title}','${article}','${city}','${locality}',${reporterId})`;
+
+  // dbData.query(statement, (err, data) => {
+  //   res.send(utils.createResult(err, data));
+  // });
+  // console.log(body);
 
   News.create(body)
     .then((data) => {
@@ -115,10 +124,23 @@ router.post("/addNews/:reporterId", (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial.",
+        message: err.message || "Some error occurred while creating the news.",
       });
     });
 });
+
+router.post(
+  "/uploadImage/:newsId",
+  upload.single("image"),
+  (req, res, next) => {
+    var fileName = req.file.filename;
+    const newsId = req.params.newsId;
+    const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
+
+    dbData.query(statement, (err, data) => {
+      res.send(utils.createResult(err, data));
+    });
+  }
+);
 
 module.exports = router;

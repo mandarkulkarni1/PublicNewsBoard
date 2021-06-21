@@ -1,0 +1,13 @@
+.my-div{
+    /* border: 1px solid black; */
+    padding: 20px;
+    box-shadow: 1px 1px 5px 5px #D6D6D6;
+    margin-top: 50px;
+}
+.back{
+    text-decoration: none;
+}
+
+.counter{
+   float: right;
+}

@@ -1,15 +1,19 @@
-import React from 'react';
-import FavNews from './components/newsElements/favNews/favNews';
-import Navbar from './components/navbar/navbar';
-import News from './components/newsElements/news/news';
+import React from "react";
+import Navbar from "./components/navbar/navbar";
 
-
+import { BrowserRouter } from "react-router-dom";
+import LoginContextProvider from "./components/Login/LoginContextProvider";
+import Routes from "./components/Routes/Routes";
 function App() {
   return (
     <React.Fragment>
-    <Navbar/>
-    <FavNews/>
-    <News/>
+      <BrowserRouter>
+        <LoginContextProvider>
+          <Navbar />
+         
+          <Routes />
+        </LoginContextProvider>
+      </BrowserRouter>
     </React.Fragment>
   );
 }

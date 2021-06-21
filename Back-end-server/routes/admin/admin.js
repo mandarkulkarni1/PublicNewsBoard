@@ -70,7 +70,10 @@ router.get("/reportersToApprove", (req, res) => {
 //                                  activate reporter
 //----------------------------------------------------------------------------------------------------//
 router.put("/approveReporter/:reporterId", (req, res) => {
-  const { isApproved } = req.body;
+
+
+  const { isApproved }=req.body;
+
   const reporterId = req.params.reporterId;
   const statement = `UPDATE reporters SET isApproved=${isApproved} where reporterId=${reporterId}`;
 
@@ -80,3 +83,4 @@ router.put("/approveReporter/:reporterId", (req, res) => {
 });
 
 module.exports = router;
+

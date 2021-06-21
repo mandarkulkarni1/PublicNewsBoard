@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BsFillBrightnessAltHighFill } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineSearch } from "react-icons/ai";
 import Categories from "./categories/categories";
+import { Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -9,7 +10,7 @@ class Navbar extends Component {
   state = {};
   render() {
     return (
-      <div style={{backgroundColor:'#0dcaf1'}}>
+      <div style={{ backgroundColor: "#0dcaf1" }}>
         <nav className="sticky-top navbar navbar-expand-lg bg-info font-weight-bold container">
           <a className="navbar-brand mx-1 text-dark" href="#">
             NewsBoard
@@ -35,11 +36,13 @@ class Navbar extends Component {
               <AiOutlineSearch />
             </button>
           </div>
-          <AiOutlineUser className="mx-3" />
+          <Link to="/login">
+            <AiOutlineUser className="mx-3" />
+          </Link>
           <BsFillBrightnessAltHighFill className="mx-3" />
         </nav>
         {/* <hr/> */}
-        <Categories/>
+        <Categories />
       </div>
     );
   }
