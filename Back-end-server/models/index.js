@@ -1,6 +1,5 @@
 const dbConfig=require('../db.config');
 
-
 const Sequelize=require('sequelize');
 
 const sequelize=new Sequelize(dbConfig.DB,dbConfig.USER,dbConfig.PASSWORD,{
@@ -19,8 +18,9 @@ const db={};
 db.Sequelize=Sequelize;
 db.sequelize=sequelize;
 
-db.Reporters=require('./reporter.model.js')(sequelize,Sequelize);
+db.Reporters=require('./reporter.model')(sequelize,Sequelize);
 db.Admin=require('./admin.model')(sequelize,Sequelize);
+db.News=require('./news.model')(sequelize,Sequelize);
 db.Readers=require('./readers.model')(sequelize,Sequelize);
 db.ReportedNews=require('./reportedNews.model')(sequelize,Sequelize);
 module.exports=db;

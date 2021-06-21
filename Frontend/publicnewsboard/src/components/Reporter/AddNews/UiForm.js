@@ -8,6 +8,7 @@ import "./Form.styles.css";
 import { useHistory } from "react-router";
 import NewsContext from "../../context/NewsContext";
 import axios from "axios";
+import { AddNewsService } from "../../Service/AddNewsService";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -58,9 +59,14 @@ function UiForm() {
 
   const reporter = JSON.parse(sessionStorage.getItem("user"));
 
-  console.log(reporter.repoterId)
+  // console.log(reporter)
+
+  const [count, setCount] = useState(0);
   function handleInputChange(e) {
     //console.log(e.target.value)
+    if (e.target.name === "article") {
+      setCount(e.target.value.length);
+    }
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -68,21 +74,27 @@ function UiForm() {
   }
 
   const handleSubmit = (e) => {
- 
     e.preventDefault();
     console.log(formData);
+
+    // AddNewsService(formData).then((res) => {
+    
+    //     console.log(res);
+
+    // });
     axios
-      .post(`http://localhost:8080/reporters/addNews/${reporter.repoterId}`, formData)
+      .post(`http://localhost:8080/reporters/addNews/${reporter.reporterId}`, formData)
       .then((res) => {
-        setNewsId(res.data.newsId);
+        console.log("form submit:"+   res);
+        // setNewsId(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
-
-    history.push("/imgModal");
   };
-
+  const styles = {
+    width: "100%",
+  };
   return (
     <>
       <div className={classes.layout}>
@@ -111,7 +123,7 @@ function UiForm() {
                 <br />
                 <TextareaAutosize
                   required
-                  cols={70}
+                  style={styles}
                   maxLength={450}
                   id="article"
                   name="article"
@@ -121,8 +133,8 @@ function UiForm() {
                   autoComplete="cc-number"
                   defaultValue={formData.article}
                   onChange={handleInputChange}
-                 
                 />
+                <span className="counter">{count}/450</span>
                 <hr />
               </Grid>
               <Grid item xs={12} md={12}>
@@ -130,7 +142,6 @@ function UiForm() {
                   native
                   name="category"
                   inputProps={{
-                   
                     id: "outlined-age-native-simple",
                   }}
                   defaultValue={formData.category}
@@ -172,7 +183,11 @@ function UiForm() {
                 />
               </Grid>
               <Grid item xs={12} md={9}>
-                <Button className={classes.button}><a className="back" href="/reporter"> Back</a></Button>
+                <Button className={classes.button}>
+                  <a className="back" href="/reporter">
+                    Back
+                  </a>
+                </Button>
               </Grid>
               <Grid item xs={12} md={3}>
                 <Button

@@ -1,17 +1,17 @@
 const express = require("express");
-const router = express.Router();
 const dbData = require("../../databaseCredential");
 const utils = require("./../../utils");
 const crypto = require("crypto-js");
 const db = require("../../models");
 const secretKey = require("../../secretKey");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
 const Reporters = db.Reporters;
 const News = db.News;
-const multer = require("multer");
-const upload=multer({dest: 'images/'})
 
+const upload = multer({ dest: "images/" });
 
+const router = express.Router();
 
 router.post("/signup", (request, response) => {
   //  const {password}=request.body.password
@@ -64,33 +64,22 @@ router.post("/signin", (req, res) => {
           );
           result["status"] = "success";
           result["data"] = {
-            reporterId:reporters['reporterId'],
+            reporterId: reporters["reporterId"],
             userName: reporters["userName"],
             phone: reporters["phone"],
             token: token,
-            
           };
         }
-        console.log(result);
+        // console.log(result);
       }
     }
     res.send(result);
   });
 });
 
-router.get("/", (req, res) => {
-  const statement = `select * from reporters`;
-
-  dbData.query(statement, (err, data) => {
-    res.send(utils.createResult(err, data));
-  });
-});
-
-router.post("/addNews/:reporterId",  (req, res) => {
+router.post("/addNews/:reporterId", (req, res) => {
   const { category, title, article, city, locality } = req.body;
   const reporterId = req.params.reporterId;
-  const publish_date = new Date().getDate();
-
 
   const body = {
     category: category,
@@ -98,10 +87,17 @@ router.post("/addNews/:reporterId",  (req, res) => {
     article: article,
     city: city,
     locality: locality,
-    publish_date: publish_date,
     reporterId: reporterId,
-    
   };
+  // console.log(body);
+
+  // const statement = `INSERT INTO news (category,title,article,city,locality,reporterId)
+  //                     values ('${category}','${title}','${article}','${city}','${locality}',${reporterId})`;
+
+  // dbData.query(statement, (err, data) => {
+  //   res.send(utils.createResult(err, data));
+  // });
+  // console.log(body);
 
   News.create(body)
     .then((data) => {
@@ -109,20 +105,23 @@ router.post("/addNews/:reporterId",  (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial.",
+        message: err.message || "Some error occurred while creating the news.",
       });
     });
 });
-router.post("/uploadImage/:newsId",upload.single("image"),(req, res, next) => {
-  var fileName = req.file.filename;
-  const newsId = req.params.newsId;
-  const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
 
-  dbData.query(statement, (err, data) => {
-    res.send(utils.createResult(err, data));
-  });
-}
+router.post(
+  "/uploadImage/:newsId",
+  upload.single("image"),
+  (req, res, next) => {
+    var fileName = req.file.filename;
+    const newsId = req.params.newsId;
+    const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
+
+    dbData.query(statement, (err, data) => {
+      res.send(utils.createResult(err, data));
+    });
+  }
 );
 
 module.exports = router;

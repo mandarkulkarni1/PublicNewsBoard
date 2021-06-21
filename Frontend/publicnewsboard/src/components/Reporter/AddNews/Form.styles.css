@@ -7,3 +7,7 @@
 .back{
     text-decoration: none;
 }
+
+.counter{
+   float: right;
+}
