@@ -62,8 +62,8 @@ function Reporter() {
             <h2 className="title">{data.title}</h2>
             <h3>{data.category} </h3>
             <div className="time">
-              Published On : {data.publish_date.split("T")[0]}{" "}
-              {data.publish_date.split("T")[1]}
+              Published On : {data.createdAt.split("T")[0]}{" "}
+              {data.createdAt.split("T")[1]}
             </div>
             <div className="img" style={{ height: "200px" }}>
               <img
