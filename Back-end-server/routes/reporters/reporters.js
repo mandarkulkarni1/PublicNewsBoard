@@ -127,4 +127,97 @@ router.post(
   }
 );
 
+router.get('/image/:filename', (request, response) => {
+  const {filename} = request.params
+ 
+  const path = __dirname + '/../../images/' + filename
+  console.log(path)
+  const data = fs.readFileSync(path)
+  response.send(data)
+})
+
+var storageVideo = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'videos/')
+  },
+  filename: (req, file, cb) => {
+      cb(null, `${Date.now()}_${file.originalname}`)
+  },
+  fileFilter: (req, file, cb) => {
+      const ext = path.extname(file.originalname)
+      if (ext !== '.mp4') {
+          return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
+      }
+      cb(null, true)
+  }
+})
+
+var uploadVideo = multer({ storage: storageVideo }).single("file")
+
+router.post("/videoUpload", (req, res) => {
+
+  uploadVideo(req, res, err => {
+      if (err) {
+          return res.json({ success: false, err })
+      }
+      return res.json({ success: true, filePath: res.req.file.path, fileName: res.req.file.filename })
+  })
+
+});
+
+
+router.post("/video", (request, response) => {
+     
+  console.log(request.body.reporterId)
+  const video = {
+      reporterId: request.body.reporterId ,
+      title: request.body.title,
+      category: request.body.category,
+      city:"Bhopal",
+      video:request.body.filePath
+  
+    };
+  
+ console.log(video)
+
+ Videos.create(video)
+  .then(data=>{
+      response.send(data)
+
+  })
+    .catch(err=>{
+        response.status(500).send({
+            message:err.message || "some error occured"
+        })
+    })
+ 
+
+});
+
+router.get('/videos/:filename', (request, response) => {
+  const {filename} = request.params
+ 
+  const path = __dirname + '/../../videos/' + filename
+  console.log(path)
+  const data = fs.readFileSync(path)
+  response.send(data)
+})
+
+router.get('/videos', (request, response) => {
+  const statement = `SELECT * FROM videos `;
+  
+  dbData.query(statement, (err, data) => {
+    response.send(utils.createResult(err, data));
+  });
+})
+
+router.get("/news/:id", (req, res) => {
+
+  const statement = `SELECT * FROM news where reporterId=${id}`;
+  
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+
+});
 module.exports = router;

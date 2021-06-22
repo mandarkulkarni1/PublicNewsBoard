@@ -24,5 +24,6 @@ db.Admin=require('./admin.model')(sequelize,Sequelize);
 db.News=require('./news.model')(sequelize,Sequelize);
 db.Readers=require('./readers.model')(sequelize,Sequelize);
 db.ReportedNews=require('./reportedNews.model')(sequelize,Sequelize);
+db.Videos=require('./video.model')(sequelize,Sequelize)
 module.exports=db;
 
