@@ -26,5 +26,18 @@ export async function GetNewsTop() {
 
 }
 
+export async function GetVideos() {
+    // Default options are marked with *
+    const data=await fetch('http://localhost:8080/reporters/videos',{
+        headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+           }
+    })
+    console.log(data)
+    return data.json()
+
+}
+
 
 

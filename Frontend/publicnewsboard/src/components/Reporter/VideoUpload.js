@@ -9,7 +9,13 @@ import Dropzone from 'react-dropzone';
 import {TextField} from '@material-ui/core'
 import { Input } from "@material-ui/core";
 import {useHistory} from 'react-router-dom'
-
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import { toast } from "react-toastify";
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -26,14 +32,17 @@ function getModalStyle() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   paper: {
-    position: "absolute",
-    width: 400,
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
-  }
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 
@@ -46,6 +55,7 @@ export default function SimpleModal({openModal}) {
   const history=useHistory()
   const [title, setTitle] = useState("");
   const [Categories, setCategories] = useState("Film & Animation")
+  const [city,setCity]=useState("")
   const handleChangeTitle = (event) => {
     setTitle(event.currentTarget.value)
 }
@@ -53,13 +63,16 @@ export default function SimpleModal({openModal}) {
 const handleChangeTwo = (event) => {
     setCategories(event.currentTarget.value)
 }
+const handleChangeCity = (event) => {
+  setCity(event.currentTarget.value)
+}
 
 const onSubmit = (event) => {
 
   event.preventDefault();
 
 
-  if (title === "" || 
+  if (title === "" || city ==="" ||
       Categories === "" || FilePath === "" 
      ) {
       return alert('Please first fill all the fields')
@@ -71,15 +84,16 @@ const onSubmit = (event) => {
       title: title,
       filePath: FilePath,
       category: Categories,
-    
+      city:city
   }
-  // console.log(variables)
+   console.log(variables)
 
   axios.post('http://localhost:8080/reporters/video', variables)
       .then(response => {
           if (response.data) {
-              alert('video Uploaded Successfully')
-               history.push('/reporter')
+            toast.success("video Uploaded Successfully")
+              
+                history.push('/reporter')
              
           } else {
               alert('Failed to upload video')
@@ -133,15 +147,12 @@ const onDrop = ( files ) => {
 }
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <form  >
-            
-            {/* <label>Select product image</label>
-            <input onChange={handleInputChange} type="file" class="form-control" accept="image/*"/>
-            <button type="submit">Upload</button>
-            <img src="http://localhost:8080/reporters/image/99a58a2d3ba2d010b06f4588051270fe" alt=""></img> */}
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <>
+     <Fade in={open}>
+    <div className={classes.paper} >
+      <form onSubmit={onSubmit}>
+      <div class="row">
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Dropzone 
                       onDrop={onDrop}
                       multiple={false}
@@ -158,40 +169,66 @@ const onDrop = ( files ) => {
                   </Dropzone>
                 
               </div>
-
-              <br /><br />
-                <label>Title</label>
-                <Input
-                    onChange={handleChangeTitle}
-                    value={title}
-                />
-                <br /><br />
-
-                <select onChange={handleChangeTwo}>
-                    {Catogory.map((item, index) => (
+            </div>
+            
+            {/* <label>Select product image</label>
+            <input onChange={handleInputChange} type="file" class="form-control" accept="image/*"/>
+            <button type="submit">Upload</button>
+            <img src="http://localhost:8080/reporters/image/99a58a2d3ba2d010b06f4588051270fe" alt=""></img> */}
+      <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+            <label for="">Title</label>
+            <input type="text" class="form-control" name="title" value={title} onChange={handleChangeTitle}/>
+            </div>
+         </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+            <label for="">City</label>
+            <input  type="text" class="form-control"  name="city" value={city} onChange={handleChangeCity}/>
+            </div>
+         </div>
+    </div>
+      <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="">Brand</label>
+          <select  class="form-control" value={Categories} name="role" onChange={handleChangeTwo} >
+          {Catogory.map((item, index) => (
                         <option key={index} value={item.label}>{item.label}</option>
                     ))}
-                </select>
-                <br /><br />
-
-                <Button type="primary" size="large" onClick={onSubmit}>
-                    Submit
-            </Button>
-          </form>
-      <button type="button" onClick={handleClose}>
-        onClose
-      </button>
-      <SimpleModal />
+          </select>
+        </div>
+      </div> 
+      <div class="modal-footer">
+         <button class="btn btn-success" type="submit" >Add</button>
+         <button  class="btn btn-danger" onClick={handleClose}>Cancel</button>
+     </div>
+      
+     </div>
+      </form>
     </div>
+
+    </Fade>
+    <Modal/>
+    </>
   );
 
   return (
     <div>
       <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
         open={open}
         onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
         {body}
       </Modal>
