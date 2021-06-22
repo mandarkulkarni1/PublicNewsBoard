@@ -16,6 +16,16 @@ export async function LoginService(data) {
     return response.json();
   }
   else if(data.role==="User"){
+    const response = await fetch('http://localhost:8080/admin/signin', {
+      method: 'POST',
+     
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json();
 
   }
      // Default options are marked with *

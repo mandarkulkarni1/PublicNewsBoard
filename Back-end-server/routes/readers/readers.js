@@ -21,6 +21,19 @@ router.get("/news", (req, res) => {
 });
 
 //----------------------------------------------------------------------------------------------------//
+//                                 Get Specific News...
+//----------------------------------------------------------------------------------------------------//
+
+router.get("/news/expandedNews/:newsId", (req, res) => {
+  const newsid = req.params.newsId;
+  const statement = `select * from news where newsId = ${newsid} ;`;
+
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+});
+
+//----------------------------------------------------------------------------------------------------//
 //                                 Get Images of news
 //----------------------------------------------------------------------------------------------------//
 router.get("/image/:filename", (req, res) => {

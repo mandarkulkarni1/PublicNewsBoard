@@ -20,20 +20,20 @@ const News = () => {
       <div className="container">
         <div className="m-2 row justify-content-between ">
           {data.map((news) => (
-            <div class=" col-3 m-3 shadow">
-              <div class="card">
+            <div className=" col-3 m-3 shadow" key={news.newsId}>
+              <div className="card">    
                 <img
-                  class="card-img-top"
+                  className="card-img-top"
                   src="https://picsum.photos/300"
                   alt="Card image cap"
                   height="200px"
                 />
-                <div class="card-body">
-                  <h5 class="card-title">{news.title}</h5>
-                  <p class="card-text">{news.article}</p>
+                <div className="card-body">
+                  <h5 className="card-title">{news.title}</h5>
+                  <p className="card-text">{news.article}</p>
                 </div>
-                <div class="card-footer">
-                  <small class="text-muted">{news.city}</small>
+                <div className="card-footer">
+                  <small className="text-muted">{news.city}</small>
                 </div>
               </div>
               <br />

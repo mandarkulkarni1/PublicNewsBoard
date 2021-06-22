@@ -17,8 +17,10 @@ const Login = () => {
     role: "",
   });
   const { email, password, role } = FormData;
+ 
   function handleInputChange({ target }) {
     const { name, value } = target;
+    console.log(name, value);
     seFormData({ ...FormData, [name]: value });
   }
 
@@ -43,7 +45,11 @@ const Login = () => {
             history.push("/admin");
           } else if (FormData.role === "Reporter") {
             history.push("/reporter");
-          } else {
+          } else if (FormData.role === "Reader") {
+            // history.push("/readnews");
+            // console.log(FormData.role);
+          }
+            else {
             history.push("/");
           }
         } else {
@@ -81,10 +87,11 @@ const Login = () => {
               value={role}
               onChange={handleInputChange}
             >
-              <option disabled selected>
+              <option disabled>
                 Select User
               </option>
-              <option value={"User"}>Reader</option>
+              <option value={"Null"}>Select</option>
+              <option value={"Reader"}>Reader</option>
               <option value={"Reporter"}>Reporter</option>
               <option value={"Admin"}>Admin</option>
             </select>
