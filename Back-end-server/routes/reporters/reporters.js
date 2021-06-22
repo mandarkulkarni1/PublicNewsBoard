@@ -5,7 +5,6 @@ const crypto = require("crypto-js");
 const db = require("../../models");
 const secretKey = require("../../secretKey");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
 const Reporters = db.Reporters;
 const News = db.News;
 
