@@ -77,9 +77,10 @@ router.post("/signin", (req, res) => {
   });
 });
 
-router.post("/addNews/:reporterId", (req, res) => {
+router.post("/addNews/:reporterId",upload.single('image'), (req, res) => {
   const { category, title, article, city, locality } = req.body;
   const reporterId = req.params.reporterId;
+  const image = req.file.filename;
 
   const body = {
     category: category,
@@ -88,8 +89,9 @@ router.post("/addNews/:reporterId", (req, res) => {
     city: city,
     locality: locality,
     reporterId: reporterId,
+    image: image,
   };
-  // console.log(body);
+   console.log(body);
 
   // const statement = `INSERT INTO news (category,title,article,city,locality,reporterId)
   //                     values ('${category}','${title}','${article}','${city}','${locality}',${reporterId})`;

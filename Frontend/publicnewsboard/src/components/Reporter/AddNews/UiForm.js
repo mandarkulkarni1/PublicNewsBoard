@@ -3,12 +3,14 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextareaAutosize, Select, Button } from "@material-ui/core";
+import { TextareaAutosize, Select, Button, InputLabel  } from "@material-ui/core";
 import "./Form.styles.css";
 import { useHistory } from "react-router";
 import NewsContext from "../../context/NewsContext";
 import axios from "axios";
 import { AddNewsService } from "../../Service/AddNewsService";
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
+import Fab from "@material-ui/core/Fab";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  input: {
+    display: "none",
+  },
 }));
 
 function UiForm() {
@@ -49,12 +54,13 @@ function UiForm() {
   const history = useHistory();
   const { setNewsId } = useContext(NewsContext);
 
-  const [formData, setFormData] = useState({
+  const [news, setNews] = useState({
     title: "",
     city: "",
     locality: "",
     category: "",
     article: "",
+    image: [],
   });
 
   const reporter = JSON.parse(sessionStorage.getItem("user"));
@@ -67,26 +73,46 @@ function UiForm() {
     if (e.target.name === "article") {
       setCount(e.target.value.length);
     }
-    setFormData({
-      ...formData,
+    setNews({
+      ...news,
       [e.target.name]: e.target.value,
     });
   }
 
+  const handleUploadClick = (e) => {
+    setNews({
+      ...news,
+      [e.target.name]: e.target.files[0],
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log(news);
 
-    // AddNewsService(formData).then((res) => {
-    
-    //     console.log(res);
+    const formData = new FormData();
+    formData.append("title", news.title);
+    formData.append("image", news.image);
+    formData.append("article", news.article);
+    formData.append("category", news.category);
+    formData.append("city", news.city);
+    formData.append("locality", news.locality);
 
-    // });
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+  
     axios
-      .post(`http://localhost:8080/reporters/addNews/${reporter.reporterId}`, formData)
+      .post(
+        `http://localhost:8080/reporters/addNews/${reporter.reporterId}`,
+        formData,
+        config
+      )
       .then((res) => {
-        console.log("form submit:"+   res);
-        // setNewsId(res.data);
+        console.log("form submit:" + res);
+        history.push('/reporter')
       })
       .catch((error) => {
         console.log(error);
@@ -112,14 +138,14 @@ function UiForm() {
                   label="Heading/Title"
                   fullWidth
                   autoComplete="cc-name"
-                  defaultValue={formData.title}
+                  defaultValue={news.title}
                   onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12} md={12}>
-                <label style={{ color: "GrayText", fontFamily: "arial" }}>
+                <InputLabel style={{ color: "GrayText", fontFamily: "arial" }}>
                   Article
-                </label>
+                </InputLabel>
                 <br />
                 <TextareaAutosize
                   required
@@ -131,20 +157,20 @@ function UiForm() {
                   placeholder="You can add only 450 words"
                   fullWidth
                   autoComplete="cc-number"
-                  defaultValue={formData.article}
+                  defaultValue={news.article}
                   onChange={handleInputChange}
                 />
                 <span className="counter">{count}/450</span>
                 <hr />
               </Grid>
-              <Grid item xs={12} md={12}>
+              <Grid item xs={12} md={6}>
                 <Select
                   native
                   name="category"
                   inputProps={{
                     id: "outlined-age-native-simple",
                   }}
-                  defaultValue={formData.category}
+                  defaultValue={news.category}
                   onChange={handleInputChange}
                 >
                   <option label="Choose Category" defaultValue="" />
@@ -159,6 +185,25 @@ function UiForm() {
                 </Select>
               </Grid>
               <Grid item xs={12} md={6}>
+              <InputLabel>
+                Add Image for your News
+              </InputLabel>
+                <input
+                  name="image"
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                  onChange={handleUploadClick}
+                />
+                <label htmlFor="contained-button-file">
+                  <Fab component="span" className={classes.button}>
+                    <AddPhotoAlternateIcon />
+                  </Fab>
+                </label>
+              </Grid>
+              <Grid item xs={12} md={6}>
                 <TextField
                   required
                   id="city"
@@ -166,7 +211,7 @@ function UiForm() {
                   label="City"
                   fullWidth
                   autoComplete="city"
-                  defaultValue={formData.city}
+                  defaultValue={news.city}
                   onChange={handleInputChange}
                 ></TextField>
               </Grid>
@@ -178,7 +223,7 @@ function UiForm() {
                   label="Locality"
                   fullWidth
                   autoComplete="cc-locality"
-                  defaultValue={formData.locality}
+                  defaultValue={news.locality}
                   onChange={handleInputChange}
                 />
               </Grid>

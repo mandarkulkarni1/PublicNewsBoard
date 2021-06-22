@@ -76,16 +76,16 @@ function Reporter() {
           <div className="news">
             <h2 className="title">{data.title}</h2>
             <h3>{data.category} </h3>
-            <div className="time">
+            {/* <div className="time">
               {" "}
               Published On : {data.publish_date.split("T")[0]}{" "}
               {data.publish_date.split("T")[1]}
-            </div>
+            </div> */}
             <div className="img" style={{ height: "200px" }}>
               <img
                 className="img"
                 style={{ height: "200px" }}
-                src={`http://localhost:8080/reporters/image/${data.image}`}
+                src={`http://localhost:8080/readers/image/${data.image}`}
                 alt=""
               ></img>
             </div>
@@ -116,7 +116,7 @@ function Reporter() {
       <div className="right">
         <h2>Press Tools</h2>
         <div style={{ height: "100px" }}>
-          <Button color="primary">Upload News</Button>{" "}
+          <Button color="primary"><a href="/addNews">Upload News</a></Button>
           <div className="time">{new Date().toLocaleString() + ""}</div>
           <Button onClick={openModal}> open</Button>
         </div>
