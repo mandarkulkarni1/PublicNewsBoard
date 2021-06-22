@@ -24,19 +24,19 @@ const AddReporter = () => {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    if (userName.length == 0) {
+    if (userName.length === 0) {
       toast.warning("please enter Name");
-    } else if (city.length == 0) {
+    } else if (city.length === 0) {
       toast.warning("please enter City Name");
-    } else if (email.length == 0) {
+    } else if (email.length === 0) {
       toast.warning("please enter email name");
-    } else if (phone.length == 0) {
+    } else if (phone.length === 0) {
       toast.warning("please enter phone name");
-    } else if (password.length == 0) {
+    } else if (password.length === 0) {
       toast.warning("please enter password");
-    } else if (confirmPassword.length == 0) {
+    } else if (confirmPassword.length === 0) {
       toast.warning("please confirm password");
-    } else if (password != confirmPassword) {
+    } else if (password !== confirmPassword) {
       toast.warning("password does match");
     } else {
       console.log(FormData);
@@ -46,8 +46,8 @@ const AddReporter = () => {
           //    toast.error(res.error)
           //  }
           // console.log(res.status,res.error);
-          console.log(res)
-          // history.push("/login");
+         // console.log(res)
+          history.push("/login");
         } else {
           toast.error(res["error"]);
         }

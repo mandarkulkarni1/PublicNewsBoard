@@ -3,7 +3,12 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextareaAutosize, Select, Button, InputLabel  } from "@material-ui/core";
+import {
+  TextareaAutosize,
+  Select,
+  Button,
+  InputLabel,
+} from "@material-ui/core";
 import "./Form.styles.css";
 import { useHistory } from "react-router";
 import NewsContext from "../../context/NewsContext";
@@ -60,7 +65,7 @@ function UiForm() {
     locality: "",
     category: "",
     article: "",
-    image: [],
+    image: [null],
   });
 
   const reporter = JSON.parse(sessionStorage.getItem("user"));
@@ -91,19 +96,33 @@ function UiForm() {
     console.log(news);
 
     const formData = new FormData();
-    formData.append("title", news.title);
+    formData.append(
+      "title",
+      news.title.replace(/\b(\w)/g, (s) => s.toUpperCase())
+    );
     formData.append("image", news.image);
-    formData.append("article", news.article);
-    formData.append("category", news.category);
-    formData.append("city", news.city);
-    formData.append("locality", news.locality);
+    formData.append(
+      "article",
+      news.article.charAt(0).toUpperCase() + news.article.slice(1)
+    );
+    formData.append(
+      "category",
+      news.category.charAt(0).toUpperCase() + news.category.slice(1)
+    );
+    formData.append(
+      "city",
+      news.city.charAt(0).toUpperCase() + news.city.slice(1)
+    );
+    formData.append(
+      "locality",
+      news.locality.charAt(0).toUpperCase() + news.locality.slice(1)
+    );
 
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
-  
     axios
       .post(
         `http://localhost:8080/reporters/addNews/${reporter.reporterId}`,
@@ -112,7 +131,7 @@ function UiForm() {
       )
       .then((res) => {
         console.log("form submit:" + res);
-        history.push('/reporter')
+        history.push("/reporter");
       })
       .catch((error) => {
         console.log(error);
@@ -123,7 +142,7 @@ function UiForm() {
   };
   return (
     <>
-      <div className={classes.layout}>
+      <div data-testid="form" className={classes.layout}>
         <div className="my-div">
           <Typography variant="h5" gutterBottom>
             Add New Article
@@ -132,6 +151,7 @@ function UiForm() {
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
                 <TextField
+                  data-testid="title"
                   required
                   id="title"
                   name="title"
@@ -148,6 +168,7 @@ function UiForm() {
                 </InputLabel>
                 <br />
                 <TextareaAutosize
+                  data-testid="article"
                   required
                   style={styles}
                   maxLength={450}
@@ -165,6 +186,8 @@ function UiForm() {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Select
+                  required
+                  data-testid="category"
                   native
                   name="category"
                   inputProps={{
@@ -185,10 +208,10 @@ function UiForm() {
                 </Select>
               </Grid>
               <Grid item xs={12} md={6}>
-              <InputLabel>
-                Add Image for your News
-              </InputLabel>
+                <InputLabel>Add Image for your News</InputLabel>
                 <input
+                  data-testid="image"
+                  required
                   name="image"
                   accept="image/*"
                   className={classes.input}
@@ -205,6 +228,7 @@ function UiForm() {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                  data-testid="city"
                   required
                   id="city"
                   name="city"
@@ -217,6 +241,7 @@ function UiForm() {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
+                  data-testid="locality"
                   required
                   id="locality"
                   name="locality"

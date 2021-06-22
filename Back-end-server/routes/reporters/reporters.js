@@ -11,6 +11,7 @@ const News = db.News;
 const multer = require("multer");
 const upload = multer({ dest: "images/" });
 const fs = require("fs");
+const Videos=db.Videos;
 
 const router = express.Router();
 
@@ -43,7 +44,7 @@ router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   result = {};
   const encryptedPassword = crypto.SHA256(password);
-  const statement = `select reporterId, userName, phone, isApproved from reporters where email = '${email}' and password = '${encryptedPassword}'`;
+  const statement = `select * from reporters where email = '${email}' and password = '${encryptedPassword}'`;
   console.log(statement);
   dbData.query(statement, (err, data) => {
     if (err) {
@@ -68,6 +69,8 @@ router.post("/signin", (req, res) => {
             reporterId: reporters["reporterId"],
             userName: reporters["userName"],
             phone: reporters["phone"],
+            city:reporters["city"],
+            email:reporters["email"],
             token: token,
           };
         }
@@ -113,19 +116,18 @@ router.post("/addNews/:reporterId",upload.single('image'), (req, res) => {
     });
 });
 
-router.post(
-  "/uploadImage/:newsId",
-  upload.single("image"),
-  (req, res, next) => {
-    var fileName = req.file.filename;
-    const newsId = req.params.newsId;
-    const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
+// router.post("/uploadImage/:newsId",
+//   upload.single("image"),
+//   (req, res, next) => {
+//     var fileName = req.file.filename;
+//     const newsId = req.params.newsId;
+//     const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
 
-    dbData.query(statement, (err, data) => {
-      res.send(utils.createResult(err, data));
-    });
-  }
-);
+//     dbData.query(statement, (err, data) => {
+//       res.send(utils.createResult(err, data));
+//     });
+//   }
+// );
 
 router.get('/image/:filename', (request, response) => {
   const {filename} = request.params

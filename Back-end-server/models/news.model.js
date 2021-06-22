@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     article: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
     },
     video: {
       type: Sequelize.STRING,
