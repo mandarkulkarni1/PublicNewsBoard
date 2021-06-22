@@ -9,7 +9,9 @@ const multer = require("multer");
 const Reporters = db.Reporters;
 const News = db.News;
 
+const multer = require("multer");
 const upload = multer({ dest: "images/" });
+const fs = require("fs");
 
 const router = express.Router();
 
