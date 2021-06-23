@@ -136,7 +136,7 @@ function UiForm() {
                   id="title"
                   name="title"
                   label="Heading/Title"
-                  fullWidth
+                  style={styles}
                   autoComplete="cc-name"
                   defaultValue={news.title}
                   onChange={handleInputChange}
@@ -155,7 +155,6 @@ function UiForm() {
                   name="article"
                   aria-label="Article"
                   placeholder="You can add only 450 words"
-                  fullWidth
                   autoComplete="cc-number"
                   defaultValue={news.article}
                   onChange={handleInputChange}
@@ -209,7 +208,7 @@ function UiForm() {
                   id="city"
                   name="city"
                   label="City"
-                  fullWidth
+                  style={styles}
                   autoComplete="city"
                   defaultValue={news.city}
                   onChange={handleInputChange}
@@ -221,7 +220,7 @@ function UiForm() {
                   id="locality"
                   name="locality"
                   label="Locality"
-                  fullWidth
+                  style={styles}
                   autoComplete="cc-locality"
                   defaultValue={news.locality}
                   onChange={handleInputChange}
