@@ -41,15 +41,11 @@ router.post("/signin", (req, res) => {
       if (data.length == 0) {
         res.send({ status: "error", error: "admin does not exist" });
       } else {
-        const admin = data[0];
-        const token = jwt.sign({ id: admin["adminId"] }, secretKey.secret);
+        // const admin = data[0];
+        // const token = jwt.sign({ id: admin["adminId"] }, secretKey.secret);
 
         res.send(
-          utils.createResult(error, {
-            userName: admin["userName"],
-            Email: admin["email"],
-            token: token,
-          })
+          utils.createResult(error, data)
         );
       }
     }
@@ -72,7 +68,7 @@ router.get("/reportersToApprove", (req, res) => {
 router.put("/approveReporter/:reporterId", (req, res) => {
 
 
-  const { isApproved }=req.body;
+  const { isApproved } = req.body;
 
   const reporterId = req.params.reporterId;
   const statement = `UPDATE reporters SET isApproved=${isApproved} where reporterId=${reporterId}`;
