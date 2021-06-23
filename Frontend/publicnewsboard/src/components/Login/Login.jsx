@@ -46,8 +46,9 @@ const Login = () => {
           } else if (FormData.role === "Reporter") {
             history.push("/reporter");
           } else if (FormData.role === "Reader") {
-            // history.push("/readnews");
-            // console.log(FormData.role);
+            toast.success("Login Successfull");
+            history.push("/");
+            toast.success("Login Successfull");
           }
             else {
             history.push("/");
@@ -87,10 +88,7 @@ const Login = () => {
               value={role}
               onChange={handleInputChange}
             >
-              <option disabled>
-                Select User
-              </option>
-              <option value={"Null"}>Select</option>
+              <option value={""}>Select</option>
               <option value={"Reader"}>Reader</option>
               <option value={"Reporter"}>Reporter</option>
               <option value={"Admin"}>Admin</option>

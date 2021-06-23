@@ -45,7 +45,7 @@ router.get("/image/:filename", (req, res) => {
 
 //----------------------------------------------------------------------------------------------------//
 //                                 Update views count
-//--------------- -------------------------------------------------------------------------------------//
+//-----------------------------------------------------------------------------------------------------//
 
 router.put("/views/:newsId", (req, res) => {
   const newsId = req.params.newsId;
@@ -66,5 +66,31 @@ router.get("/news/top10", (req, res) => {
     res.send(utils.createResult(err, data));
   });
 });
+
+
+router.post("/signin", (req, res) => {
+  const { email, password } = req.body;
+  // const encryptedPassword = crypto.SHA256(password);
+  const statement = `select readerId, userName, email from readers where email = '${email}' and password = '${password}'`;
+  dbData.query(statement, (error, data) => {
+      if (error) {
+          res.send({ status: "error", error: error });
+      } else {
+          if (data.length == 0) {
+              res.send({ status: "error", error: "Reader does not exist" });
+          } else {
+              //   const admin = data[0];
+              //   const token = jwt.sign({ id: admin["adminId"] }, secretKey.secret);
+
+              res.send(
+                  utils.createResult(error, data)
+              );
+          }
+      }
+  });
+});
+
+
+
 
 module.exports = router;
