@@ -17,46 +17,34 @@ function Reporter() {
     const[news,setNews]=useState([])
     const[topNews,setTopNews]=useState([])
     const reporter=JSON.parse(sessionStorage.getItem('user'))
+    const token=sessionStorage.getItem("token")
     const [readMore,setReadMore]=useState(false);
     // getModalStyle is not a pure function, we roll the style only on the first render
     const[videos,setVideos]=useState([])
     const history=useHistory()
-
     function displayDiv(index)  {
       console.log(readMore)
       setReadMore({...readMore,[index]:!readMore[index]});
     };
     
     useEffect(() => {
-      toast.success('Welcome '+reporter.userName)
-      
-
+       toast.success("Welcome "+reporter.userName)
         async function getData(){
-          console.log("use effect")
           const videos=await GetVideos()
           console.log(videos.data)
-          setVideos(videos.data)
-          
+          setVideos(videos.data) 
           const news=await GetNews()
           console.log(news.data)
           setNews(news.data)
-          
-          console.log("use effect1")
         }
-        async function getTop10(){
-            console.log("use effect")
-            
+        async function getTop10(){    
             const news=await GetNewsTop()
             console.log(news.data)
            setTopNews(news.data)
-            
-            console.log("use effect1")
           }
-       
         getTop10()
         getData()
-        
-    
+   
       }, [])
    
      function openModal(){
@@ -75,7 +63,20 @@ function Reporter() {
 
 <div className="outerDiv">
   <div className="left">
-     <h2>Headlines</h2>
+
+         <div className="headline">
+            <h4>Press Tools</h4>
+            <div style={{height:"100px"}}>
+            <Button color="primary" onClick={()=>{history.push('/addNews')}} >Upload News</Button> 
+            <Button onClick={openModal}> Upload Videos</Button>
+            <br></br>
+            <Link component="button" variant="body2" onClick={filterNews}>
+                     See Your Local News
+             </Link>
+            </div>
+            </div>
+     <hr></hr>
+     
      <h5>Latest Headlines</h5>
     
      {topNews.map(data=>(
@@ -87,6 +88,9 @@ function Reporter() {
           
           </>
      ))}
+
+
+
     
   </div>
   <div className="main">
@@ -119,15 +123,11 @@ function Reporter() {
  ))}
   </div>
   <div className="right">
-            <h2>Press Tools</h2>
-            <div style={{height:"100px"}}>
-            <Button color="primary" onClick={()=>{history.push('/addNews')}} >Upload News</Button>  <div className="time" style={{float:"right"}}>  {new Date().toLocaleString() + ""}</div>
-            <Button onClick={openModal}> Upload Videos</Button>
-            <br></br>
-            <Link component="button" variant="body2" onClick={filterNews}>
-                     See Your Local News
-             </Link>
-            </div>
+        
+        <div className="time" style={{float:"right"}}>  {new Date().toLocaleString() + ""}
+           
+        </div>
+        <h4>Videos</h4>
         <div> 
             {videos.map((data)=>(
                 <div >

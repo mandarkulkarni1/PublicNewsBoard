@@ -56,6 +56,7 @@ export default function SimpleModal({openModal}) {
   const [title, setTitle] = useState("");
   const [Categories, setCategories] = useState("Film & Animation")
   const [city,setCity]=useState("")
+ 
   const handleChangeTitle = (event) => {
     setTitle(event.currentTarget.value)
 }
@@ -77,10 +78,12 @@ const onSubmit = (event) => {
      ) {
       return alert('Please first fill all the fields')
   }
- 
-  const id=1;
+  const token=sessionStorage.getItem("token")
+  console.log(token)
+  const reporter=JSON.parse(sessionStorage.getItem('user'))
+  console.log(reporter)
   const variables = {
-      reporterId: id,
+      reporterId: reporter.reporterId,
       title: title,
       filePath: FilePath,
       category: Categories,
@@ -88,7 +91,11 @@ const onSubmit = (event) => {
   }
    console.log(variables)
 
-  axios.post('http://localhost:8080/reporters/video', variables)
+  axios.post('http://localhost:8080/reporters/video', variables,{
+     headers:{
+      'token':token
+     }
+  })
       .then(response => {
           if (response.data) {
             toast.success("video Uploaded Successfully")
@@ -107,6 +114,7 @@ const onSubmit = (event) => {
 
   const handleClose = () => {
     setOpen(false);
+    history.push('/reporter')
   };
 
   const Catogory = [
@@ -119,14 +127,16 @@ const onSubmit = (event) => {
 
 
 const onDrop = ( files ) => {
-
+  const token=sessionStorage.getItem("token")
+  console.log(token)
   let formData = new FormData();
   const config = {
-      header: { 'content-type': 'multipart/form-data' }
+      headers: { 'content-type': 'multipart/form-data',
+                'token':token }
   }
   console.log(files)
   formData.append("file", files[0])
-
+ 
   axios.post('http://localhost:8080/reporters/videoUpload', formData, config)
   .then(response=> {
       if(response.data.success){
@@ -149,10 +159,13 @@ const onDrop = ( files ) => {
   const body = (
     <>
      <Fade in={open}>
+     
     <div className={classes.paper} >
+    
       <form onSubmit={onSubmit}>
       <div class="row">
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+     
                   <Dropzone 
                       onDrop={onDrop}
                       multiple={false}
@@ -162,12 +175,16 @@ const onDrop = ( files ) => {
                               {...getRootProps()}
                           >
                               <input {...getInputProps()} />
-                              Upload Videos
-  
+                            
+                              <i class="fa fa-video-camera " style={{fontSize:"100px"}} aria-hidden="true"></i>
+                             
                           </div>
                       )}
                   </Dropzone>
                 
+              </div>
+              <div style={{width:"100px",color:"gray"}}>
+              {FilePath}
               </div>
             </div>
             
@@ -230,8 +247,10 @@ const onDrop = ( files ) => {
           timeout: 500,
         }}
       >
+        
         {body}
       </Modal>
+      
     </div>
   );
 }

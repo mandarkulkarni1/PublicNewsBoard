@@ -15,30 +15,54 @@ const Videos=db.Videos;
 
 const router = express.Router();
 
-router.post("/signup", (request, response) => {
+router.post('/signup', (request, response) => {
   //  const {password}=request.body.password
   //  const encryptedPassword = crypto.SHA256(password)
+  result={}
   const reporters = {
-    userName: request.body.userName || "default",
-    password: crypto.SHA256(request.body.password).toString() || "default",
-    email: request.body.email,
-    phone: request.body.phone,
-    isApproved: false, //Server is doing logic for this
-    city: request.body.city,
-  };
-  console.log(reporters);
+      userName: request.body.userName || "default",
+      password: crypto.SHA256(request.body.password).toString() || "default",
+      email: request.body.email,
+      phone: request.body.phone,
+      isApproved: false,  //Server is doing logic for this
+      city:request.body.city
+    };
+ console.log(reporters)
   // const encryptedPassword = crypto.SHA256(password)
+  const statement=`select email from reporters where email='${request.body.email}'`
+   dbData.query(statement,(err,data)=>{
 
-  Reporters.create(reporters)
-    .then((data) => {
-      response.send(data);
-    })
-    .catch((err) => {
-      response.status(500).send({
-        message: err.message || "some error occured",
-      });
-    });
-});
+       if(err){
+           result['status']='error'
+           result['error']=err
+       }
+       else if(data.length==0){
+
+          Reporters.create(reporters)
+          .then(data=>{
+             result['status']='success'
+             result['data']=data
+             console.log(result)
+          })
+            .catch(err=>{
+                result['status']='error'
+                result['error']=err.message
+               
+            })
+         
+           }
+           else{
+              console.log(data)
+              result['status']="error"
+              result['error']="Already registered with this email address"
+           }
+             
+       console.log(result)
+       response.send(result)
+
+   })
+  
+})
 
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
@@ -53,7 +77,7 @@ router.post("/signin", (req, res) => {
     } else {
       if (data.length == 0) {
         result["status"] = "error";
-        result["error"] = "invalid crendential";
+        result["error"] = "Invalid crendential";
       } else {
         const reporters = data[0];
         if (reporters["isApproved"] == 0) {
@@ -175,7 +199,7 @@ router.post("/video", (request, response) => {
       reporterId: request.body.reporterId ,
       title: request.body.title,
       category: request.body.category,
-      city:"Bhopal",
+      city:request.body.city,
       video:request.body.filePath
   
     };

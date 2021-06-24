@@ -33,13 +33,14 @@ const Login = () => {
     } else if (role === "") {
       toast.warning("please choose role");
     } else {
-      setLogin(true);
+     // setLogin(true);
       console.log(FormData);
       LoginService(FormData).then((res) => {
         if (res["status"] === "success") {
-          //    setLogin(true)
+              setLogin(true)
           sessionStorage.setItem("user", JSON.stringify(res.data));
-          console.log(res);
+          sessionStorage.setItem("token",res.data.token)
+          console.log(sessionStorage.getItem("token"));
 
           if (FormData.role === "Admin") {
             history.push("/admin");
