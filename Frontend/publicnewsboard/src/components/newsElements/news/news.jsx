@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import ExpandedNews from "../expandedNews/expandedNews";
 
 const News = () => {
   const [data, setData] = useState([]);
-
+  const history = useHistory();
   useEffect(() => {
     async function fetchData() {
       const url = "http://localhost:8080/readers/news/";
@@ -15,12 +18,21 @@ const News = () => {
     fetchData();
   }, []);
 
+  const handleClick = (news) => {
+    console.log("handleclick callled");
+    // <Switch>
+    //   <Route path="/expandedNews" component={()=>(<ExpandedNews news={news}/>)}/> 
+    // </Switch>
+
+
+  }
+
   return (
     <React.Fragment>
       <div className="container">
         <div className="m-2 row justify-content-between ">
           {data.map((news) => (
-            <div className=" col-3 m-3 shadow" key={news.newsId}>
+            <div className=" col-3 m-3 shadow" key={news.newsId} onClick={()=>handleClick(news)}>
               <div className="card">    
                 <img
                   className="card-img-top"
