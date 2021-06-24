@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import filterUtil from "./filter";
 
-const News = () => {
+const News = ({ value }) => {
   const [data, setData] = useState([]);
+  const [tempData, setTempData] = useState();
   const history = useHistory();
+  // console.log(value);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +19,11 @@ const News = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setTempData(filterUtil(data, value));
+    // console.log(data);
+  }, [value]);
+
   const handleClick = (news) => {
     const newsId = news.newsId;
     history.push("/detailedNews/" + newsId);
@@ -23,9 +31,9 @@ const News = () => {
 
   return (
     <React.Fragment>
-      <div className="container">
+      <div className="container border border-info">
         <div className="m-2 row justify-content-between ">
-          {data.map((news) => (
+          {tempData.map((news) => (
             <div
               className=" col-3 m-3 shadow"
               key={news.newsId}

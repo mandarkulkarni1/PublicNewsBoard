@@ -41,8 +41,6 @@ class Navbar extends Component {
           </Link>
           <BsFillBrightnessAltHighFill className="mx-3" />
         </nav>
-        {/* <hr/> */}
-        <Categories />
       </div>
     );
   }
