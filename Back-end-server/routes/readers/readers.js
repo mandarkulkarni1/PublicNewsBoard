@@ -26,7 +26,7 @@ router.get("/news", (req, res) => {
 
 router.get("/news/expandedNews/:newsId", (req, res) => {
   const newsid = req.params.newsId;
-  const statement = `select * from news where newsId = ${newsid} ;`;
+  const statement = `select * from news where newsId = ${newsid}`;
 
   dbData.query(statement, (err, data) => {
     res.send(utils.createResult(err, data));
