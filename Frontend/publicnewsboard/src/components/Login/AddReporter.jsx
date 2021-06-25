@@ -5,6 +5,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { RegisterService } from "../Service/RegisterService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SweetAlert from 'sweetalert2-react';
 const AddReporter = () => {
   const history = useHistory();
   const [FormData, setFormData] = useState({
@@ -16,11 +17,11 @@ const AddReporter = () => {
     confirmPassword: "",
     State_:""
   });
-
+  const [dialogue,setDialogue]=useState("")
   function handleInputChange({ target }) {
     console.log(target.value);
     const { name, value } = target;
-    setFormData({ ...FormData, [name]: value });
+    setFormData({ ...FormData, [name]: value});
   }
 
  function handleChange({target}) {
@@ -58,13 +59,25 @@ const AddReporter = () => {
     } 
     else {
       console.log(FormData);
-      RegisterService(FormData).then(res => {
+      const variables = {
+        userName: userName[0].toUpperCase()+userName.slice(1),
+        email: email,
+        password: password,
+        city: city[0].toUpperCase()+city.slice(1),
+        phone: phone,
+        confirmPassword: confirmPassword,
+        State_:State_
+      
+    }
+    console.log(variables)
+      RegisterService(variables).then(res => {
         if (res) {
           console.log(res)
            if(res.status==="error"){
               toast.error(res.error)
             }else{
-                toast.success("Account Successfully created")
+                // toast.success("Account Successfully created")
+                setDialogue(true)
                  history.push("/login");
                
             }
@@ -147,15 +160,15 @@ const AddReporter = () => {
               type="tel"
               className="form-control"
               id="inputPassword4"
-              placeholder="Phone Number"
+              placeholder="(xxxxxxxxxx)"
               name="phone"
               pattern="^\d{10}$"
               value={phone}
               onChange={handleInputChange}
               
             />
-              {phone.length<10 && <small id="passwordHelpInline" className="text-muted">
-              Must be 10 digits.
+              {(phone.length!==10)&& <small id="passwordHelpInline" className="text-muted">
+              Must be 10 digits and no spaces.
             </small>}
           </div>
         </div>
@@ -192,8 +205,15 @@ const AddReporter = () => {
         <button type="submit" className="btn btn-primary mt-2 mb-3">
           Sign up
         </button>
+
         <ToastContainer />
       </form>
+      <SweetAlert
+        show={dialogue}
+        title="Register Reporter"
+        text="Successfully Created Account"
+        onConfirm={()=>{setDialogue(false)}}
+      />
     </div>
   );
 };

@@ -3,7 +3,7 @@
 export async function GetNews() {
     const token=sessionStorage.getItem("token")
     // Default options are marked with *
-    const data=await fetch('http://localhost:8080/readers/news',{
+    const data=await fetch('http://localhost:8080/reporters/news',{
         headers : { 
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -18,7 +18,7 @@ export async function GetNews() {
 export async function GetNewsTop() {
     const token=sessionStorage.getItem("token")
     // Default options are marked with *
-    const data=await fetch('http://localhost:8080/readers/news/top10',{
+    const data=await fetch('http://localhost:8080/reporters/news/top10',{
         headers : { 
             'Content-Type': 'application/json',
             'Accept': 'application/json',

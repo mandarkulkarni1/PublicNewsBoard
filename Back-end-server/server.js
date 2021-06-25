@@ -17,11 +17,10 @@ function authorized(request, response, next) {
     request.url == "/reporters/signup" ||
     request.url == "/admin/signin" ||
     request.url == "/admin/signup" ||
-    request.url.startsWith("/readers")||
     (request.url.startsWith('/reporters/image'))||
     (request.url.startsWith('/reporters/videos')) ||
-    (request.url.startsWith('/reporters/videoUpload')||
-    (request.url.startsWith('/admin')))
+    (request.url.startsWith('/reporters/video')) ||
+   (request.url.startsWith('/readers'))
   ) {
     next();
   } else {

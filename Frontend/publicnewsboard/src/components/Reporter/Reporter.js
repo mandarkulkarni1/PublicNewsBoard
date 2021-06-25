@@ -1,22 +1,18 @@
 import React from 'react'
-import  { useState ,useEffect,useContext,useRef} from 'react'
 import {useHistory} from 'react-router-dom'
 import "./reporter.style.css"
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {Button} from '@material-ui/core'
-import { color } from '@material-ui/system';
 import {GetNews,GetNewsTop} from '../Service/GetNewsService'
 import { ToastContainer, toast } from 'react-toastify';  
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
 import { GetVideos } from '../Service/GetNewsService';
 import { getFilteredNews } from './FilterNews';
 import Link from '@material-ui/core/Link';
+import{useState ,useEffect} from 'react'
 function Reporter() {
 
     const[news,setNews]=useState([])
     const[topNews,setTopNews]=useState([])
-    const reporter=JSON.parse(sessionStorage.getItem('user'))
+    const reporter=JSON.parse(sessionStorage.getItem('reporter'))
     const token=sessionStorage.getItem("token")
     const [readMore,setReadMore]=useState(false);
     // getModalStyle is not a pure function, we roll the style only on the first render
@@ -28,7 +24,13 @@ function Reporter() {
     };
     
     useEffect(() => {
-       toast.success("Welcome "+reporter.userName)
+      if(!(sessionStorage.getItem('token'))){
+        console.log("inside sess")
+        history.push("/login")
+      }
+       
+      else{
+        toast.success("Welcome "+reporter.userName)
         async function getData(){
           const videos=await GetVideos()
           console.log(videos.data)
@@ -44,7 +46,8 @@ function Reporter() {
           }
         getTop10()
         getData()
-   
+      
+        }
       }, [])
    
      function openModal(){

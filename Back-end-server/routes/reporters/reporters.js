@@ -230,14 +230,14 @@ router.get('/videos/:filename', (request, response) => {
 })
 
 router.get('/videos', (request, response) => {
-  const statement = `SELECT * FROM videos `;
+  const statement = `SELECT * FROM videos order by updatedAt desc `;
   
   dbData.query(statement, (err, data) => {
     response.send(utils.createResult(err, data));
   });
 })
 
-router.get("/news/:id", (req, res) => {
+router.get("/reporterNews/:id", (req, res) => {
 
   const statement = `SELECT * FROM news where reporterId=${id}`;
   
@@ -246,4 +246,21 @@ router.get("/news/:id", (req, res) => {
   });
 
 });
+
+router.get("/news/top10", (req, res) => {
+  console.log("inside top ne")
+  const statement = "SELECT * FROM news ORDER BY views desc limit 10";
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+});
+
+router.get("/news", (req, res) => {
+  const statement = "SELECT * FROM news ORDER BY updatedAt DESC";
+
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+});
+
 module.exports = router;

@@ -18,21 +18,24 @@ function Routes() {
       <Route path="/login">
          <Login/>
       </Route>
-      <Route path="/reporter">
-        <Reporter />
-      </Route>
-      <Route path="/addNews">
-        <UiForm />
-      </Route>
-      <Route path="/imgModal">
-        <SimpleModal open={true} />
-      </Route>
-      <Route path="/videoUpload" >
-        <VideoUpload openModal='true'/>
-      </Route>
-      <Route path="/addReporter" >
-          <AddReporter/>
-       </Route>
+       
+          <Route path="/reporter">
+              <Reporter />
+         </Route>
+
+        <Route path="/addNews">
+          <UiForm />
+        </Route>
+        <Route path="/imgModal">
+          <SimpleModal open={true} />
+        </Route>
+        <Route path="/videoUpload" >
+          <VideoUpload openModal='true'/>
+        </Route>
+        <Route path="/addReporter" >
+            <AddReporter/>
+         </Route>
+       
     </Switch>
   );
 }
