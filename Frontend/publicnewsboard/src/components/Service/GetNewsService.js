@@ -46,4 +46,19 @@ export async function GetVideos() {
 }
 
 
+export async function GetArticle(params) {
+    const token=sessionStorage.getItem("token")
+    // Default options are marked with *
+    const data=await fetch("http://localhost:8080/reporters/getArticle/" + params.id,{
+        headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'token':token
+           }
+    })
+    console.log(data)
+    return data.json()
+
+}
+
 

@@ -7,6 +7,7 @@ import UiForm from "../Reporter/AddNews/UiForm";
 import SimpleModal from "../Reporter/UploadImage/UploadImageModal";
 import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
+import ArticlePage from "../Reporter/ArticlePage";
 
 function Routes() {
   return (
@@ -34,6 +35,10 @@ function Routes() {
         </Route>
         <Route path="/addReporter" >
             <AddReporter/>
+         </Route>
+
+         <Route path="/articlePage/:id" >
+            <ArticlePage/>
          </Route>
        
     </Switch>

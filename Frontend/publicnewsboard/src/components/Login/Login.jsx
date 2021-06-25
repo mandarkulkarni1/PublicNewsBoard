@@ -52,8 +52,6 @@ const Login = () => {
             history.push("/reporter");
           } else if (FormData.role === "Reader") {
             sessionStorage.setItem("reader", JSON.stringify(res.data));
-            sessionStorage.setItem("token",res.data.token)
-            console.log(sessionStorage.getItem("token"));
           
             history.push("/");
             

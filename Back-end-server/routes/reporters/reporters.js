@@ -11,6 +11,7 @@ const News = db.News;
 const multer = require("multer");
 const upload = multer({ dest: "images/" });
 const fs = require("fs");
+const { request } = require("express");
 const Videos=db.Videos;
 
 const router = express.Router();
@@ -238,7 +239,8 @@ router.get('/videos', (request, response) => {
 })
 
 router.get("/reporterNews/:id", (req, res) => {
-
+ 
+  const{id}=req.params
   const statement = `SELECT * FROM news where reporterId=${id}`;
   
   dbData.query(statement, (err, data) => {
@@ -262,5 +264,15 @@ router.get("/news", (req, res) => {
     res.send(utils.createResult(err, data));
   });
 });
+
+router.get("/getArticle/:id", (req, res) => {
+  const{id}=req.params
+  const statement = `SELECT * FROM news where newsId=${id}`;
+
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+});
+
 
 module.exports = router;

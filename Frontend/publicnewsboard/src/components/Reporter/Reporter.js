@@ -62,6 +62,10 @@ function Reporter() {
       setNews(filterNews)
 
      }
+     function openArticle(newsId){
+        console.log(newsId)
+        history.push('/articlePage/'+newsId)
+     }
     return (
 
 <div className="outerDiv">
@@ -85,7 +89,7 @@ function Reporter() {
      {topNews.map(data=>(
           
            <>
-           <div className="headline" style={{height:"60px"}}><a href="https://news.microsoft.com/june-2021-hybrid-work/">{data.article.slice(0,30)}...
+           <div className="headline" style={{height:"60px"}}><a onClick={(e)=>{openArticle(data.newsId)}}>{data.article.slice(0,30)}...
                     
            </a></div><br/>
           
