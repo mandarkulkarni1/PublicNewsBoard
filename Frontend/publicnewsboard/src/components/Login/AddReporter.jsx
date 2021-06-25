@@ -1,6 +1,6 @@
 import React from "react";
 import Data from '../../State.json'
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { RegisterService } from "../Service/RegisterService";
 import { ToastContainer, toast } from "react-toastify";

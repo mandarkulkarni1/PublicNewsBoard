@@ -2,7 +2,7 @@ const express = require("express");
 const dbData = require("../../databaseCredential");
 const utils = require("./../../utils");
 const db = require("../../models");
-const News = db.News;
+const Readers = db.Readers;
 const fs = require("fs");
 
 const router = express.Router();
@@ -91,6 +91,35 @@ router.post("/signin", (req, res) => {
 });
 
 
+router.post("/signup", (request, response) => {
+
+  const readers = {
+    userName: request.body.userName || "default",
+    password: request.body.password || "default",
+    email: request.body.email
+  };
+  console.log(readers);
+  // const encryptedPassword = crypto.SHA256(password)
+
+  Readers.create(readers)
+    .then((data) => {
+      response.send(data);
+    })
+    .catch((err) => {
+      response.status(500).send({
+        message: err.message || "some error occured",
+      });
+    });
+});
+
+router.get("/news/search/:searchValue", (req, res) => {
+  const searchValue = req.params.searchValue;
+  const statement = `select * from news where city = '${searchValue}' OR locality = '${searchValue}' OR title like '%${searchValue}%'`;
+
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+});
 
 
 module.exports = router;

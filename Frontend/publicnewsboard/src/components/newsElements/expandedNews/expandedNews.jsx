@@ -1,19 +1,21 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../../Service/newsService";
-import { Share } from "../../sharingElements/shareWidget";
+import { Share } from "../../Reader/shareWidget";
 
-const ExpandedNews = (props) => {
-  const { news } = useParams(props);
+const ExpandedNews = () => {
+  const { newsId } = useParams();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     async function init() {
-      const { data } = await fetchData(news);
+      const { data } = await fetchData(newsId);
+      console.log(data);
       setData(data[0]);
     }
     init();
   }, []);
+
   return (
     <div className="container ">
       <div className="card text-white m-3 ">

@@ -1,13 +1,11 @@
-import React from "react";
-import Data from '../../State.json'
-import { useState, useContext } from "react";
+import React from "react"
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { RegisterService } from "../Service/RegisterService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RegisterReaderService } from "../Service/RegisterReaderService";
 
-const AddReader = () => {
+const RegisterReader = () => {
   const history = useHistory();
   const [FormData, setFormData] = useState({
     userName: "",
@@ -58,19 +56,17 @@ const AddReader = () => {
   return (
     <div className="container col-md-4 col-lg-4">
       <div style={{ textAlign: "center" }}>
-        <img style={{height:"150px",borderRadius:"50%"}} src={require("../../Asset/reporterAvatar.jpg").default} alt="" />
-        <span className="text-primary h2">
-          <i className="fa fa-plus-circle" aria-hidden="true"></i>
-        </span>
+        <img style={{height:"150px",borderRadius:"50%"}} src={require("../../Asset/Reader.png").default} alt="" />
+        
       </div>
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
-          <label>Reporter Name</label>
+          <label>Reader Name</label>
           <input
             type="text"
             className="form-control"
             id="inputAddress"
-            placeholder="Reporter Name"
+            placeholder="Reader Name"
             name="userName"
             value={userName}
             onChange={handleInputChange}
@@ -130,4 +126,4 @@ const AddReader = () => {
   );
 };
 
-export default AddReader;
+export default RegisterReader;

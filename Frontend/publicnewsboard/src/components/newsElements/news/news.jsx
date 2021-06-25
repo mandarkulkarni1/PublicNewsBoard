@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import filterUtil from "./filter";
 
-const News = ({ value }) => {
+const News = ( {value} ) => {
   const [data, setData] = useState([]);
-  const [tempData, setTempData] = useState();
+  const [tempData, setTempData] = useState([]);
   const history = useHistory();
   // console.log(value);
 

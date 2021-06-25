@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import Login from '../Login/Login'
 import AddReporter from "../Login/AddReporter";
+import AddReader from "../Reader/RegisterReader";
 import VideoUpload from '../Reporter/VideoUpload'
 import Reporter from "../Reporter/Reporter";
 import UiForm from "../Reporter/AddNews/UiForm";
@@ -9,6 +10,7 @@ import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
 import ExpandedNews from "../newsElements/expandedNews/expandedNews";
 import Categories from "../navbar/categories/categories";
+
 
 function Routes() {
   return (
@@ -33,11 +35,15 @@ function Routes() {
         <VideoUpload openModal='true' />
       </Route>
       <Route path="/addReporter" >
-        <AddReporter />
-      </Route>
-      <Route path="/detailedNews/:news" >
-        <ExpandedNews />
-      </Route>
+          <AddReporter/>
+       </Route>
+       <Route path="/registerReader" >
+          <AddReader/>
+       </Route>
+
+       <Route path="/detailedNews/:newsId" >
+          <ExpandedNews />
+       </Route>
     </Switch>
   );
 }
