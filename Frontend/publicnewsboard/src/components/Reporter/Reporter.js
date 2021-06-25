@@ -5,13 +5,14 @@ import {Button} from '@material-ui/core'
 import {GetNews,GetNewsTop} from '../Service/GetNewsService'
 import { ToastContainer, toast } from 'react-toastify';  
 import { GetVideos } from '../Service/GetNewsService';
-import { getFilteredNews } from './FilterNews';
+import { getFilteredNews, getReporterNews } from './FilterNews';
 import Link from '@material-ui/core/Link';
 import{useState ,useEffect} from 'react'
 function Reporter() {
 
     const[news,setNews]=useState([])
     const[topNews,setTopNews]=useState([])
+    const[tempData,setTempData]=useState([])
     const reporter=JSON.parse(sessionStorage.getItem('reporter'))
     const token=sessionStorage.getItem("token")
     const [readMore,setReadMore]=useState(false);
@@ -19,13 +20,11 @@ function Reporter() {
     const[videos,setVideos]=useState([])
     const history=useHistory()
     function displayDiv(index)  {
-      console.log(readMore)
       setReadMore({...readMore,[index]:!readMore[index]});
     };
     
     useEffect(() => {
       if(!(sessionStorage.getItem('token'))){
-        console.log("inside sess")
         history.push("/login")
       }
        
@@ -33,15 +32,14 @@ function Reporter() {
         toast.success("Welcome "+reporter.userName)
         async function getData(){
           const videos=await GetVideos()
-          console.log(videos.data)
           setVideos(videos.data) 
-          const news=await GetNews()
-          console.log(news.data)
-          setNews(news.data)
+
+          const n=await GetNews
+          setNews(n.data)
+          setTempData(n.data)
         }
         async function getTop10(){    
             const news=await GetNewsTop()
-            console.log(news.data)
            setTopNews(news.data)
           }
         getTop10()
@@ -55,15 +53,23 @@ function Reporter() {
      }
      
     function filterNews(){
-      console.log(reporter)
-      console.log(reporter.city)
       const filterNews=getFilteredNews(news,reporter.city)
-      console.log(filterNews)
+      console.log("local"+filterNews)
       setNews(filterNews)
+     
 
      }
+     function seeAllNews(){
+      console.log("full news"+tempData)
+       setNews(tempData)
+     }
+     function seeReporterNews(){
+       const filterNews=getReporterNews(tempData,reporter.reporterId)
+       console.log("on id "+filterNews)
+       setNews(filterNews)
+       
+     }
      function openArticle(newsId){
-        console.log(newsId)
         history.push('/articlePage/'+newsId)
      }
     return (
@@ -73,13 +79,22 @@ function Reporter() {
 
          <div className="headline">
             <h4>Press Tools</h4>
-            <div style={{height:"100px"}}>
+            <div style={{height:"200px"}}>
             <Button color="primary" onClick={()=>{history.push('/addNews')}} >Upload News</Button> 
             <Button onClick={openModal}> Upload Videos</Button>
             <br></br>
             <Link component="button" variant="body2" onClick={filterNews}>
-                     See Your Local News
+                     See Local News
              </Link>
+           
+             <Link component="button" variant="body2" onClick={seeReporterNews} >
+                     See Your News
+             </Link>
+             
+              <Link component="button" variant="body2" onClick={seeAllNews} >
+                     See All News
+             </Link> 
+             
             </div>
             </div>
      <hr></hr>

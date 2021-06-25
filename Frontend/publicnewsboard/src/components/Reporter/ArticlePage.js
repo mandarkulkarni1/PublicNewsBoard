@@ -10,11 +10,9 @@ function ArticlePage() {
    
     const[article,setArticle]=useState([])
     const params = useParams();
-    console.log(params.id);
     useEffect(()=>{
         async function getArticle(){
             const article=await GetArticle(params)
-            console.log(article.data[0])
             setArticle(article.data[0]) 
           
           }

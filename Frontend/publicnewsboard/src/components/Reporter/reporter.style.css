@@ -83,6 +83,27 @@
   padding: 20px;
 }
 
+/* a:hover{
+   color: rgba(0, 0, 0, 0.35);
+} */
+button:link {
+  color:gray;
+}
+
+/* visited link */
+button:visited {
+  color: green;
+}
+
+/* mouse over link */
+button:hover {
+  color: hotpink;
+}
+
+/* selected link */
+button:active {
+  color:rgba(0, 0, 0, 0.35)s
+}
 
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */

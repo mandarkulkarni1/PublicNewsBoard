@@ -6,16 +6,9 @@ import { Button } from "@material-ui/core";
 import axios from 'axios'
 import {useState,useContext} from 'react'
 import Dropzone from 'react-dropzone';
-import {TextField} from '@material-ui/core'
-import { Input } from "@material-ui/core";
 import {useHistory} from 'react-router-dom'
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { toast } from "react-toastify";
 import SweetAlert from 'sweetalert2-react';
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -145,7 +138,6 @@ const onDrop = ( files ) => {
       headers: { 'content-type': 'multipart/form-data',
                 'token':token }
   }
-  console.log(files)
   formData.append("file", files[0])
  
   axios.post('http://localhost:8080/reporters/videoUpload', formData, config)
@@ -199,10 +191,6 @@ const onDrop = ( files ) => {
               </div>
             </div>
             
-            {/* <label>Select product image</label>
-            <input onChange={handleInputChange} type="file" class="form-control" accept="image/*"/>
-            <button type="submit">Upload</button>
-            <img src="http://localhost:8080/reporters/image/99a58a2d3ba2d010b06f4588051270fe" alt=""></img> */}
       <div class="row">
           <div class="col-md-12">
             <div class="form-group">
