@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./styles.css";
 const FavNews = () => {
   const [data, setData] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     async function init() {
@@ -15,6 +18,11 @@ const FavNews = () => {
 
     init();
   }, []);
+
+  const handleclick = (news) => {
+    history.push("/detailedNews/" + news.newsId);
+  };
+
   return (
     <div className="container-lg p-2">
       <div className="card shadow">
@@ -22,7 +30,11 @@ const FavNews = () => {
         <div className="card-body overflow-auto d-flex ">
           {/* =========================================================================== */}
           {data.map((news) => (
-            <div className="col-2 m-1" key={news.newsId}>
+            <div
+              className="col-2 m-1"
+              key={news.newsId}
+              onClick={() => handleclick(news)}
+            >
               <div className="card">
                 <div className="shadow">
                   <div className="card-body" id="cardd">

@@ -1,10 +1,7 @@
 const filterUtil=function (data,value){
-    data.map((news)=>console.log(news.title));
-    if(!value){
+    if(!value || value==='ALL'){
       return data;
     }
-
-    // data.filter((data)=>data.category === filter);
     return data.filter((data)=>data.category === value);
   }
 

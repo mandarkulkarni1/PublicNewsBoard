@@ -12,6 +12,7 @@ const Categories = () => {
     "Economics",
     "Sports",
     "Regional",
+    "ALL"
   ];
 
   const handleClick = ({item}) => {

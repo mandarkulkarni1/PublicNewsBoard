@@ -9,7 +9,7 @@ const router = express.Router();
 
 const newsData = null;
 //----------------------------------------------------------------------------------------------------//
-//                                 Get All news
+//                                 Get All news mandar
 //----------------------------------------------------------------------------------------------------//
 
 router.get("/news", (req, res) => {
@@ -21,7 +21,7 @@ router.get("/news", (req, res) => {
 });
 
 //----------------------------------------------------------------------------------------------------//
-//                                 Get Specific News...
+//                                 Get Specific News... Madnar
 //----------------------------------------------------------------------------------------------------//
 
 router.get("/news/expandedNews/:newsId", (req, res) => {
@@ -67,7 +67,7 @@ router.get("/news/top10", (req, res) => {
   });
 });
 
-
+// Mandar------------------------>>>>>>>>>>>>>>>
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   // const encryptedPassword = crypto.SHA256(password);
