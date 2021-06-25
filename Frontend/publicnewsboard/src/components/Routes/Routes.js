@@ -7,16 +7,18 @@ import UiForm from "../Reporter/AddNews/UiForm";
 import SimpleModal from "../Reporter/UploadImage/UploadImageModal";
 import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
+import ExpandedNews from "../newsElements/expandedNews/expandedNews";
+import Categories from "../navbar/categories/categories";
 
 function Routes() {
   return (
     <Switch>
       <Route exact path="/">
         <FavNews />
-        <News />
+        <Categories/>
       </Route>
       <Route path="/login">
-         <Login/>
+        <Login />
       </Route>
       <Route path="/reporter">
         <Reporter />
@@ -28,11 +30,14 @@ function Routes() {
         <SimpleModal open={true} />
       </Route>
       <Route path="/videoUpload" >
-        <VideoUpload openModal='true'/>
+        <VideoUpload openModal='true' />
       </Route>
       <Route path="/addReporter" >
-          <AddReporter/>
-       </Route>
+        <AddReporter />
+      </Route>
+      <Route path="/detailedNews/:news" >
+        <ExpandedNews />
+      </Route>
     </Switch>
   );
 }

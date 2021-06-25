@@ -1,24 +1,35 @@
-import { React } from 'react';
+import { React, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchData } from "../../Service/newsService";
+import { Share } from "../../sharingElements/shareWidget";
 
 const ExpandedNews = (props) => {
-    const {title,url,article,city} = props.news;
+  const { news } = useParams(props);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function init() {
+      const { data } = await fetchData(news);
+      setData(data[0]);
+    }
+    init();
+  }, []);
   return (
-    <React.Fragment>
-      <div class="card bg-dark text-white">
+    <div className="container ">
+      <div className="card text-white m-3 ">
         <img
           src="https://mdbootstrap.com/img/new/slides/017.jpg"
           className="card-img"
           alt="..."
         />
         <div className="card-img-overlay">
-          <h5 className="card-title">{title}</h5>
-          <p className="card-text">
-            {article}
-          </p>
-          <p className="card-text">{city}</p>
+          <h5 className="card-title text-white">{data.title}</h5>
+          <p className="card-text text-white">{data.article}</p>
+          <p className="card-text text-white">{data.city}</p>
+          <Share newsId={data.title} title={data.title}/>
         </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
