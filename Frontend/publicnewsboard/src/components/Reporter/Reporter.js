@@ -34,7 +34,7 @@ function Reporter() {
           const videos=await GetVideos()
           setVideos(videos.data) 
 
-          const n=await GetNews
+          const n=await GetNews()
           setNews(n.data)
           setTempData(n.data)
         }
@@ -104,9 +104,9 @@ function Reporter() {
      {topNews.map(data=>(
           
            <>
-           <div className="headline" style={{height:"60px"}}><a onClick={(e)=>{openArticle(data.newsId)}}>{data.article.slice(0,30)}...
+           <div className="headline" style={{height:"80px"}}><Link style={{cursor:"pointer"}} onClick={(e)=>{openArticle(data.newsId)}}>{data.article.slice(0,30)}...
                     
-           </a></div><br/>
+           </Link></div><br/>
           
           </>
      ))}
