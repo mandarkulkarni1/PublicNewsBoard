@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import Login from '../Login/Login'
 import AddReporter from "../Login/AddReporter";
+import AddReader from "../Reader/RegisterReader";
 import VideoUpload from '../Reporter/VideoUpload'
 import Reporter from "../Reporter/Reporter";
 import UiForm from "../Reporter/AddNews/UiForm";
@@ -17,6 +18,10 @@ import AllReports from "../Admin/AllReports";
 import AllReader from "../Admin/AllReader";
 import TotalReporter from "../Admin/TotalReporter";
 import ParticularReporterNews from "../Admin/ParticularReporterNews";
+import ArticlePage from "../Reporter/ArticlePage";
+import ExpandedNews from "../newsElements/expandedNews/expandedNews";
+import Categories from "../navbar/categories/categories";
+import Search from "../Reader/Search";
 
 
 function Routes() {
@@ -24,11 +29,14 @@ function Routes() {
     <Switch>
       <Route exact path="/">
         <FavNews />
-        <News />
+        <Categories/>
       </Route>
       <Route path="/login">
-         <Login/>
+        <Login />
       </Route>
+         <Route path="/articlePage/:id" >
+            <ArticlePage/>
+         </Route>
       <Route path="/reporter">
         <Reporter />
       </Route>
@@ -39,7 +47,7 @@ function Routes() {
         <SimpleModal open={true} />
       </Route>
       <Route path="/videoUpload" >
-        <VideoUpload openModal='true'/>
+        <VideoUpload openModal='true' />
       </Route>
       <Route path="/addReporter" >
           <AddReporter/>
@@ -65,8 +73,17 @@ function Routes() {
       <Route path="/getAllReporter">
         <TotalReporter />
       </Route>{" "}
+       <Route path="/registerReader" >
+          <AddReader/>
+       </Route>
 
+       <Route path="/detailedNews/:newsId" >
+          <ExpandedNews />
+       </Route>
 
+       <Route path="/searchResult/:searchValue" >
+          <Search />
+       </Route>
     </Switch>
   );
 }

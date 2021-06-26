@@ -1,21 +1,40 @@
 import React from "react";
 import { Button } from "@material-ui/core";
+import News from "../../newsElements/news/news";
+import { useState } from "react";
 
 const Categories = () => {
+  const [value, setValue] = useState("");
   const categories = [
+    "economics",
+    "science and tech",
+    "Politics",
     "Economics",
-    "Science & Technology",
-    "Political",
-    "Child Abuse",
     "Sports",
     "Regional",
+    "Entertainment",
+    "ALL"
   ];
+
+  const handleClick = ({item}) => {
+    setValue(item);
+
+  };
   return (
-    <div className="container bg-info">
-      {categories.map((item) => (
-        <Button key={item} className='m-1 pb-2'>{item}</Button>
-      ))}
-    </div>
+    <React.Fragment>
+      <div className="container bg-info text-center sticky-top">
+        {categories.map((item) => (
+          <Button
+            key={item}
+            className="shadow m-1 pb-2"
+            onClick={() => handleClick({ item })}
+          >
+            {item}
+          </Button>
+        ))}
+      </div>
+      <News value={value}/>
+    </React.Fragment>
   );
 };
 

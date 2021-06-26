@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./styles.css";
+import { setViews } from "../counterServices";
 const FavNews = () => {
   const [data, setData] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     async function init() {
@@ -15,6 +19,12 @@ const FavNews = () => {
 
     init();
   }, []);
+
+  const handleclick = (news) => {
+    setViews(news.newsId);
+    history.push("/detailedNews/" + news.newsId); 
+  };
+
   return (
     <div className="container-lg p-2">
       <div className="card shadow">
@@ -22,13 +32,18 @@ const FavNews = () => {
         <div className="card-body overflow-auto d-flex ">
           {/* =========================================================================== */}
           {data.map((news) => (
-            <div className="col-2 m-1" key={news.newsId}>
+            <div
+              className="col-2 m-1"
+              key={news.newsId}
+              onClick={() => handleclick(news)}
+            >
               <div className="card">
                 <div className="shadow">
                   <div className="card-body" id="cardd">
                     <img
                       className="card-img-top"
-                      src="https://picsum.photos/200"
+                      src={`http://localhost:8080/reporters/image/${news.image}`}
+                      alt="news"
                       height="80px"
                     ></img>
                     <h6 className="card-title my-1">{news.title}</h6>
