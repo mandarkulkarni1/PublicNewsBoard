@@ -1,62 +1,51 @@
 import React from 'react'
-import  { useState ,useEffect,useContext,useRef} from 'react'
 import {useHistory} from 'react-router-dom'
 import "./reporter.style.css"
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {Button} from '@material-ui/core'
-import { color } from '@material-ui/system';
 import {GetNews,GetNewsTop} from '../Service/GetNewsService'
 import { ToastContainer, toast } from 'react-toastify';  
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
 import { GetVideos } from '../Service/GetNewsService';
-import { getFilteredNews } from './FilterNews';
+import { getFilteredNews, getReporterNews } from './FilterNews';
 import Link from '@material-ui/core/Link';
+import{useState ,useEffect} from 'react'
 function Reporter() {
 
     const[news,setNews]=useState([])
     const[topNews,setTopNews]=useState([])
-    const reporter=JSON.parse(sessionStorage.getItem('user'))
+    const[tempData,setTempData]=useState([])
+    const reporter=JSON.parse(sessionStorage.getItem('reporter'))
+    const token=sessionStorage.getItem("token")
     const [readMore,setReadMore]=useState(false);
     // getModalStyle is not a pure function, we roll the style only on the first render
     const[videos,setVideos]=useState([])
     const history=useHistory()
-
     function displayDiv(index)  {
-      console.log(readMore)
       setReadMore({...readMore,[index]:!readMore[index]});
     };
     
     useEffect(() => {
-      toast.success('Welcome '+reporter.userName)
-      
-
-        async function getData(){
-          console.log("use effect")
-          const videos=await GetVideos()
-          console.log(videos.data)
-          setVideos(videos.data)
-          
-          const news=await GetNews()
-          console.log(news.data)
-          setNews(news.data)
-          
-          console.log("use effect1")
-        }
-        async function getTop10(){
-            console.log("use effect")
-            
-            const news=await GetNewsTop()
-            console.log(news.data)
-           setTopNews(news.data)
-            
-            console.log("use effect1")
-          }
+      if(!(sessionStorage.getItem('token'))){
+        history.push("/login")
+      }
        
+      else{
+        toast.success("Welcome "+reporter.userName)
+        async function getData(){
+          const videos=await GetVideos()
+          setVideos(videos.data) 
+
+          const n=await GetNews()
+          setNews(n.data)
+          setTempData(n.data)
+        }
+        async function getTop10(){    
+            const news=await GetNewsTop()
+           setTopNews(news.data)
+          }
         getTop10()
         getData()
-        
-    
+      
+        }
       }, [])
    
      function openModal(){
@@ -64,29 +53,66 @@ function Reporter() {
      }
      
     function filterNews(){
-      console.log(reporter)
-      console.log(reporter.city)
       const filterNews=getFilteredNews(news,reporter.city)
-      console.log(filterNews)
+      console.log("local"+filterNews)
       setNews(filterNews)
+     
 
+     }
+     function seeAllNews(){
+      console.log("full news"+tempData)
+       setNews(tempData)
+     }
+     function seeReporterNews(){
+       const filterNews=getReporterNews(tempData,reporter.reporterId)
+       console.log("on id "+filterNews)
+       setNews(filterNews)
+       
+     }
+     function openArticle(newsId){
+        history.push('/articlePage/'+newsId)
      }
     return (
 
 <div className="outerDiv">
   <div className="left">
-     <h2>Headlines</h2>
+
+         <div className="headline">
+            <h4>Press Tools</h4>
+            <div style={{height:"200px"}}>
+            <Button color="primary" onClick={()=>{history.push('/addNews')}} >Upload News</Button> 
+            <Button onClick={openModal}> Upload Videos</Button>
+            <br></br>
+            <Link component="button" variant="body2" onClick={filterNews}>
+                     See Local News
+             </Link>
+           
+             <Link component="button" variant="body2" onClick={seeReporterNews} >
+                     See Your News
+             </Link>
+             
+              <Link component="button" variant="body2" onClick={seeAllNews} >
+                     See All News
+             </Link> 
+             
+            </div>
+            </div>
+     <hr></hr>
+     
      <h5>Latest Headlines</h5>
     
      {topNews.map(data=>(
           
            <>
-           <div className="headline" style={{height:"60px"}}><a href="https://news.microsoft.com/june-2021-hybrid-work/">{data.article.slice(0,30)}...
+           <div className="headline" style={{height:"80px"}}><Link style={{cursor:"pointer"}} onClick={(e)=>{openArticle(data.newsId)}}>{data.article.slice(0,30)}...
                     
-           </a></div><br/>
+           </Link></div><br/>
           
           </>
      ))}
+
+
+
     
   </div>
   <div className="main">
@@ -119,15 +145,11 @@ function Reporter() {
  ))}
   </div>
   <div className="right">
-            <h2>Press Tools</h2>
-            <div style={{height:"100px"}}>
-            <Button color="primary" onClick={()=>{history.push('/addNews')}} >Upload News</Button>  <div className="time" style={{float:"right"}}>  {new Date().toLocaleString() + ""}</div>
-            <Button onClick={openModal}> Upload Videos</Button>
-            <br></br>
-            <Link component="button" variant="body2" onClick={filterNews}>
-                     See Your Local News
-             </Link>
-            </div>
+        
+        <div className="time" style={{float:"right"}}>  {new Date().toLocaleString() + ""}
+           
+        </div>
+        <h4>Videos</h4>
         <div> 
             {videos.map((data)=>(
                 <div >

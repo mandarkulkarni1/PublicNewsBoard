@@ -24,6 +24,11 @@ class Navbar extends Component {
   }
 
   render() {
+
+const Navbar =()=> {
+  // state = {};
+  const handleClick = ()=>{}
+
     return (
       <div style={{ backgroundColor: "#0dcaf1" }}>
         <nav className="sticky-top navbar navbar-expand-lg bg-info font-weight-bold container">
@@ -66,6 +71,9 @@ class Navbar extends Component {
       </div>
     );
   }
+
 }
 
 export default withRouter(Navbar);
+
+

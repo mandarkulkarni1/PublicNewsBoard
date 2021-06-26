@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./styles.css";
+import { setViews } from "../counterServices";
 const FavNews = () => {
   const [data, setData] = useState([]);
 
@@ -20,7 +21,8 @@ const FavNews = () => {
   }, []);
 
   const handleclick = (news) => {
-    history.push("/detailedNews/" + news.newsId);
+    setViews(news.newsId);
+    history.push("/detailedNews/" + news.newsId); 
   };
 
   return (
