@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import filterUtil from "./filter";
 import Card from "./newsCard";
+import { setViews } from "../counterServices";
 
 const News = ({ value }) => {
   const [data, setData] = useState([]);
@@ -25,6 +26,7 @@ const News = ({ value }) => {
 
   const handleClick = (news) => {
     const newsId = news.newsId;
+    setViews(news.newsId);
     history.push("/detailedNews/" + newsId);
   };
   return (

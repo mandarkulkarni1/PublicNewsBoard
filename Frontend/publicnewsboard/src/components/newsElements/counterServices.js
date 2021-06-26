@@ -22,3 +22,23 @@ export function fakeNewsSelector(news) {
         })
         return;
 }
+
+export function setViews(newsId){
+    // const newsId = data[0].newsId
+    
+    fetch('http://localhost:8080/readers/views', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            newsId: newsId,
+        })
+    })
+        .then(res => res.json())
+        .catch(error => {
+            // enter your logic for when there is an error (ex. error toast)
+            console.log(error)
+        })
+        return;
+}

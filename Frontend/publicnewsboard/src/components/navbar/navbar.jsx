@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { BsFillBrightnessAltHighFill } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineSearch } from "react-icons/ai";
-import Categories from "./categories/categories";
+
 import { Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-class Navbar extends Component {
-  state = {};
-  render() {
+const Navbar =()=> {
+  // state = {};
+  const handleClick = ()=>{}
     return (
       <div style={{ backgroundColor: "#0dcaf1" }}>
         <nav className="sticky-top navbar navbar-expand-lg bg-info font-weight-bold container">
@@ -44,6 +44,4 @@ class Navbar extends Component {
       </div>
     );
   }
-}
-
 export default Navbar;
