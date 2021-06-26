@@ -1,10 +1,11 @@
 import React from "react";
 import Data from '../../State.json'
 import { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { RegisterService } from "../Service/RegisterService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SweetAlert from 'sweetalert2-react';
 const AddReporter = () => {
   const history = useHistory();
   const [FormData, setFormData] = useState({
@@ -14,47 +15,82 @@ const AddReporter = () => {
     city: "",
     phone: "",
     confirmPassword: "",
+    State_:""
   });
-
+  const [dialogue,setDialogue]=useState("")
   function handleInputChange({ target }) {
     console.log(target.value);
     const { name, value } = target;
-    setFormData({ ...FormData, [name]: value });
+    setFormData({ ...FormData, [name]: value});
   }
+
+ function handleChange({target}) {
+    const {name,value}=target
+    console.log(name,value)
+    var reg = /^[a-z]*$/;
+    var test = reg.test(value);
+    if (test) {
+      console.log("pass")
+       setFormData({...FormData,[name]:value})
+    }else{
+      toast.warn("pass should be in small letters")
+    }        
+}
 
   function handleFormSubmit(e) {
     e.preventDefault();
+    console.log(FormData)
     if (userName.length === 0) {
       toast.warning("please enter Name");
-    } else if (city.length === 0) {
-      toast.warning("please enter City Name");
-    } else if (email.length === 0) {
-      toast.warning("please enter email name");
-    } else if (phone.length === 0) {
-      toast.warning("please enter phone name");
     } else if (password.length === 0) {
       toast.warning("please enter password");
     } else if (confirmPassword.length === 0) {
       toast.warning("please confirm password");
     } else if (password !== confirmPassword) {
-      toast.warning("password does match");
-    } else {
+      toast.warning("password does not match");
+    }  else if (email.length === 0) {
+      toast.warning("please enter email name");
+    } else if (phone.length === 0) {
+      toast.warning("please enter phone name");
+    }else if (city.length === 0) {
+      toast.warning("please enter City Name");
+    }else if (State_.length===0) {
+      toast.warning("Please choose state");
+    } 
+    else {
       console.log(FormData);
-      RegisterService(FormData).then(res => {
+      const variables = {
+        userName: userName[0].toUpperCase()+userName.slice(1),
+        email: email,
+        password: password,
+        city: city[0].toUpperCase()+city.slice(1),
+        phone: phone,
+        confirmPassword: confirmPassword,
+        State_:State_
+      
+    }
+    console.log(variables)
+      RegisterService(variables).then(res => {
         if (res) {
-          //  if(res.status==="error"){
-          //    toast.error(res.error)
-          //  }
+          console.log(res)
+           if(res.status==="error"){
+              toast.error(res.error)
+            }else{
+                // toast.success("Account Successfully created")
+                setDialogue(true)
+                 history.push("/login");
+               
+            }
           // console.log(res.status,res.error);
-         // console.log(res)
-          history.push("/login");
+        
+    
         } else {
           toast.error(res["error"]);
         }
       });
     }
   }
-  const { userName, email, password, phone, city, confirmPassword } = FormData;
+  const { userName, email, password, phone, city, confirmPassword,State_ } = FormData;
   return (
     <div className="container col-md-4 col-lg-4">
       <div style={{ textAlign: "center" }}>
@@ -86,11 +122,11 @@ const AddReporter = () => {
               placeholder="Password"
               name="password"
               value={password}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
-            {/* <small id="passwordHelpInline" className="text-muted">
-              Must be 8-20 characters long.
-            </small> */}
+           {(password==="" || password.length<6) && <small id="passwordHelpInline" className="text-muted">
+              Must be 6-20 small characters long.
+            </small>}
           </div>
           <div className="form-group col-md-12">
             <label>Confirm Password</label>
@@ -101,7 +137,7 @@ const AddReporter = () => {
               placeholder="Confirm Password"
               name="confirmPassword"
               value={confirmPassword}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -124,11 +160,16 @@ const AddReporter = () => {
               type="tel"
               className="form-control"
               id="inputPassword4"
-              placeholder="Phone Number"
+              placeholder="(xxxxxxxxxx)"
               name="phone"
+              pattern="^\d{10}$"
               value={phone}
               onChange={handleInputChange}
+              
             />
+              {(phone.length!==10)&& <small id="passwordHelpInline" className="text-muted">
+              Must be 10 digits and no spaces.
+            </small>}
           </div>
         </div>
 
@@ -139,6 +180,7 @@ const AddReporter = () => {
               id="inputState"
               className="form-control"
               placeholder="state"
+              value={State_} name="State_" onChange={handleInputChange}
             >
               <option defaultValue>Choose...</option>
               {Data.map((post) => {
@@ -163,8 +205,15 @@ const AddReporter = () => {
         <button type="submit" className="btn btn-primary mt-2 mb-3">
           Sign up
         </button>
+
         <ToastContainer />
       </form>
+      <SweetAlert
+        show={dialogue}
+        title="Register Reporter"
+        text="Successfully Created Account"
+        onConfirm={()=>{setDialogue(false)}}
+      />
     </div>
   );
 };

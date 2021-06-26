@@ -10,18 +10,22 @@ const adminRouter = require("./routes/admin/admin");
 const reporterRouter = require("./routes/reporters/reporters");
 const readerRouter =  require("./routes/readers/readers")
 
+
 function authorized(request, response, next) {
   if (
     request.url == "/reporters/signin" ||
     request.url == "/reporters/signup" ||
     request.url == "/admin/signin" ||
     request.url == "/admin/signup" ||
-    request.url.startsWith("/readers")
+    (request.url.startsWith('/reporters/image'))||
+    (request.url.startsWith('/reporters/videos')) ||
+    (request.url.startsWith('/reporters/video')) ||
+   (request.url.startsWith('/readers'))
   ) {
     next();
   } else {
     const token = request.headers["token"];
-    console.log(token);
+    console.log(token)
     if (!token) {
       response.status(401);
       response.send(utils.createResult("token is missing"));
@@ -39,14 +43,13 @@ function authorized(request, response, next) {
     }
   }
 }
-
 const app = express();
 app.use(cors("*"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 db.sequelize.sync();
 
-// app.use(authorized);
+app.use(authorized);
 
 app.use(express.static('images/'))
 

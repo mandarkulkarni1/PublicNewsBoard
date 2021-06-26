@@ -7,6 +7,7 @@ import UiForm from "../Reporter/AddNews/UiForm";
 import SimpleModal from "../Reporter/UploadImage/UploadImageModal";
 import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
+import ArticlePage from "../Reporter/ArticlePage";
 import ExpandedNews from "../newsElements/expandedNews/expandedNews";
 import Categories from "../navbar/categories/categories";
 
@@ -20,6 +21,9 @@ function Routes() {
       <Route path="/login">
         <Login />
       </Route>
+         <Route path="/articlePage/:id" >
+            <ArticlePage/>
+         </Route>
       <Route path="/reporter">
         <Reporter />
       </Route>

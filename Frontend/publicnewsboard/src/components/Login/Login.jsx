@@ -25,6 +25,7 @@ const Login = () => {
   }
 
   function handleFormSubmit(e) {
+
     e.preventDefault();
     if (FormData.email.length === 0) {
       toast.warning("please enter email name");
@@ -33,22 +34,27 @@ const Login = () => {
     } else if (role === "") {
       toast.warning("please choose role");
     } else {
-      setLogin(true);
+     // setLogin(true);
       console.log(FormData);
       LoginService(FormData).then((res) => {
         if (res["status"] === "success") {
-          //    setLogin(true)
-          sessionStorage.setItem("user", JSON.stringify(res.data));
-          console.log(res);
+              setLogin(true)
 
           if (FormData.role === "Admin") {
+            sessionStorage.setItem("admin", JSON.stringify(res.data));
+            sessionStorage.setItem("token",res.data.token)
+            console.log(sessionStorage.getItem("token"));
             history.push("/admin");
           } else if (FormData.role === "Reporter") {
+            sessionStorage.setItem("reporter", JSON.stringify(res.data));
+             sessionStorage.setItem("token",res.data.token)
+            console.log(sessionStorage.getItem("token"));
             history.push("/reporter");
           } else if (FormData.role === "Reader") {
-            toast.success("Login Successfull");
+            sessionStorage.setItem("reader", JSON.stringify(res.data));
+          
             history.push("/");
-            toast.success("Login Successfull");
+            
           }
             else {
             history.push("/");
