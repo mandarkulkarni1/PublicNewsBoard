@@ -41,11 +41,11 @@ router.post("/signin", (req, res) => {
       if (data.length == 0) {
         res.send({ status: "error", error: "admin does not exist" });
       } else {
-        // const admin = data[0];
-        // const token = jwt.sign({ id: admin["adminId"] }, secretKey.secret);
+   //     const admin = data[0];
+   //     const token = jwt.sign({ id: admin["adminId"] }, secretKey.secret);
 
         res.send(
-          utils.createResult(error, data)
+         utils.createResult(error,data)
         );
       }
     }

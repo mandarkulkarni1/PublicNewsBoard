@@ -4,7 +4,7 @@ import filterUtil from "./filter";
 import Card from "./newsCard";
 import { setViews } from "../counterServices";
 
-const News = ({ value }) => {
+const News = ( {value} ) => {
   const [data, setData] = useState([]);
   const [tempData, setTempData] = useState([]);
   const history = useHistory();
@@ -22,7 +22,7 @@ const News = ({ value }) => {
 
   useEffect(() => {
     setTempData(filterUtil(data, value));
-  }, [value]);
+  }, [data,value]);
 
   const handleClick = (news) => {
     const newsId = news.newsId;

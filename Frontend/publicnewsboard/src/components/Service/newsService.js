@@ -6,5 +6,6 @@
             'Accept': 'application/json'
            }
     })
+    console.log(data);
     return data.json();
 }

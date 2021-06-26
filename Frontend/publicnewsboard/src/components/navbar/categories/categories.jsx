@@ -8,15 +8,17 @@ const Categories = () => {
   const categories = [
     "economics",
     "science and tech",
-    "Political",
+    "Politics",
     "Economics",
     "Sports",
     "Regional",
+    "Entertainment",
     "ALL"
   ];
 
   const handleClick = ({item}) => {
     setValue(item);
+
   };
   return (
     <React.Fragment>

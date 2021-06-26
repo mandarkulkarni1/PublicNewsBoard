@@ -2,7 +2,7 @@ const express = require("express");
 const dbData = require("../../databaseCredential");
 const utils = require("./../../utils");
 const db = require("../../models");
-const News = db.News;
+const Readers = db.Readers;
 const fs = require("fs");
 
 const router = express.Router();
@@ -11,6 +11,8 @@ const newsData = null;
 
 
 //----------------------------------------------------------------------------------------------------//
+//                                 Get All news
+
 //                                 Get Images of news
 //----------------------------------------------------------------------------------------------------//
 router.get("/image/:filename", (req, res) => {
@@ -20,6 +22,9 @@ router.get("/image/:filename", (req, res) => {
   res.send(file);
 });
 
+//----------------------------------------------------------------------------------------------------//
+//                                 Get Specific News...
+//----------------------------------------------------------------------------------------------------//
 
 
 //----------------------------------------------------------------------------------------------------//
@@ -56,7 +61,6 @@ router.get("/news/expandedNews/:newsId", (req, res) => {
 });
 
 
-
 // Sign in Reader Mandar
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
@@ -91,6 +95,36 @@ router.post("/views", (req, res) => {
 });
 
 
+router.post("/signup", (request, response) => {
+
+  const readers = {
+    userName: request.body.userName || "default",
+    password: request.body.password || "default",
+    email: request.body.email
+  };
+  console.log(readers);
+  // const encryptedPassword = crypto.SHA256(password)
+
+  Readers.create(readers)
+    .then((data) => {
+      response.send(data);
+    })
+    .catch((err) => {
+      response.status(500).send({
+        message: err.message || "some error occured",
+      });
+    });
+});
+
+router.get("/search/:searchValue", (req, res) => {
+  let searchValue = req.params.searchValue;
+  searchValue=searchValue.replace(/\+/g," ")
+  const statement = `select * from news where city = '${searchValue}' OR locality = '${searchValue}' OR title like '%${searchValue}%'`;
+
+  dbData.query(statement, (err, data) => {
+    res.send(utils.createResult(err, data));
+  });
+});
 
 
 module.exports = router;

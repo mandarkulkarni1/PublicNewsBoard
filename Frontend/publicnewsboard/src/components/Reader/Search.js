@@ -1,12 +1,36 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const Card = (props) => {
-  const st = props.news;
-  const handleClick = props.handleClick;
+const Search = () => {
+    const { searchValue } = useParams();
+    const [data, setData] = useState([]);
+//   const [tempData, setTempData] = useState([]);
+   const history = useHistory();
+  // console.log(value);
+
+  useEffect(() => {
+    async function fetchData() {
+      const url = "http://localhost:8080/readers/search/"+searchValue;
+      const response = await fetch(url);
+      const { data } = await response.json();
+      setData(data);
+    }
+
+    fetchData();
+  }, [data,searchValue]);
+
+
+  const handleClick = (news) => {
+    const newsId = news.newsId;
+    history.push("/detailedNews/" + newsId);
+  };
+
   return (
+    <React.Fragment>
     <div className="container border border-info">
       <div className="m-2 row justify-content-between ">
-        {st.map((news) => (
+        {data.map((news) => (
           <div
             className=" col-3 m-3 shadow"
             key={news.newsId}
@@ -34,7 +58,8 @@ const Card = (props) => {
         ))}
       </div>
     </div>
+  </React.Fragment>
   );
 };
 
-export default Card;
+export default Search;

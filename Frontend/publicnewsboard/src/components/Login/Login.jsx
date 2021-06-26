@@ -6,6 +6,7 @@ import { LoginService } from "../Service/LoginService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddReporter from "./AddReporter";
+import RegisterReader from "../Reader/RegisterReader";
 import LoginContext from "../Login/LoginContext";
 const Login = () => {
   //   const {setLogin}=useContext(LoginContext);
@@ -145,10 +146,10 @@ const Login = () => {
                 style={{ width: "100%" }}
                 className="btn btn-secondary"
                 onClick={() => {
-                  history.push("/addUser");
+                  history.push("/registerReader");
                 }}
               >
-                Register User<span>&nbsp;</span>
+                Register Reader<span>&nbsp;</span>
                 <i class="fa fa-user-plus"></i>
               </button>
             </div>
