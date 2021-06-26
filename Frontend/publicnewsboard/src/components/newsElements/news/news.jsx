@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import filterUtil from "./filter";
-import Card from "./newsCard";
 import { setViews } from "../counterServices";
+import Cardd from "./newsCard";
 
-const News = ( {value} ) => {
+const News = ({ value }) => {
   const [data, setData] = useState([]);
   const [tempData, setTempData] = useState([]);
   const history = useHistory();
@@ -22,19 +22,26 @@ const News = ( {value} ) => {
 
   useEffect(() => {
     setTempData(filterUtil(data, value));
-  }, [data,value]);
+  }, [data, value]);
 
   const handleClick = (news) => {
     const newsId = news.newsId;
     setViews(news.newsId);
     history.push("/detailedNews/" + newsId);
   };
+  const news = tempData.length ? tempData : data;
+
   return (
     <React.Fragment>
-      <Card
-        news={tempData.length ? tempData : data}
-        handleClick={handleClick}
-      />
+      <div className="container border border-info">
+        <div className=" m-2 justify-content-around" >
+          {news.map((news) => (
+            <div className="d-inline-flex flex-row col-4 p-2">
+              <Cardd  news={news} handleClick={handleClick} />
+            </div>
+          ))}
+        </div>
+      </div>
     </React.Fragment>
   );
 };

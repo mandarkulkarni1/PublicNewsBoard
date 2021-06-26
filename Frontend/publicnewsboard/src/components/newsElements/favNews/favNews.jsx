@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./styles.css";
 import { setViews } from "../counterServices";
+import Cardd from "./Cardd";
 const FavNews = () => {
   const [data, setData] = useState([]);
 
@@ -22,7 +23,7 @@ const FavNews = () => {
 
   const handleclick = (news) => {
     setViews(news.newsId);
-    history.push("/detailedNews/" + news.newsId); 
+    history.push("/detailedNews/" + news.newsId);
   };
 
   return (
@@ -31,7 +32,7 @@ const FavNews = () => {
         <div className="card-header bg-secondry text-dark">Top News</div>
         <div className="card-body overflow-auto d-flex ">
           {/* =========================================================================== */}
-          {data.map((news) => (
+          {/* {data.map((news) => (
             <div
               className="col-2 m-1"
               key={news.newsId}
@@ -51,6 +52,10 @@ const FavNews = () => {
                 </div>
               </div>
             </div>
+          ))} */}
+
+          {data.map((news) => (
+            <Cardd handleclick={handleclick} news={news} id="cardd"/>
           ))}
           {/* =========================================================================== */}
         </div>

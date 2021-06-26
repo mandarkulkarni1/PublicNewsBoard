@@ -15,7 +15,7 @@ export async function LoginService(data) {
     return response.json();
   }
   else if (data.role === "Reader") {
-    console.log(data+'------------------------------------------------');
+    console.log(data.role);
     const response = await fetch('http://localhost:8080/readers/signin', {
       method: 'POST',
 

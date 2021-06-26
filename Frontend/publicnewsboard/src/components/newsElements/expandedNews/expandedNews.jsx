@@ -14,7 +14,7 @@ import { setViews } from "../counterServices";
 const ExpandedNews = () => {
   const { newsId } = useParams();
   const [data, setData] = useState([]);
-  const user = window.sessionStorage.getItem("user");
+  const user = window.sessionStorage.getItem("reader");
 
   useEffect(() => {
     async function init() {

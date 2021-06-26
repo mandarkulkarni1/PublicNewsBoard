@@ -208,13 +208,13 @@ function AddNews() {
                   onChange={handleInputChange}
                 >
                   <option label="Choose Category" defaultValue="" />
-                  <option defaultValue="business">Business</option>
+                  <option defaultValue="economics">Economics</option>
                   <option defaultValue="cars">Cars</option>
                   <option defaultValue="entertainment">Entertainment</option>
-                  <option defaultValue="family">Family</option>
+                  {/* <option defaultValue="family">Family</option> */}
                   <option defaultValue="health">Health</option>
-                  <option defaultValue="politics">Politics</option>
-                  <option defaultValue="religion">Religion</option>
+                  <option defaultValue="politics">Politics</option>   
+                  <option defaultValue="sports">Sports</option>
                   <option defaultValue="science">Science</option>
                 </Select>
               </Grid>

@@ -6,13 +6,13 @@ import { useState } from "react";
 const Categories = () => {
   const [value, setValue] = useState("");
   const categories = [
-    "economics",
-    "science and tech",
-    "Politics",
     "Economics",
-    "Sports",
-    "Regional",
+    "Cars",
     "Entertainment",
+    "Health",
+    "Politics",
+    "Sports",
+    "Science",
     "ALL"
   ];
 
