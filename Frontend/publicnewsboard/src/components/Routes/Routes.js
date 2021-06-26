@@ -4,8 +4,7 @@ import AddReporter from "../Login/AddReporter";
 import AddReader from "../Reader/RegisterReader";
 import VideoUpload from '../Reporter/VideoUpload'
 import Reporter from "../Reporter/Reporter";
-import UiForm from "../Reporter/AddNews/UiForm";
-import SimpleModal from "../Reporter/UploadImage/UploadImageModal";
+import AddNews from "../Reporter/AddNews/AddNews";
 import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
 // import ReaderAddUser from "../Login/ReaderAddUser";
@@ -41,10 +40,7 @@ function Routes() {
         <Reporter />
       </Route>
       <Route path="/addNews">
-        <UiForm />
-      </Route>
-      <Route path="/imgModal">
-        <SimpleModal open={true} />
+        <AddNews />
       </Route>
       <Route path="/videoUpload" >
         <VideoUpload openModal='true' />

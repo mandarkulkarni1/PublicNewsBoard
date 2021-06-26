@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -9,13 +9,13 @@ import {
   Button,
   InputLabel,
 } from "@material-ui/core";
-import "./Form.styles.css";
+import "./AddNews.styles.css";
 import { useHistory } from "react-router";
-import NewsContext from "../../context/NewsContext";
 import axios from "axios";
-import { AddNewsService } from "../../Service/AddNewsService";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import Fab from "@material-ui/core/Fab";
+import Swal from 'sweetalert2'
+
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -27,19 +27,6 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "auto",
       marginRight: "auto",
     },
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
   },
   buttons: {
     display: "flex",
@@ -53,12 +40,16 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
 }));
+ const styles = {
+    width: "100%",
+  };
+// Add news Function Component
+function AddNews() {
 
-function UiForm() {
   const classes = useStyles();
   const history = useHistory();
-  const { setNewsId } = useContext(NewsContext);
 
+  // State use to store form data
   const [news, setNews] = useState({
     title: "",
     city: "",
@@ -68,15 +59,29 @@ function UiForm() {
     image: [null],
   });
 
-  const reporter = JSON.parse(sessionStorage.getItem("reporter"));
 
-  // console.log(reporter)
-
-  const [count, setCount] = useState(0);
+  //State for Word counter for counting artical words
+  //{ content, wordCount }
+  const [{ content, wordCount }, setContent] = useState({
+    content: news.article,
+    wordCount: 0
+  });
+//Handling onChange Event
   function handleInputChange(e) {
-    //console.log(e.target.value)
+
+    //only for counting words in article
     if (e.target.name === "article") {
-      setCount(e.target.value.length);
+      const limit=450;
+      let words = (e.target.value).split(' ').filter(Boolean);
+      if (words.length > limit) {
+        Swal.fire("Word limit is Over")
+        setContent({
+          content: words.slice(0, limit).join(' '),
+          wordCount: limit
+        });
+      } else {
+        setContent({ content: e.target.value, wordCount: words.length });
+      }
     }
     setNews({
       ...news,
@@ -84,6 +89,7 @@ function UiForm() {
     });
   }
 
+  //Handling Image file
   const handleUploadClick = (e) => {
     setNews({
       ...news,
@@ -91,10 +97,12 @@ function UiForm() {
     });
   };
 
+  //handling form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(news);
 
+    //appending image file and other data
     const formData = new FormData();
     formData.append(
       "title",
@@ -118,11 +126,18 @@ function UiForm() {
       news.locality.charAt(0).toUpperCase() + news.locality.slice(1)
     );
 
+    // geting repoter info and token from session
+    const reporter = JSON.parse(sessionStorage.getItem("reporter"));
+    const token = sessionStorage.getItem("token");
+
+// posting data to add new news
     const config = {
       headers: {
         "content-type": "multipart/form-data",
+       "token":token
       },
     };
+
     axios
       .post(
         `http://localhost:8080/reporters/addNews/${reporter.reporterId}`,
@@ -130,16 +145,14 @@ function UiForm() {
         config
       )
       .then((res) => {
-        console.log("form submit:" + res);
+        Swal.fire("News Article Added Successfully")
         history.push("/reporter");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const styles = {
-    width: "100%",
-  };
+ 
   return (
     <>
       <div data-testid="form" className={classes.layout}>
@@ -156,8 +169,7 @@ function UiForm() {
                   id="title"
                   name="title"
                   label="Heading/Title"
-                  fullWidth
-                  autoComplete="cc-name"
+                  style={styles}
                   defaultValue={news.title}
                   onChange={handleInputChange}
                 />
@@ -171,22 +183,21 @@ function UiForm() {
                   data-testid="article"
                   required
                   style={styles}
-                  maxLength={450}
+                  // maxLength={450}
                   id="article"
                   name="article"
                   aria-label="Article"
                   placeholder="You can add only 450 words"
-                  fullWidth
-                  autoComplete="cc-number"
                   defaultValue={news.article}
                   onChange={handleInputChange}
                 />
-                <span className="counter">{count}/450</span>
+                <span className="counter">{wordCount}/450</span>
                 <hr />
               </Grid>
               <Grid item xs={12} md={6}>
                 <Select
                   required
+                  style={styles}
                   data-testid="category"
                   native
                   name="category"
@@ -233,8 +244,7 @@ function UiForm() {
                   id="city"
                   name="city"
                   label="City"
-                  fullWidth
-                  autoComplete="city"
+                  style={styles}
                   defaultValue={news.city}
                   onChange={handleInputChange}
                 ></TextField>
@@ -246,8 +256,7 @@ function UiForm() {
                   id="locality"
                   name="locality"
                   label="Locality"
-                  fullWidth
-                  autoComplete="cc-locality"
+                  style={styles}
                   defaultValue={news.locality}
                   onChange={handleInputChange}
                 />
@@ -276,4 +285,4 @@ function UiForm() {
     </>
   );
 }
-export default UiForm;
+export default AddNews;

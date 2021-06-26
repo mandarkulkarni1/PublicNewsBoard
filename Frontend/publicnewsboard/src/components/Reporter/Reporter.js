@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { GetVideos } from '../Service/GetNewsService';
 import { getFilteredNews, getReporterNews } from './FilterNews';
 import Link from '@material-ui/core/Link';
-import{useState ,useEffect} from 'react'
+import{useState ,useEffect} from 'react';
 function Reporter() {
 
     const[news,setNews]=useState([])

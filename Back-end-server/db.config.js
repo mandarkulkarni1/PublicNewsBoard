@@ -5,8 +5,8 @@ module.exports = {
 
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "1234",
-    DB: "testdb",
+    PASSWORD: "admin123",
+    DB: "public_news_board",
     dialect: "mysql",
     pool: {
       max: 5,
