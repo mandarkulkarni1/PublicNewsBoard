@@ -2,20 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import AdminNavbar from "../AdminNavbar/AdminNavbar";
 const ReportedNews = () => {
   const [data, setData] = useState([]);
   const history = useHistory();
 
   async function fetching() {
+    const token = sessionStorage.getItem("token");
     const url = "http://localhost:8080/admin/reportedNews";
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { token: token },
+    });
     const { data } = await response.json();
     setData(data);
   }
   useEffect(() => {
-    fetching();
-  }, []);
+    if (
+      sessionStorage.getItem("token") &&
+      sessionStorage.getItem("role") === "admin"
+    ) {
+      fetching();
+    } else {
+      history.push("/login");
+    }
+  });
 
   function handleClick(id) {
     history.push("/allReports/" + id);
@@ -64,6 +75,7 @@ const ReportedNews = () => {
 
   return (
     <React.Fragment>
+      <AdminNavbar />
       <div>
         <div className="container">
           <div className="row">

@@ -1,5 +1,7 @@
 import React from "react";
 import { Component } from "react";
+import { withRouter } from "react-router";
+import AdminNavbar from "../AdminNavbar/AdminNavbar";
 
 class AllReader extends Component {
   constructor(props) {
@@ -10,47 +12,62 @@ class AllReader extends Component {
   }
 
   componentDidMount = async () => {
-    const url = "http://localhost:8080/admin/allReader";
-    var promise = await fetch(url, { method: "GET" });
-
-    var prod = await promise.json();
-    this.setState({
-      data: prod.data,
-    });
-    console.log(this.state.data);
+    if (
+      sessionStorage.getItem("token") &&
+      sessionStorage.getItem("role") === "admin"
+    ) {
+      const token = sessionStorage.getItem("token");
+      console.log(token);
+      const url = "http://localhost:8080/admin/allReader";
+      var promise = await fetch(url, {
+        method: "GET",
+        headers: { token: token },
+      });
+      var prod = await promise.json();
+      this.setState({
+        data: prod.data,
+      });
+      console.log(this.state.data);
+    } else {
+      this.props.history.push("/login");
+    }
   };
 
   render() {
     return (
-      <div className="container">
-        <div className="row" style={{ textAlign: "center" }}>
-          <div className="col-md-6">
-            <b>All Reader</b>
-            <br />
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th> Reader Name</th>
+      <div>
+        <AdminNavbar />
+        <div className="container">
+          <div className="row" style={{ textAlign: "center" }}>
+            <div className="col-md-8">
+              <br />
+              <b className="text-primary">All Reader</b>
+              <br />
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th> Reader Name</th>
 
-                  <th>Reader Email</th>
-                  <th>Reader Id</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.data.map((repo, index) => {
-                  return (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{repo.userName}</td>
+                    <th>Reader Email</th>
+                    <th>Reader Id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.data.map((repo, index) => {
+                    return (
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>{repo.userName}</td>
 
-                      <td>{repo.email}</td>
-                      <td>{repo.readerId}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        <td>{repo.email}</td>
+                        <td>{repo.readerId}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -58,4 +75,4 @@ class AllReader extends Component {
   }
 }
 
-export default AllReader;
+export default withRouter(AllReader);

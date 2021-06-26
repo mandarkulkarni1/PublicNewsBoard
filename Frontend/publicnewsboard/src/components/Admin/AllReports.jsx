@@ -1,6 +1,8 @@
 import React from "react";
 import { Component } from "react";
 import Swal from "sweetalert2";
+import { withRouter } from "react-router";
+import AdminNavbar from "../AdminNavbar/AdminNavbar";
 
 class AllReports extends Component {
   constructor(props) {
@@ -11,8 +13,10 @@ class AllReports extends Component {
   }
 
   async viewUser(id) {
+    const token = sessionStorage.getItem("token");
     const data = await fetch("http://localhost:8080/admin/Reader/" + id, {
       method: "GET",
+      headers: { token: token },
     });
     const response = await data.json();
     const value = response.data;
@@ -33,58 +37,68 @@ class AllReports extends Component {
   }
 
   componentDidMount = async () => {
-    const url =
-      "http://localhost:8080/admin/seeReport/" + this.props.match.params.id;
-    var promise = await fetch(url, { method: "GET" });
+    if (
+      sessionStorage.getItem("token") &&
+      sessionStorage.getItem("role") === "admin"
+    ) {
+      const url =
+        "http://localhost:8080/admin/seeReport/" + this.props.match.params.id;
+      var promise = await fetch(url, { method: "GET" });
 
-    var prod = await promise.json();
+      var prod = await promise.json();
 
-    console.log("Coming Data" + prod.data);
-    this.setState({
-      data: prod.data,
-    });
-    console.log(this.state.data);
+      console.log("Coming Data" + prod.data);
+      this.setState({
+        data: prod.data,
+      });
+      console.log(this.state.data);
+    } else {
+      this.props.history.push("/login");
+    }
   };
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-8">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Report Issue</th>
+      <div>
+        <AdminNavbar />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Report Issue</th>
 
-                  <th>User Id</th>
-                  <th>View User</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.data.map((repo, index) => {
-                  return (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{repo.category}</td>
+                    <th>User Id</th>
+                    <th>View User</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.data.map((repo, index) => {
+                    return (
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>{repo.category}</td>
 
-                      <td>{repo.readerId}</td>
-                      <td>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            return this.viewUser(repo.readerId);
-                          }}
-                          className="btn btn-info"
-                        >
-                          View user
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        <td>{repo.readerId}</td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              return this.viewUser(repo.readerId);
+                            }}
+                            className="btn btn-info"
+                          >
+                            View user
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -92,4 +106,4 @@ class AllReports extends Component {
   }
 }
 
-export default AllReports;
+export default withRouter(AllReports);

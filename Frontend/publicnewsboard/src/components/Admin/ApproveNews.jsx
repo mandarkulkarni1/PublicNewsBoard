@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import AdminNavbar from "../AdminNavbar/AdminNavbar";
 
 const ApproveNews = () => {
   const [data, setData] = useState([]);
@@ -14,8 +15,15 @@ const ApproveNews = () => {
     setData(data);
   }
   useEffect(() => {
-    fetching();
-    console.log(data);
+    if (
+      sessionStorage.getItem("token") &&
+      sessionStorage.getItem("role") === "admin"
+    ) {
+      fetching();
+      console.log(data);
+    } else {
+      history.push("/login");
+    }
   });
 
   function handleClick(id) {
@@ -72,6 +80,7 @@ const ApproveNews = () => {
   }
 
   function approve(id, rid, title) {
+    const token = sessionStorage.getItem("token");
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -83,6 +92,7 @@ const ApproveNews = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios.post("http://localhost:8080/admin/accepted", {
+          Headers: { token: token },
           newsId: id,
           reporterId: rid,
           title: title,
@@ -96,6 +106,7 @@ const ApproveNews = () => {
 
   return (
     <div>
+      <AdminNavbar />
       {data.length === 0 ? (
         <div className="container" style={{ textAlign: "center" }}>
           {" "}
