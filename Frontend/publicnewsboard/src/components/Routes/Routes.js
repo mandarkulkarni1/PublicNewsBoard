@@ -8,7 +8,7 @@ import UiForm from "../Reporter/AddNews/UiForm";
 import SimpleModal from "../Reporter/UploadImage/UploadImageModal";
 import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
-import ReaderAddUser from "../Login/ReaderAddUser";
+// import ReaderAddUser from "../Login/ReaderAddUser";
 import GraphRepresent from "../Admin/GraphRepresent";
 import ReporterApprove from "../Admin/ReporterApprove";
 import Article from "../Admin/Article";
@@ -29,14 +29,14 @@ function Routes() {
     <Switch>
       <Route exact path="/">
         <FavNews />
-        <Categories/>
+        <Categories />
       </Route>
       <Route path="/login">
         <Login />
       </Route>
-         <Route path="/articlePage/:id" >
-            <ArticlePage/>
-         </Route>
+      <Route path="/articlePage/:id" >
+        <ArticlePage />
+      </Route>
       <Route path="/reporter">
         <Reporter />
       </Route>
@@ -50,9 +50,9 @@ function Routes() {
         <VideoUpload openModal='true' />
       </Route>
       <Route path="/addReporter" >
-          <AddReporter/>
-       </Route>
-<Route path="/admin">
+        <AddReporter />
+      </Route>
+      <Route path="/admin">
         <GraphRepresent />
       </Route>{" "}
       <Route path="/reporterApprove">
@@ -73,17 +73,17 @@ function Routes() {
       <Route path="/getAllReporter">
         <TotalReporter />
       </Route>{" "}
-       <Route path="/registerReader" >
-          <AddReader/>
-       </Route>
+      <Route path="/registerReader" >
+        <AddReader />
+      </Route>
 
-       <Route path="/detailedNews/:newsId" >
-          <ExpandedNews />
-       </Route>
+      <Route path="/detailedNews/:newsId" >
+        <ExpandedNews />
+      </Route>
 
-       <Route path="/searchResult/:searchValue" >
-          <Search />
-       </Route>
+      <Route path="/searchResult/:searchValue" >
+        <Search />
+      </Route>
     </Switch>
   );
 }

@@ -25,9 +25,6 @@ class Navbar extends Component {
 
   render() {
 
-const Navbar =()=> {
-  // state = {};
-  const handleClick = ()=>{}
 
     return (
       <div style={{ backgroundColor: "#0dcaf1" }}>

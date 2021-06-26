@@ -68,7 +68,7 @@ function UiForm() {
     image: [null],
   });
 
-  const reporter = JSON.parse(sessionStorage.getItem("user"));
+  const reporter = JSON.parse(sessionStorage.getItem("reporter"));
 
   // console.log(reporter)
 
