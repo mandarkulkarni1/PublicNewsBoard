@@ -9,7 +9,7 @@ const router = express.Router();
 
 const newsData = null;
 //----------------------------------------------------------------------------------------------------//
-//                                 Get All news mandar
+//                                 Get All news
 //----------------------------------------------------------------------------------------------------//
 
 router.get("/news", (req, res) => {
@@ -21,7 +21,7 @@ router.get("/news", (req, res) => {
 });
 
 //----------------------------------------------------------------------------------------------------//
-//                                 Get Specific News... Madnar
+//                                 Get Specific News...
 //----------------------------------------------------------------------------------------------------//
 
 router.get("/news/expandedNews/:newsId", (req, res) => {
@@ -67,7 +67,7 @@ router.get("/news/top10", (req, res) => {
   });
 });
 
-// Mandar------------------------>>>>>>>>>>>>>>>
+
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   // const encryptedPassword = crypto.SHA256(password);
@@ -112,8 +112,9 @@ router.post("/signup", (request, response) => {
     });
 });
 
-router.get("/news/search/:searchValue", (req, res) => {
-  const searchValue = req.params.searchValue;
+router.get("/search/:searchValue", (req, res) => {
+  let searchValue = req.params.searchValue;
+  searchValue=searchValue.replace(/\+/g," ")
   const statement = `select * from news where city = '${searchValue}' OR locality = '${searchValue}' OR title like '%${searchValue}%'`;
 
   dbData.query(statement, (err, data) => {

@@ -10,6 +10,7 @@ import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
 import ExpandedNews from "../newsElements/expandedNews/expandedNews";
 import Categories from "../navbar/categories/categories";
+import Search from "../Reader/Search";
 
 
 function Routes() {
@@ -43,6 +44,10 @@ function Routes() {
 
        <Route path="/detailedNews/:newsId" >
           <ExpandedNews />
+       </Route>
+
+       <Route path="/searchResult/:searchValue" >
+          <Search />
        </Route>
     </Switch>
   );

@@ -40,7 +40,8 @@ const FavNews = () => {
                   <div className="card-body" id="cardd">
                     <img
                       className="card-img-top"
-                      src="https://picsum.photos/200"
+                      src={`http://localhost:8080/reporters/image/${news.image}`}
+                      alt="news"
                       height="80px"
                     ></img>
                     <h6 className="card-title my-1">{news.title}</h6>

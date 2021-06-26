@@ -17,8 +17,8 @@ const Card = (props) => {
             <div className="card">
               <img
                 className="card-img-top"
-                src="https://picsum.photos/300"
-                alt="Card image cap"
+                src={`http://localhost:8080/reporters/image/${news.image}`}
+                alt="Card cap"
                 height="200px"
               />
               <div className="card-body">

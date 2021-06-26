@@ -12,11 +12,8 @@ const Categories = () => {
     "Economics",
     "Sports",
     "Regional",
-<<<<<<< HEAD
-    "Entertainment"
-=======
+    "Entertainment",
     "ALL"
->>>>>>> 1154f0f055eaea8dd0c9414c4805ede8c2c04218
   ];
 
   const handleClick = ({item}) => {

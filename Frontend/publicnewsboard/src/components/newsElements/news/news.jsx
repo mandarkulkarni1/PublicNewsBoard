@@ -21,7 +21,7 @@ const News = ( {value} ) => {
 
   useEffect(() => {
     setTempData(filterUtil(data, value));
-  }, [value]);
+  }, [data,value]);
 
   const handleClick = (news) => {
     const newsId = news.newsId;

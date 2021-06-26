@@ -2,13 +2,27 @@
 import React, { Component } from "react";
 import { BsFillBrightnessAltHighFill } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineSearch } from "react-icons/ai";
-import Categories from "./categories/categories";
 import { Link } from "react-router-dom";
+import { createRef } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class Navbar extends Component {
   state = {};
+
+  constructor() {
+    super()
+    this.searchRef = createRef();
+  }
+
+  handleSearch(){
+   
+    let searchValue=this.searchRef.current.value;
+    searchValue=searchValue.trim().replaceAll(" ","+");
+    this.props.history.push('/searchResult/'+searchValue);
+  }
+
   render() {
     return (
       <div style={{ backgroundColor: "#0dcaf1" }}>
@@ -28,12 +42,19 @@ class Navbar extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="container p-1">
-            <input
+            <input 
               className="form-control"
               type="search"
-              placeholder="Search"
+              placeholder="Search by title, headline, city or locality"
+              ref={this.searchRef}
+              onChange={() => {
+                this.handleSearch();
+              }}
             />
-            <button className="btn">
+            <button className="btn"
+             onClick={() => {
+              this.handleSearch();
+            }}>
               <AiOutlineSearch />
             </button>
           </div>
@@ -47,4 +68,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
