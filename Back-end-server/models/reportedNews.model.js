@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const ReportedNews = sequelize.define("reportedNews", {
-    reportedNewsId: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
+    // reportedNewsId: {
+    //   type: Sequelize.INTEGER,
+    //   autoIncrement: true,
+    //   primaryKey: true,
+    // },
     readerId: {
       type: Sequelize.INTEGER,
       allowNull: false,

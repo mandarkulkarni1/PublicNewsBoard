@@ -13,13 +13,14 @@ module.exports = (sequelize, Sequelize) => {
     },
     email: {
       type: Sequelize.STRING,
+      unique: true,
     },
     phone: {
       type: Sequelize.STRING,
     },
     isApproved: {
       type: Sequelize.BOOLEAN,
-      ddefaultValue: false,
+      defaultValue: false,
     },
     city: {
       type: Sequelize.STRING,

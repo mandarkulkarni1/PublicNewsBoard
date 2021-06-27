@@ -123,16 +123,7 @@ router.post("/addNews/:reporterId", upload.single('image'), (req, res) => {
     reporterId: reporterId,
     image: image,
   };
-  console.log(body);
-
-  // const statement = `INSERT INTO news (category,title,article,city,locality,reporterId)
-  //                     values ('${category}','${title}','${article}','${city}','${locality}',${reporterId})`;
-
-  // dbData.query(statement, (err, data) => {
-  //   res.send(utils.createResult(err, data));
-  // });
-  // console.log(body);
-
+ 
   News.create(body)
     .then((data) => {
       res.send(data);
@@ -144,18 +135,6 @@ router.post("/addNews/:reporterId", upload.single('image'), (req, res) => {
     });
 });
 
-// router.post("/uploadImage/:newsId",
-//   upload.single("image"),
-//   (req, res, next) => {
-//     var fileName = req.file.filename;
-//     const newsId = req.params.newsId;
-//     const statement = `UPDATE news SET image ='${fileName}' where newsId=${newsId}`;
-
-//     dbData.query(statement, (err, data) => {
-//       res.send(utils.createResult(err, data));
-//     });
-//   }
-// );
 
 router.get('/image/:filename', (request, response) => {
   const { filename } = request.params
