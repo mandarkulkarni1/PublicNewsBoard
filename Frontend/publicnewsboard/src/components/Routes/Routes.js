@@ -2,7 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import Login from '../Login/Login'
 import AddReporter from "../Login/AddReporter";
 import AddReader from "../Reader/RegisterReader";
-import VideoUpload from '../Reporter/VideoUpload'
+import VideoUpload from '../Reporter/VideoUpload/VideoUpload'
 import Reporter from "../Reporter/Reporter";
 import AddNews from "../Reporter/AddNews/AddNews";
 import News from "../newsElements/news/news";

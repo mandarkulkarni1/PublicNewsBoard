@@ -102,6 +102,7 @@ function AddNews() {
     e.preventDefault();
     console.log(news);
 
+   
     //appending image file and other data
     const formData = new FormData();
     formData.append(
