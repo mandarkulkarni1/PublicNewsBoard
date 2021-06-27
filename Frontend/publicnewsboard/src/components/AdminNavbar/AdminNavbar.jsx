@@ -41,8 +41,11 @@ function AdminNavbar(props) {
         </div>
         <span> &nbsp;&nbsp;</span>
       </nav>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light mt-0 pt-0 mb-0 pb-0 ">
-        <NavLink className="navbar-brand" to="/"></NavLink>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light mt-0  ">
+        <NavLink className="navbar-brand" to="/">
+          {" "}
+          <span></span>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -59,17 +62,15 @@ function AdminNavbar(props) {
           <div className="container " style={{ width: "80%" }}>
             <div className="navbar-nav ">
               <NavLink
-                className="nav-link   "
+                className="nav-item nav-link  mr-3 "
                 to="/admin"
                 activeClassName="active"
                 exact={true}
               >
                 <li>Home</li>
               </NavLink>
-
               <NavLink
                 className="nav-item nav-link mr-3 "
-                to=""
                 activeClassName="active"
                 to="/approveNews"
                 exact={true}

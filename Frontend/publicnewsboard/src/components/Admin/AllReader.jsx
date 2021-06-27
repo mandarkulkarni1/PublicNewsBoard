@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import { withRouter } from "react-router";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
+import "bootstrap/js/src/collapse.js";
 
 class AllReader extends Component {
   constructor(props) {
@@ -57,9 +58,8 @@ class AllReader extends Component {
                   {this.state.data.map((repo, index) => {
                     return (
                       <tr>
-                        <td>{index + 1}</td>
-                        <td>{repo.userName}</td>
-
+                        <th> {index + 1} </th>
+                        <th>{repo.userName}</th>
                         <td>{repo.email}</td>
                         <td>{repo.readerId}</td>
                       </tr>
