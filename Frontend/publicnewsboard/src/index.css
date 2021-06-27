@@ -10,9 +10,9 @@ code {
 }
 
 .nav-link.active {
-    border-bottom: 4px solid rgb(0, 98, 255) !important;
+    border-bottom: 4px solid rgb(7, 180, 248) !important;
 }
 
 .nav-item.active {
-    border-bottom: 4px solid rgb(0, 114, 245) !important;
+    border-bottom: 4px solid rgb(7, 180, 248) !important;
 }

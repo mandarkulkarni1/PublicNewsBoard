@@ -9,8 +9,12 @@ const ApproveNews = () => {
   const history = useHistory();
 
   async function fetching() {
+    const token = sessionStorage.getItem("token");
     const url = "http://localhost:8080/admin/toBeApprov";
-    const response = await fetch(url);
+    const response = await fetch(url,{
+      method: "GET",
+      headers: { token: token },
+    });
     const { data } = await response.json();
     setData(data);
   }
@@ -125,7 +129,7 @@ const ApproveNews = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-11 col-lg-11 mx-auto">
-                <h4 className="text-primary" style={{ textAlign: "center" }}>
+                <h4 className="text-info" style={{ textAlign: "center" }}>
                   News to Be Approved
                 </h4>
                 <table class="table  table-hover">
@@ -176,7 +180,7 @@ const ApproveNews = () => {
                           </td>
                           <td>
                             <button
-                              className="btn btn-primary"
+                              className="btn btn-info"
                               onClick={() => {
                                 return approve(
                                   repo.newsId,

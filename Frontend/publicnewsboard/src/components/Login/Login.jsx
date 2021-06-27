@@ -44,7 +44,7 @@ const Login = () => {
           if (FormData.role === "Admin") {
             sessionStorage.setItem("admin", JSON.stringify(res.data));
             sessionStorage.setItem("token",res.data.token)
-            
+            sessionStorage.setItem("role","admin");
             console.log(sessionStorage.getItem("token"));
             history.push("/admin");
           } else if (FormData.role === "Reporter") {

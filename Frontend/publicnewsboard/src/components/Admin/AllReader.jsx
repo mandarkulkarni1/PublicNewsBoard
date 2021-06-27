@@ -42,7 +42,7 @@ class AllReader extends Component {
           <div className="row" style={{ textAlign: "center" }}>
             <div className="col-md-8">
               <br />
-              <b className="text-primary">All Reader</b>
+              <b className="text-info">All Reader</b>
               <br />
               <table class="table table-hover">
                 <thead>

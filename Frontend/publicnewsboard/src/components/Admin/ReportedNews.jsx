@@ -16,7 +16,9 @@ const ReportedNews = () => {
     });
     const { data } = await response.json();
     setData(data);
+    console.log(data);
   }
+  
   useEffect(() => {
     if (
       sessionStorage.getItem("token") &&
@@ -26,12 +28,13 @@ const ReportedNews = () => {
     } else {
       history.push("/login");
     }
-  });
+  },[]);
 
   function handleClick(id) {
     history.push("/allReports/" + id);
   }
   function action(newsId) {
+    const token = sessionStorage.getItem("token");
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -42,7 +45,10 @@ const ReportedNews = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get("http://localhost:8080/admin/takeAction/" + newsId);
+        axios.get("http://localhost:8080/admin/takeAction/" + newsId,{
+          method: "GET",
+          headers: { token: token },
+        });
         Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
           () => {
             fetching();
@@ -53,6 +59,7 @@ const ReportedNews = () => {
   }
 
   function ignore(newsId) {
+    const token = sessionStorage.getItem("token");
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -63,7 +70,9 @@ const ReportedNews = () => {
       confirmButtonText: "Yes, ignore it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get("http://localhost:8080/admin/ignore/" + newsId);
+        axios.get("http://localhost:8080/admin/ignore/" + newsId,{
+          method: "GET",
+          headers: { token: token }});
         Swal.fire("Ignored!", "Your file has been ignored.", "success").then(
           () => {
             fetching();
@@ -80,7 +89,7 @@ const ReportedNews = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-11 col-lg-11 mx-auto">
-              {data.length === 0 || data.toString() ? (
+              {data.length === 0  ? (
                 <div style={{ textAlign: "center" }}>
                   <br />
                   <br />
@@ -88,7 +97,7 @@ const ReportedNews = () => {
                 </div>
               ) : (
                 <div>
-                  <h4 className="text-primary" style={{ textAlign: "center" }}>
+                  <h4 className="text-info" style={{ textAlign: "center" }}>
                     Reported News
                   </h4>
                   <table class="table  table-hover">
@@ -157,7 +166,7 @@ const ReportedNews = () => {
                             </th>
                             <th>
                               <button
-                                className="btn btn-primary"
+                                className="btn btn-info"
                                 onClick={() => {
                                   return ignore(repo.newsId);
                                 }}

@@ -1,46 +1,12 @@
 import "bootstrap/js/src/collapse.js";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 
 function AdminNavbar(props) {
-  const history = useHistory();
-  function logout() {
-    sessionStorage.removeItem("token");
-    history.push("/login");
-  }
 
   return (
     <div>
-      <nav className="navbar navbar-light bg-light mb-0 pb-0">
-        <div className="container-fluid container" style={{ width: "70%" }}>
-          <NavLink className="navbar-brand" to="#">
-            <img
-              src={require("../../Asset/logo.gif").default}
-              alt=""
-              width="38"
-              height="37"
-              className="d-inline-block align-text-top"
-            />
-            <span className="text-primary">
-              <b className="text-primary">Precise</b>
-            </span>
-          </NavLink>
-          <form className="d-flex  ml-n3">
-            <div></div>
-
-            <button
-              type="button"
-              className="btn btn-outline-primary"
-              onClick={logout}
-            >
-              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-              <span>&nbsp;</span> Admin Logout <span>&nbsp;</span>
-            </button>
-          </form>
-        </div>
-        <span> &nbsp;&nbsp;</span>
-      </nav>
+      
       <nav className="navbar navbar-expand-lg navbar-light bg-light mt-0  ">
         <NavLink className="navbar-brand" to="/">
           {" "}
