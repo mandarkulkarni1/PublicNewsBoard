@@ -12,7 +12,7 @@ class ReporterApprove extends Component {
       sessionStorage.getItem("token") &&
       sessionStorage.getItem("role") === "admin"
     ) {
-      const url = "http://localhost:8080/reporters/to_be_aproved";
+      const url = "http://localhost:8080/admin/approvedRepo";
       var promise = fetch(url, {
         method: "GET",
         headers: {
@@ -43,7 +43,7 @@ class ReporterApprove extends Component {
           ) : (
             <div className="row">
               <div className="col-md-11 col-lg-11 mx-auto">
-                <h4 className="text-primary" style={{ textAlign: "center" }}>
+                <h4 className="text-info" style={{ textAlign: "center" }}>
                   Reporters to Be Approved
                 </h4>
                 <table class="table  table-hover">
@@ -88,7 +88,7 @@ class ReporterApprove extends Component {
                           <td>{repo.city}</td>
                           <td>
                             <button
-                              className="btn btn-primary"
+                              className="btn btn-info"
                               onClick={() => {
                                 this.approve(repo.userName, repo.reporterId);
                               }}
@@ -114,12 +114,17 @@ class ReporterApprove extends Component {
     );
   }
   approve = (name, id) => {
+    const token = sessionStorage.getItem("token");
     fetch("http://localhost:8080/admin/approved/" + id, {
       method: "GET",
+      headers: { token: token },
     });
     Swal.fire("Approved", name + " is now Reporter", "success").then(() => {
-      const url = "http://localhost:8080/reporters/to_be_aproved";
-      var promise = fetch(url, { method: "GET" });
+      const url = "http://localhost:8080/admin/approvedRepo";
+      var promise = fetch(url, {
+        method: "GET",
+        headers: { token: token },
+      });
       promise.then((response) => {
         console.log(response);
 

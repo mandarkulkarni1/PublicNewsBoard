@@ -20,9 +20,13 @@ class Article extends Component {
   }
 
   componentDidMount = async () => {
+    const token = sessionStorage.getItem("token");
     const url =
       "http://localhost:8080/admin/adminNews/" + this.props.match.params.id;
-    var promise = await fetch(url, { method: "GET" });
+    var promise = await fetch(url, {
+      method: "GET",
+      headers: { token: token },
+    });
 
     var prod = await promise.json();
     console.log(prod.data[0].city);
@@ -41,6 +45,7 @@ class Article extends Component {
     });
     console.log(this.state);
   };
+  
 
   render() {
     return (
@@ -88,7 +93,6 @@ class Article extends Component {
             <br />
             <br />
             <br />
-            Reprted By : - Taslima nasreen
             <br />
             <br />
           </div>

@@ -282,7 +282,7 @@ router.get("/takeAction/:id", (req, res) => {
 
     dbData.query(query, (error, response) => {
         if (response) {
-            dbData.query(query, (err, data) => {
+            dbData.query(statement, (err, data) => {
                 res.send(utils.createResult(err, data));
             });
         } else {
@@ -307,6 +307,18 @@ router.get("/getParticularNews/:id", (req, res) => {
     dbData.query(query, (err, data) => {
         res.send(utils.createResult(err, data));
     });
+});
+
+router.get("/approvedRepo", (req, res) => {
+
+  const query = `select * from reporters where isApproved=false`;
+
+  dbData.query(query, (err, data) => {
+
+      res.send(utils.createResult(err, data));
+
+  });
+
 });
 
 module.exports = router;

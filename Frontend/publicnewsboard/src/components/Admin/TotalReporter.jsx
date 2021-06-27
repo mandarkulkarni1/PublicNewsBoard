@@ -41,7 +41,7 @@ const TotalReporter = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-11 col-lg-11 mx-auto">
-              <h4 className="text-primary" style={{ textAlign: "center" }}>
+              <h4 className="text-info" style={{ textAlign: "center" }}>
                 All Reporter
               </h4>
               <table class="table  table-hover">
