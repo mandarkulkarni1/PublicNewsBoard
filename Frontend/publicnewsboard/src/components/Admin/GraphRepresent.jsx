@@ -13,6 +13,7 @@ class GraphRepresent extends Component {
     ) {
       const url = "http://localhost:8080/admin/mostlyReadNews";
       var promise = fetch(url, { method: "GET", headers: { token: token } });
+      console.log(promise);
       promise.then((response) => {
         var promise2 = response.json();
         promise2.then((prod) => {

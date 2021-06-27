@@ -1,0 +1,10 @@
+.overlay{
+    background-image: linear-gradient(#ffffff00, #030303);
+}
+
+.mk{
+    position: absolute;
+  bottom: 10px;
+  left: 10px;
+
+}

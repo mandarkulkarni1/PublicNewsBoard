@@ -3,13 +3,9 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../../Service/newsService";
 import { Share } from "../../Reader/shareWidget";
 import { Button } from "@material-ui/core";
-import { BiBlock } from "react-icons/bi";
-import {fakeNewsSelector} from "../counterServices"
-
-
+import { fakeNewsSelector } from "../counterServices";
 import ReportFake from "./ReportFake";
-import { setViews } from "../counterServices";
-
+import "./style.css";
 
 const ExpandedNews = () => {
   const { newsId } = useParams();
@@ -19,36 +15,39 @@ const ExpandedNews = () => {
   useEffect(() => {
     async function init() {
       const { data } = await fetchData(newsId);
-      console.log(data);
       setData(data[0]);
-      // setViews(data);
     }
     init();
   }, []);
 
-
-  const handleClick = (news)=>{
+  const handleClick = (news) => {
     fakeNewsSelector(news);
-  }
+  };
 
   if (user) {
     return (
       <div className="container ">
-        <div className="card text-white m-3 ">
+        <div className="card mk text-white m-3 ">
           <img
-            src="https://mdbootstrap.com/img/new/slides/017.jpg"
-            className="card-img"
-            alt="..."
-          />
-          <div className="card-img-overlay">
-            <h5 className="card-title text-white">{data.title}</h5>
-            <p className="card-text text-white">{data.article}</p>
-            <p className="card-text text-white">{data.city}</p>
-            <Share newsId={data.title} title={data.title} />
-            <br />
-            <Button variant="contained" color="secondary">
-            <ReportFake data={data}/>
-            </Button>
+            className="card-img-top"
+            src={`http://localhost:8080/reporters/image/${data.image}`}
+            alt="news"
+            height="450vh"
+          ></img>
+          <div className="card-img-overlay overlay">
+            <div className="mk">
+              <h3 className=" card-title text-white text-center">
+                {data.title}
+              </h3>
+              <h6 className="card-text text-white">{data.article}</h6>
+              <h5 className="card-text text-secondary">{data.city}</h5>
+              <div className="text-center">
+                <Share newsId={data.title} title={data.title} />
+                <Button variant="contained" color="secondary">
+                  <ReportFake data={data} />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

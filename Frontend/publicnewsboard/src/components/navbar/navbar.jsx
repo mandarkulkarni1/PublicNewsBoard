@@ -5,15 +5,29 @@ import { AiOutlineUser, AiOutlineSearch } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { createRef } from 'react';
 import { withRouter } from 'react-router-dom';
+import ThemeContext from "../context/ThemeContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class Navbar extends Component {
   state = {};
+  static contextType = ThemeContext;
+
 
   constructor() {
     super()
     this.searchRef = createRef();
+   
+  }
+
+  componentDidMount() {
+    const themeContext=this.context;
+    console.log(themeContext);
+  }
+
+  componentDidUpdate(){
+    const themeContext=this.context;
+    console.log(themeContext);
   }
 
   handleSearch(){
@@ -63,7 +77,10 @@ class Navbar extends Component {
           <Link to="/login">
             <AiOutlineUser className="mx-3" />
           </Link>
-          <BsFillBrightnessAltHighFill className="mx-3" />
+          <BsFillBrightnessAltHighFill className="mx-3" 
+           onClick={() => {
+            this.context.toggleTheme(!this.context.theme);
+          }}/>
         </nav>
       </div>
     );

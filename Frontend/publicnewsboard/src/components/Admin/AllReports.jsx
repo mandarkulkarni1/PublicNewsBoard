@@ -41,9 +41,13 @@ class AllReports extends Component {
       sessionStorage.getItem("token") &&
       sessionStorage.getItem("role") === "admin"
     ) {
+      const token = sessionStorage.getItem("token");
       const url =
         "http://localhost:8080/admin/seeReport/" + this.props.match.params.id;
-      var promise = await fetch(url, { method: "GET" });
+      var promise = await fetch(url, {
+        method: "GET",
+        headers: { token: token },
+      });
 
       var prod = await promise.json();
 

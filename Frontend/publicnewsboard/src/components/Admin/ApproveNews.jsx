@@ -31,6 +31,7 @@ const ApproveNews = () => {
   }
 
   function reject(id, rid, title) {
+    const token = sessionStorage.getItem("token");
     Swal.fire({
       title: "Reson to Reject News",
       input: "text",
@@ -58,6 +59,8 @@ const ApproveNews = () => {
             confirmButtonText: "Yes, Reject it!",
           }).then((result) => {
             axios.post("http://localhost:8080/admin/rejected", {
+              method: "GET",
+              headers: { token: token },
               newsId: id,
               reporterId: rid,
               reason: login,
