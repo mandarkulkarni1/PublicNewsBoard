@@ -21,6 +21,7 @@ import ArticlePage from "../Reporter/ArticlePage";
 import ExpandedNews from "../newsElements/expandedNews/expandedNews";
 import Categories from "../navbar/categories/categories";
 import Search from "../Reader/Search";
+import Videobar from "../newsElements/videoElement/VideoElement";
 
 
 function Routes() {
@@ -28,6 +29,7 @@ function Routes() {
     <Switch>
       <Route exact path="/">
         <FavNews />
+        <Videobar/>
         <Categories />
       </Route>
       <Route path="/login">

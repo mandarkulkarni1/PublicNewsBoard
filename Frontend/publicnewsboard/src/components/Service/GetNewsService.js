@@ -42,7 +42,6 @@ export async function GetVideos() {
     })
     console.log(data)
     return data.json()
-
 }
 
 

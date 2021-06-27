@@ -145,5 +145,23 @@ router.post("/reportnews", (req, res) => {
     });
 });
 
+router.get('/videos/:filename', (request, response) => {
+  const { filename } = request.params
+
+  const path = __dirname + '/../../videos/' + filename
+  const data = fs.readFileSync(path)
+  response.send(data)
+})
+
+router.get('/videos', (request, response) => {
+  const statement = `SELECT * FROM videos`;
+
+  dbData.query(statement, (err, data) => {
+    response.send(utils.createResult(err, data));
+  });
+})
+
+
+
 
 module.exports = router;

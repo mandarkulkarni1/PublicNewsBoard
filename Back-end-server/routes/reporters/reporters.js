@@ -14,7 +14,7 @@ const upload = multer({ dest: "images/" });
 const fs = require("fs");
 
 const { request } = require("express");
-const Videos=db.Videos;
+const Videos = db.Videos;
 
 
 const router = express.Router();
@@ -22,50 +22,50 @@ const router = express.Router();
 router.post('/signup', (request, response) => {
   //  const {password}=request.body.password
   //  const encryptedPassword = crypto.SHA256(password)
-  result={}
+  result = {}
   const reporters = {
-      userName: request.body.userName || "default",
-      password: crypto.SHA256(request.body.password).toString() || "default",
-      email: request.body.email,
-      phone: request.body.phone,
-      isApproved: false,  //Server is doing logic for this
-      city:request.body.city
-    };
- console.log(reporters)
+    userName: request.body.userName || "default",
+    password: crypto.SHA256(request.body.password).toString() || "default",
+    email: request.body.email,
+    phone: request.body.phone,
+    isApproved: false,  //Server is doing logic for this
+    city: request.body.city
+  };
+  console.log(reporters)
   // const encryptedPassword = crypto.SHA256(password)
-  const statement=`select email from reporters where email='${request.body.email}'`
-   dbData.query(statement,(err,data)=>{
+  const statement = `select email from reporters where email='${request.body.email}'`
+  dbData.query(statement, (err, data) => {
 
-       if(err){
-           result['status']='error'
-           result['error']=err
-       }
-       else if(data.length==0){
+    if (err) {
+      result['status'] = 'error'
+      result['error'] = err
+    }
+    else if (data.length == 0) {
 
-          Reporters.create(reporters)
-          .then(data=>{
-             result['status']='success'
-             result['data']=data
-             console.log(result)
-          })
-            .catch(err=>{
-                result['status']='error'
-                result['error']=err.message
-               
-            })
-         
-           }
-           else{
-              console.log(data)
-              result['status']="error"
-              result['error']="Already registered with this email address"
-           }
-             
-       console.log(result)
-       response.send(result)
+      Reporters.create(reporters)
+        .then(data => {
+          result['status'] = 'success'
+          result['data'] = data
+          console.log(result)
+        })
+        .catch(err => {
+          result['status'] = 'error'
+          result['error'] = err.message
 
-   })
-  
+        })
+
+    }
+    else {
+      console.log(data)
+      result['status'] = "error"
+      result['error'] = "Already registered with this email address"
+    }
+
+    console.log(result)
+    response.send(result)
+
+  })
+
 })
 
 router.post("/signin", (req, res) => {
@@ -123,7 +123,7 @@ router.post("/addNews/:reporterId", upload.single('image'), (req, res) => {
     reporterId: reporterId,
     image: image,
   };
- 
+
   News.create(body)
     .then((data) => {
       res.send(data);
@@ -179,18 +179,18 @@ router.post("/video", (request, response) => {
 
   console.log(request.body.reporterId)
   const video = {
-      reporterId: request.body.reporterId ,
-      title: request.body.title,
-      category: request.body.category,
-      city:request.body.city,
-      video:request.body.filePath
-  
-    };
-  
- console.log(video)
+    reporterId: request.body.reporterId,
+    title: request.body.title,
+    category: request.body.category,
+    city: request.body.city,
+    video: request.body.filePath
 
- Videos.create(video)
-  .then(data=>{
+  };
+
+  console.log(video)
+
+  Videos.create(video)
+    .then(data => {
 
       response.send(data)
 
@@ -215,15 +215,15 @@ router.get('/videos/:filename', (request, response) => {
 
 router.get('/videos', (request, response) => {
   const statement = `SELECT * FROM videos order by updatedAt desc `;
-  
+
   dbData.query(statement, (err, data) => {
     response.send(utils.createResult(err, data));
   });
 })
 
 router.get("/reporterNews/:id", (req, res) => {
- 
-  const{id}=req.params
+
+  const { id } = req.params
   const statement = `SELECT * FROM news where reporterId=${id}`;
 
   dbData.query(statement, (err, data) => {
@@ -249,7 +249,7 @@ router.get("/news", (req, res) => {
 });
 
 router.get("/getArticle/:id", (req, res) => {
-  const{id}=req.params
+  const { id } = req.params
   const statement = `SELECT * FROM news where newsId=${id}`;
 
   dbData.query(statement, (err, data) => {
@@ -259,26 +259,3 @@ router.get("/getArticle/:id", (req, res) => {
 
 
 module.exports = router;
-
-// // //Mandar function for reporting  news
-// // router.post("/reportnews", (req, res) => {
-// //   const { category,newsId,readerId } = req.body;
-// //   // const newsId = req.params.reportedNewsId;
-// //   // const readerId = 1
-// //   const body = {
-// //     category: category,
-// //     newsId: newsId,
-// //     readerId: readerId
-// //   }
-// //   console.log(body);  
-// //   ReportedNews.create(body)
-// //     .then((data) => {
-// //       res.send(data);
-// //     })
-// //     .catch((err) => {
-// //       res.status(500).send({
-// //         message: err.message || "Some error occurred while asd the news.",
-// //       });
-// //     });
-
-// });

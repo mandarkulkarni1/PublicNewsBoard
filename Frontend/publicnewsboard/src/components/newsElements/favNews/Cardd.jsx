@@ -25,7 +25,7 @@ export default function MediaCard(props) {
           className="card-img-top"
           src={`http://localhost:8080/reporters/image/${news.image}`}
           alt="news"
-          height="100px"
+          height="85px"
         ></img>
        <CardContent><div className="text-truncate">{news.title}</div></CardContent>
       </CardActionArea>
