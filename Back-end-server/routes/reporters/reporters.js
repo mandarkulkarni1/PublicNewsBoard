@@ -260,25 +260,25 @@ router.get("/getArticle/:id", (req, res) => {
 
 module.exports = router;
 
-//Mandar function for reporting  news
-router.post("/reportnews", (req, res) => {
-  const { category,newsId,readerId } = req.body;
-  // const newsId = req.params.reportedNewsId;
-  // const readerId = 1;
+// // //Mandar function for reporting  news
+// // router.post("/reportnews", (req, res) => {
+// //   const { category,newsId,readerId } = req.body;
+// //   // const newsId = req.params.reportedNewsId;
+// //   // const readerId = 1
+// //   const body = {
+// //     category: category,
+// //     newsId: newsId,
+// //     readerId: readerId
+// //   }
+// //   console.log(body);  
+// //   ReportedNews.create(body)
+// //     .then((data) => {
+// //       res.send(data);
+// //     })
+// //     .catch((err) => {
+// //       res.status(500).send({
+// //         message: err.message || "Some error occurred while asd the news.",
+// //       });
+// //     });
 
-  const body = {
-    category: category,
-    newsId: newsId,
-    readerId: readerId
-  }
-  ReportedNews.create(body)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while asd the news.",
-      });
-    });
-
-});
+// });

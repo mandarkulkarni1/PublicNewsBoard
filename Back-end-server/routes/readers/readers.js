@@ -4,7 +4,7 @@ const utils = require("./../../utils");
 const db = require("../../models");
 const Readers = db.Readers;
 const fs = require("fs");
-
+const ReportedNews = db.ReportedNews;
 const router = express.Router();
 
 const newsData = null;
@@ -70,7 +70,7 @@ router.post("/signin", (req, res) => {
     if (error) {
       res.send({ status: "error", error: error });
     } else {
-      if (data.length ===  0) {
+      if (data.length === 0) {
         res.send({ status: "error", error: "Reader does not exist" });
       } else {
         //   const admin = data[0];
@@ -86,7 +86,7 @@ router.post("/signin", (req, res) => {
 
 //Update views count mandar
 router.post("/views", (req, res) => {
-  const {newsId} = req.body;
+  const { newsId } = req.body;
   const statement = `UPDATE news SET views = views+1 where newsId=${newsId}`;
 
   dbData.query(statement, (err, data) => {
@@ -118,12 +118,31 @@ router.post("/signup", (request, response) => {
 
 router.get("/search/:searchValue", (req, res) => {
   let searchValue = req.params.searchValue;
-  searchValue=searchValue.replace(/\+/g," ")
+  searchValue = searchValue.replace(/\+/g, " ")
   const statement = `select * from news where city = '${searchValue}' OR locality = '${searchValue}' OR title like '%${searchValue}%'`;
 
   dbData.query(statement, (err, data) => {
     res.send(utils.createResult(err, data));
   });
+});
+
+//Mandar function for reporting  news
+router.post("/reportnews", (req, res) => {
+  const { category, newsId, readerId } = req.body;
+  const body = {
+    category: category,
+    newsId: newsId,
+    readerId: readerId
+  }
+  ReportedNews.create(body)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while asd the news.",
+      });
+    });
 });
 
 

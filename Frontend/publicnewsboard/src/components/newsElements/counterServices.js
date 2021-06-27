@@ -1,10 +1,10 @@
 export function fakeNewsSelector(news) {
     let { newsId, category, readerId } = news;
-    
+
     //This line to be removed after making use of session storage
     readerId = readerId || 1;
-
-    fetch('http://localhost:8080/reporters/reportnews', {
+    console.log(newsId, category, readerId);
+    fetch('http://localhost:8080/readers/reportnews', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -20,12 +20,12 @@ export function fakeNewsSelector(news) {
             // enter your logic for when there is an error (ex. error toast)
             console.log(error)
         })
-        return;
+    return;
 }
 
-export function setViews(newsId){
+export function setViews(newsId) {
     // const newsId = data[0].newsId
-    
+
     fetch('http://localhost:8080/readers/views', {
         method: 'POST',
         headers: {
@@ -40,5 +40,5 @@ export function setViews(newsId){
             // enter your logic for when there is an error (ex. error toast)
             console.log(error)
         })
-        return;
+    return;
 }
