@@ -40,15 +40,16 @@ const Login = () => {
       LoginService(FormData).then((res) => {
         if (res["status"] === "success") {
               setLogin(true)
-
+              sessionStorage.setItem("isLoggedIn",true)
           if (FormData.role === "Admin") {
             sessionStorage.setItem("admin", JSON.stringify(res.data));
             sessionStorage.setItem("token",res.data.token)
+            
             console.log(sessionStorage.getItem("token"));
             history.push("/admin");
           } else if (FormData.role === "Reporter") {
             sessionStorage.setItem("reporter", JSON.stringify(res.data));
-             sessionStorage.setItem("token",res.data.token)
+            sessionStorage.setItem("token",res.data.token)
             console.log(sessionStorage.getItem("token"));
             history.push("/reporter");
           } else if (FormData.role === "Reader") {

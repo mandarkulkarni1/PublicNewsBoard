@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import { BsFillBrightnessAltHighFill } from "react-icons/bs";
-import { AiOutlineUser, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineSearch ,AiOutlineLogout} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { createRef } from 'react';
 import { withRouter } from 'react-router-dom';
@@ -34,6 +34,9 @@ class Navbar extends Component {
    
     let searchValue=this.searchRef.current.value;
     searchValue=searchValue.trim().replaceAll(" ","+");
+    if(searchValue==="")
+    this.props.history.push('/');
+    else
     this.props.history.push('/searchResult/'+searchValue);
   }
 
@@ -43,7 +46,10 @@ class Navbar extends Component {
     return (
       <div style={{ backgroundColor: "#0dcaf1" }}>
         <nav className="sticky-top navbar navbar-expand-lg bg-info font-weight-bold container">
-          <a className="navbar-brand mx-1 text-dark" href="#">
+          <a className="navbar-brand mx-1 text-dark" href="#"
+           onClick={() => {
+            this.props.history.push('/');
+          }}>
             NewsBoard
           </a>
           <button
@@ -74,10 +80,20 @@ class Navbar extends Component {
               <AiOutlineSearch />
             </button>
           </div>
-          <Link to="/login">
-            <AiOutlineUser className="mx-3" />
-          </Link>
-          <BsFillBrightnessAltHighFill className="mx-3" 
+          {sessionStorage.getItem("isLoggedIn")? 
+          <AiOutlineLogout className="mx-3" 
+          onClick={() => {
+            sessionStorage.clear();
+            this.props.history.push('/');
+          }}/>
+          :<Link to="/login">
+           <AiOutlineUser className="mx-3" />
+         </Link>
+        } 
+
+           
+
+          <BsFillBrightnessAltHighFill className="mx-3" name="Login"
            onClick={() => {
             this.context.toggleTheme(!this.context.theme);
           }}/>

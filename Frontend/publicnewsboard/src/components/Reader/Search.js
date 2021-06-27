@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Cardd from "../newsElements/news/newsCard";
+
+const SearchNoResult = () =>(<h3>No results found</h3>);
 
 const Search = () => {
     const { searchValue } = useParams();
@@ -26,39 +29,21 @@ const Search = () => {
     history.push("/detailedNews/" + newsId);
   };
 
+  if(data.length===0)
+  return <SearchNoResult/>
+
   return (
     <React.Fragment>
-    <div className="container border border-info">
-      <div className="m-2 row justify-content-between ">
-        {data.map((news) => (
-          <div
-            className=" col-3 m-3 shadow"
-            key={news.newsId}
-            onClick={() => {
-              handleClick(news);
-            }}
-          >
-            <div className="card">
-              <img
-                className="card-img-top"
-                src={`http://localhost:8080/reporters/image/${news.image}`}
-                alt="Card cap"
-                height="200px"
-              />
-              <div className="card-body">
-                <h5 className="card-title">{news.title}</h5>
-                <p className="card-text">{news.article}</p>
-              </div>
-              <div className="card-footer">
-                <small className="text-muted">{news.city}</small>
-              </div>
+      <div className="container border border-info">
+        <div className=" m-2 justify-content-around" >
+          {data.map((news) => (
+            <div className="d-inline-flex flex-row col-4 p-2">
+              <Cardd  news={news} handleClick={handleClick} />
             </div>
-            <br />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </React.Fragment>
+    </React.Fragment>
   );
 };
 
