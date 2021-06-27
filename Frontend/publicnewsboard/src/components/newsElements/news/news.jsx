@@ -30,13 +30,12 @@ const News = ({ value }) => {
     history.push("/detailedNews/" + newsId);
   };
   const news = tempData.length ? tempData : data;
-
   return (
     <React.Fragment>
       <div className="container border border-info">
         <div className=" m-2 justify-content-around" >
           {news.map((news) => (
-            <div className="d-inline-flex flex-row col-4 p-2">
+            <div key={news.newsId} className="d-inline-flex flex-row col-4 p-2">
               <Cardd  news={news} handleClick={handleClick} />
             </div>
           ))}

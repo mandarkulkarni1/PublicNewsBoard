@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import News from "../../newsElements/news/news";
 import { useState } from "react";
+import WeatherComponent from "./weatherComponent";
 
 const Categories = () => {
   const [value, setValue] = useState("");
@@ -32,7 +33,9 @@ const Categories = () => {
             {item}
           </Button>
         ))}
+        <button className="btn btn-warning shadow"><WeatherComponent/></button>
       </div>
+      
       <News value={value}/>
     </React.Fragment>
   );

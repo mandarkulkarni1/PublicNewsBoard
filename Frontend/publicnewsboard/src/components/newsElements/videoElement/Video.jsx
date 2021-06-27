@@ -8,7 +8,7 @@ const Video = ({ video }) => {
         className="fakeimg m-1"
         controls
         src={`http://localhost:8080/reporters/${video.video}`}
-        autoplay
+        autoPlay
       ></video>
     </React.Fragment>
   );

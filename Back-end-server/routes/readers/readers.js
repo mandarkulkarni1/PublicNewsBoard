@@ -161,6 +161,15 @@ router.get('/videos', (request, response) => {
   });
 })
 
+router.get('/weather', (request, response) => {
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  const temp = { temp: getRandomInt(45) }
+  response.send(temp);
+})
+
+
 
 
 

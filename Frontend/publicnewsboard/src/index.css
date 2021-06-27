@@ -9,10 +9,3 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.nav-link.active {
-    border-bottom: 4px solid rgb(0, 98, 255) !important;
-}
-
-.nav-item.active {
-    border-bottom: 4px solid rgb(0, 114, 245) !important;
-}

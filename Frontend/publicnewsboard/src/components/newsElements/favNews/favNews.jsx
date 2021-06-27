@@ -24,14 +24,13 @@ const FavNews = () => {
     setViews(news.newsId);
     history.push("/detailedNews/" + news.newsId);
   };
-
   return (
     <div className="container-lg p-2">
       <div className="card shadow">
         <div className="card-header bg-secondry text-dark">Top News</div>
         <div className="card-body overflow-auto d-flex ">
           {data.map((news) => (
-            <Cardd handleclick={handleclick} news={news} id="cardd"/>
+            <Cardd key={news.newsId} handleclick={handleclick} news={news} id="cardd"/>
           ))}
         </div>
       </div>

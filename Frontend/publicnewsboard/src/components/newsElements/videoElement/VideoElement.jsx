@@ -12,7 +12,6 @@ const Videobar = () => {
     }
     getData();
   }, []);
-
   return (
     <React.Fragment>
       <div className="container-lg p-2">
@@ -20,7 +19,7 @@ const Videobar = () => {
           <div className="card-header bg-secondry text-dark">News Stories</div>
           <div className="card-body overflow-auto d-flex ">
             {video.map((video) => (
-              <Video video={video}></Video>
+              <Video key={video.videoId} video={video}></Video>
             ))}
           </div>
         </div>
