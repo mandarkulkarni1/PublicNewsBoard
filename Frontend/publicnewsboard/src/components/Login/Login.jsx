@@ -18,7 +18,7 @@ const Login = () => {
     role: "",
   });
   const { email, password, role } = FormData;
- 
+
   function handleInputChange({ target }) {
     const { name, value } = target;
     console.log(name, value);
@@ -26,7 +26,6 @@ const Login = () => {
   }
 
   function handleFormSubmit(e) {
-
     e.preventDefault();
     if (FormData.email.length === 0) {
       toast.warning("please enter email name");
@@ -35,29 +34,27 @@ const Login = () => {
     } else if (role === "") {
       toast.warning("please choose role");
     } else {
-     // setLogin(true);
+      // setLogin(true);
       console.log(FormData);
       LoginService(FormData).then((res) => {
         if (res["status"] === "success") {
-              setLogin(true)
+          setLogin(true);
 
           if (FormData.role === "Admin") {
             sessionStorage.setItem("admin", JSON.stringify(res.data));
-            sessionStorage.setItem("token",res.data.token)
+            sessionStorage.setItem("token", res.data.token);
             console.log(sessionStorage.getItem("token"));
             history.push("/admin");
           } else if (FormData.role === "Reporter") {
             sessionStorage.setItem("reporter", JSON.stringify(res.data));
-             sessionStorage.setItem("token",res.data.token)
+            sessionStorage.setItem("token", res.data.token);
             console.log(sessionStorage.getItem("token"));
             history.push("/reporter");
           } else if (FormData.role === "Reader") {
             sessionStorage.setItem("reader", JSON.stringify(res.data));
-          
+
             history.push("/");
-            
-          }
-            else {
+          } else {
             history.push("/");
           }
         } else {
@@ -73,24 +70,25 @@ const Login = () => {
 
   return (
     <div className="container">
-      <div className="row">
+      <div className="row m-2">
         <form
-          className="col-md-5 col-lg-5  mx-auto"
+          className="col-md-5 col-lg-5  mx-auto border border-info p-4 rounded"
           onSubmit={handleFormSubmit}
         >
-          
           <div style={{ textAlign: "center" }}>
-          
-            <img style={{borderRadius:"50%",height:"200px"}} src={require("../../Asset/signin.png").default} alt="" />
-            
+            <img
+              style={{ borderRadius: "50%", height: "130px" }}
+              src={require("../../Asset/signin.png").default}
+              alt=""
+            />
           </div>
-          <div className="h4" style={{textAlign:"center"}}>
-              <b style={{ color: "#0ebcc2" }}>Login</b>
-            </div>
+          <div className="h4" style={{ textAlign: "center" }}>
+            <b className="text-info">Login</b>
+          </div>
           <div className="form-group">
             <label for="exampleInputPassword1">Select Role</label>
             <select
-              class="form-control"
+              className="form-control"
               name="role"
               value={role}
               onChange={handleInputChange}
@@ -132,15 +130,15 @@ const Login = () => {
           <div style={{ textAlign: "center" }}>
             <button
               type="submit"
-              style={{ width: "100%" }}
+              style={{ width: "80%" }}
               className="btn btn-primary mt-2"
             >
               Sign-in <span>&nbsp;</span>
-              <i class="fa fa-sign-in" aria-hidden="true"></i>
+              <i className="fa fa-sign-in text-white" aria-hidden="true"></i>
             </button>
           </div>
-          <div class="row mt-2">
-            <div class="col-md-6">
+          <div className="row mt-2">
+            <div className="col-md-6">
               <button
                 type="button"
                 style={{ width: "100%" }}
@@ -150,11 +148,11 @@ const Login = () => {
                 }}
               >
                 Register Reader<span>&nbsp;</span>
-                <i class="fa fa-user-plus"></i>
+                <i className="fa fa-user-plus text-white"></i>
               </button>
             </div>
 
-            <div class="col-md-6">
+            <div className="col-md-6">
               <button
                 type="button"
                 style={{ width: "100%" }}
@@ -164,7 +162,7 @@ const Login = () => {
                 }}
               >
                 Register Reporter <span>&nbsp;</span>
-                <i class="fa fa-user-plus"></i>
+                <i className="fa fa-user-plus text-white"></i>
               </button>
             </div>
           </div>

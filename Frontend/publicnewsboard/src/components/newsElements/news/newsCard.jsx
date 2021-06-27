@@ -57,6 +57,7 @@ export default function Cardd(props) {
         </CardContent>
         </div>
         <CardActions disableSpacing>
+          <p className="mx-2">{news.city}</p>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,

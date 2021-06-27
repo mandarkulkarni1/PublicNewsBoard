@@ -14,12 +14,11 @@ const Categories = () => {
     "Politics",
     "Sports",
     "Science",
-    "ALL"
+    "ALL",
   ];
 
-  const handleClick = ({item}) => {
+  const handleClick = ({ item }) => {
     setValue(item);
-
   };
   return (
     <React.Fragment>
@@ -33,10 +32,12 @@ const Categories = () => {
             {item}
           </Button>
         ))}
-        <button className="btn btn-warning shadow"><WeatherComponent/></button>
+        <button className="btn btn-warning shadow">
+          <WeatherComponent />
+        </button>
       </div>
-      
-      <News value={value}/>
+
+      <News value={value} />
     </React.Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -40,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
 }));
- const styles = {
-    width: "100%",
-  };
+const styles = {
+  width: "100%",
+};
 // Add news Function Component
 function AddNews() {
 
@@ -66,12 +66,12 @@ function AddNews() {
     content: news.article,
     wordCount: 0
   });
-//Handling onChange Event
+  //Handling onChange Event
   function handleInputChange(e) {
 
     //only for counting words in article
     if (e.target.name === "article") {
-      const limit=450;
+      const limit = 450;
       let words = (e.target.value).split(' ').filter(Boolean);
       if (words.length > limit) {
         Swal.fire("Word limit is Over")
@@ -102,7 +102,7 @@ function AddNews() {
     e.preventDefault();
     console.log(news);
 
-   
+
     //appending image file and other data
     const formData = new FormData();
     formData.append(
@@ -131,11 +131,11 @@ function AddNews() {
     const reporter = JSON.parse(sessionStorage.getItem("reporter"));
     const token = sessionStorage.getItem("token");
 
-// posting data to add new news
+    // posting data to add new news
     const config = {
       headers: {
         "content-type": "multipart/form-data",
-       "token":token
+        "token": token
       },
     };
 
@@ -153,17 +153,17 @@ function AddNews() {
         console.log(error);
       });
   };
- 
+
   return (
     <>
-      <div data-testid="form" className={classes.layout}>
-        <div className="my-div">
-          <Typography variant="h5" gutterBottom>
-            Add New Article
-          </Typography>
+      <div data-testid="form" className={classes.layout}><div className="container p-2">
+        <div className="border border-info m-2 p-3 card shadow">
+          <h2 className="text-center">Add News</h2>
+          <hr />
           <form onSubmit={handleSubmit} action="">
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
+                <>Enter Title</>
                 <TextField
                   data-testid="title"
                   required
@@ -176,10 +176,8 @@ function AddNews() {
                 />
               </Grid>
               <Grid item xs={12} md={12}>
-                <InputLabel style={{ color: "GrayText", fontFamily: "arial" }}>
-                  Article
-                </InputLabel>
-                <br />
+                <>Article</>
+                <br /><br />
                 <TextareaAutosize
                   data-testid="article"
                   required
@@ -212,31 +210,33 @@ function AddNews() {
                   <option defaultValue="economics">Economics</option>
                   <option defaultValue="cars">Cars</option>
                   <option defaultValue="entertainment">Entertainment</option>
-                  {/* <option defaultValue="family">Family</option> */}
                   <option defaultValue="health">Health</option>
-                  <option defaultValue="politics">Politics</option>   
+                  <option defaultValue="politics">Politics</option>
                   <option defaultValue="sports">Sports</option>
                   <option defaultValue="science">Science</option>
                 </Select>
               </Grid>
               <Grid item xs={12} md={6}>
-                <InputLabel>Add Image for your News</InputLabel>
-                <input
-                  data-testid="image"
-                  required
-                  name="image"
-                  accept="image/*"
-                  className={classes.input}
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                  onChange={handleUploadClick}
-                />
-                <label htmlFor="contained-button-file">
-                  <Fab component="span" className={classes.button}>
-                    <AddPhotoAlternateIcon />
-                  </Fab>
-                </label>
+                <div className="text-center">
+                  <p>Add Image for your News</p>
+
+                  <input
+                    data-testid="image"
+                    required
+                    name="image"
+                    accept="image/*"
+                    className={classes.input}
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    onChange={handleUploadClick}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Fab component="span" className={classes.button}>
+                      <AddPhotoAlternateIcon />
+                    </Fab>
+                  </label>
+                </div>
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -282,6 +282,7 @@ function AddNews() {
             </Grid>
           </form>
         </div>
+      </div>
       </div>
     </>
   );

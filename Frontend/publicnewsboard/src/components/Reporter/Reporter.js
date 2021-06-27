@@ -1,13 +1,13 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import "./reporter.style.css"
-import { Button } from '@material-ui/core'
 import { GetNews, GetNewsTop } from '../Service/GetNewsService'
 import { ToastContainer, toast } from 'react-toastify';
 import { GetVideos } from '../Service/GetNewsService';
 import { getFilteredNews, getReporterNews } from './FilterNews';
 import Link from '@material-ui/core/Link';
 import { useState, useEffect } from 'react';
+import Video from '../newsElements/videoElement/Video'
 function Reporter() {
 
   const [news, setNews] = useState([])
@@ -76,13 +76,11 @@ function Reporter() {
 
     <div className="outerDiv">
       <div className="left">
-
-        <div className="headline">
-          <h4>Press Tools</h4>
-          <div style={{ height: "200px" }}>
-            <Button color="primary" onClick={() => { history.push('/addNews') }} >Upload News</Button>
-            <Button onClick={openModal}> Upload Videos</Button>
-            <br></br>
+        <div className="p-2 text-center rounded shadow">
+          <h4 className="">Press Tools</h4><hr />
+          <div className="text-center">
+            <button className="btn btn-info text-center my-1" color="primary" onClick={() => { history.push('/addNews') }} >Upload News</button>
+            <button className="btn btn-info text-center my-1" onClick={openModal}>Upload Video</button>
             <Link component="button" variant="body2" onClick={filterNews}>
               See Local News
             </Link>
@@ -97,39 +95,37 @@ function Reporter() {
 
           </div>
         </div>
-        <hr></hr>
+        <br />
 
-        <h5>Latest Headlines</h5>
-
-        {topNews.map(data => (
-
-          <>
-            <div className="headline" style={{ height: "80px" }}><Link style={{ cursor: "pointer" }} onClick={(e) => { openArticle(data.newsId) }}>{data.article.slice(0, 30)}...
-
-            </Link></div><br />
-
-          </>
-        ))}
-
-
-
-
+        <div className="card rounded shadow">
+          <br />
+          <h4 className="text-center bg-white sticky-top">Headlines</h4><hr />
+          {topNews.map(data => (
+            <>
+              <div className="p-2" style={{ cursor: "pointer" }} >
+                <Link onClick={(e) => { openArticle(data.newsId) }} />
+                {data.article.slice(0, 30)}...
+              </div>
+              <hr />
+            </>
+          ))}
+        </div>
       </div>
       <div className="main">
-        <h2>News</h2>
+        <h2 className="text-center sticky-top bg-white ">News</h2>
 
         {news.map((data, index) => (
 
-          <div className="news">
-            <h2 className="title">{data.title}</h2>
-            <h3>{data.category} </h3>
-            <div className="time"> Published On : {data.updatedAt.split('T')[0]} {data.updatedAt.split('T')[1]}</div>
-            <div className="img" style={{ height: "200px" }}><img className="img" style={{ height: "200px" }} src={`http://localhost:8080/reporters/image/${data.image}`} alt=""></img></div>
-            <p> Place : {data.city},{data.locality}</p>
+          <div className="news rounded my-3">
+            <h6 className="text-center">{data.category} </h6>
+            <hr />
+            <h4 className="title">{data.title}</h4>
+            <hr />
+            <img className="img" style={{ height: "200px" }} src={`http://localhost:8080/reporters/image/${data.image}`} alt="" />
+            <hr />
             <div>{data.article.slice(0, 150)}...</div>
             {/* <a  onClick={displayDiv}><h2>view more</h2></a> */}
             <div>
-
               <a className="read-more-link" onClick={(e) => { displayDiv(index) }}>{readMore[index] ? 'Read Less' : 'Read More'}</a>
               {readMore[index] &&
                 <div>
@@ -137,37 +133,22 @@ function Reporter() {
                     {data.article}
                   </p>
                 </div>}
-
+              <div> Place : {data.city}, {data.locality}</div>
+              <div className="time"> Published On : {data.updatedAt.split('T')[0]} {data.updatedAt.split('T')[1]}</div>
             </div>
-
-
           </div>
         ))}
       </div>
-      <div className="right">
-
-        <div className="time" style={{ float: "right" }}>  {new Date().toLocaleString() + ""}
-
-        </div>
-        <h4>Videos</h4>
-        <div>
+      <div className="right text-center">
+        <div className="time shadow">
+          <h4 className="text-center bg-white sticky-top p-1 ">Videos</h4>
           {videos.map((data) => (
-            <div >
-
-              <div style={{ height: "200px" }} className="fakeimg">
-                <video style={{ height: "200px" }} className="fakeimg" controls src={`http://localhost:8080/reporters/${data.video}`}></video>
-              </div>
-              <h4>{data.title}</h4>
-              <div>{data.city}</div>
-              <div className="time"> Published On : {data.createdAt.split('T')[0]} {data.createdAt.split('T')[1]}</div>
-              <hr></hr>
-            </div>
+            <React.Fragment>
+              <Video video={data}></Video>
+              <div>{data.title}</div>
+              <hr />
+            </React.Fragment>
           ))}
-          <div>
-            <h4>Top Stories</h4>
-            <div className="fakeimg" style={{ height: "200px" }}>Image</div>
-            <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-          </div>
         </div>
       </div>
       <ToastContainer />

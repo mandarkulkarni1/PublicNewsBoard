@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import SweetAlert from "sweetalert2-react";
+import { BsCameraVideo } from "react-icons/bs";
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "2px solid #5bc0de",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -111,14 +112,14 @@ export default function SimpleModal({ openModal }) {
   };
 
   const Catogory = [
-    { value: 0, label: "Film & Animation" },
-    { value: 0, label: "Autos & Vehicles" },
-    { value: 0, label: "Music" },
-    { value: 0, label: "Pets & Animals" },
+    { value: 0, label: "Economics" },
+    { value: 0, label: "Cars" },
+    { value: 0, label: "Entertainment" },
+    { value: 0, label: "Health" },
+    { value: 0, label: "Politics" },
     { value: 0, label: "Sports" },
-    { value: 0, label: "Covid-19" },
-    { value: 0, label: "Child Abuse" },
     { value: 0, label: "Science" },
+    // { value: 0, label: "Science" },
     { value: 0, label: "Others" },
   ];
 
@@ -153,39 +154,23 @@ export default function SimpleModal({ openModal }) {
       <Fade in={open}>
         <div className={classes.paper}>
           <form onSubmit={onSubmit}>
-            <div class="row">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+            Add/Drop Video:<br/>
+            <div className="text-center border border-info p-3 rounded">
                 <Dropzone onDrop={onDrop} multiple={false} maxSize={800000000}>
                   {({ getRootProps, getInputProps }) => (
-                    <div
-                      style={{
-                        width: "300px",
-                        height: "240px",
-                        border: "1px solid lightgray",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                      {...getRootProps()}
-                    >
+                    <div {...getRootProps()} className="text-center">
                       <input {...getInputProps()} />
-
-                      <i
-                        class="fa fa-video-camera "
-                        style={{ fontSize: "100px" }}
-                        aria-hidden="true"
-                      ></i>
+                      <BsCameraVideo size="50px"/>
                     </div>
                   )}
                 </Dropzone>
-              </div>
               <div style={{ width: "100px", color: "gray" }}>{FilePath}</div>
             </div>
 
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="">Title</label>
+                  <label for="">Title:</label>
                   <input
                     type="text"
                     class="form-control"
@@ -199,7 +184,7 @@ export default function SimpleModal({ openModal }) {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="">City</label>
+                  <label for="">City:</label>
                   <input
                     type="text"
                     class="form-control"
@@ -213,7 +198,7 @@ export default function SimpleModal({ openModal }) {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="">category</label>
+                  <label for="">Category:</label>
                   <select
                     class="form-control"
                     value={Categories}
@@ -229,11 +214,11 @@ export default function SimpleModal({ openModal }) {
                 </div>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-success" type="submit">
-                  Add
-                </button>
-                <button class="btn btn-danger" onClick={handleClose}>
+                <button class="btn btn-danger right" onClick={handleClose}>
                   Cancel
+                </button>
+                <button class="btn btn-info right" type="submit">
+                  Add
                 </button>
               </div>
             </div>
