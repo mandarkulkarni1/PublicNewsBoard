@@ -15,7 +15,6 @@ const FavNews = () => {
       const response = await fetch(url);
       const { data } = await response.json();
       setData(data);
-      // console.log(data);
     }
 
     init();
@@ -31,33 +30,9 @@ const FavNews = () => {
       <div className="card shadow">
         <div className="card-header bg-secondry text-dark">Top News</div>
         <div className="card-body overflow-auto d-flex ">
-          {/* =========================================================================== */}
-          {/* {data.map((news) => (
-            <div
-              className="col-2 m-1"
-              key={news.newsId}
-              onClick={() => handleclick(news)}
-            >
-              <div className="card">
-                <div className="shadow">
-                  <div className="card-body" id="cardd">
-                    <img
-                      className="card-img-top"
-                      src={`http://localhost:8080/reporters/image/${news.image}`}
-                      alt="news"
-                      height="80px"
-                    ></img>
-                    <h6 className="card-title my-1">{news.title}</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))} */}
-
           {data.map((news) => (
             <Cardd handleclick={handleclick} news={news} id="cardd"/>
           ))}
-          {/* =========================================================================== */}
         </div>
       </div>
     </div>
