@@ -25,7 +25,6 @@ function authorized(request, response, next) {
     next();
   } else {
     const token = request.headers["token"];
-    console.log(token)
     if (!token) {
       response.status(401);
       response.send(utils.createResult("token is missing"));

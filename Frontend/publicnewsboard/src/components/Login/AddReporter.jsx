@@ -19,7 +19,6 @@ const AddReporter = () => {
   });
   const [dialogue,setDialogue]=useState("")
   function handleInputChange({ target }) {
-    console.log(target.value);
     const { name, value } = target;
     setFormData({ ...FormData, [name]: value});
   }
@@ -27,13 +26,11 @@ const AddReporter = () => {
  function handleChange({target}) {
   
   const {name,value}=target
-  console.log(name,value)
   ///^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   var reg = /^[a-zA-Z0-9#?!@$%^&*-]*$/;
   //var regrex=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
   var test = reg.test(value);
   if (test) {
-    console.log("pass")
      setFormData({...FormData,[name]:value})
   }else{
     toast.warn("pass should be in small and capital letters")
@@ -43,7 +40,6 @@ function handleName({target})
     
       { 
         const {name,value}=target
-        console.log(name,value)
       var letters = /^[a-zA-Z]*$/;
       if(value.match(letters))
       {
@@ -58,7 +54,6 @@ function handleName({target})
       }
   function handleFormSubmit(e) {
     e.preventDefault();
-    console.log(FormData)
     if (userName.length === 0) {
       toast.warning("please enter Name");
     } else if (password.length === 0) {
@@ -77,7 +72,6 @@ function handleName({target})
       toast.warning("Please choose state");
     } 
     else {
-      console.log(FormData);
       const variables = {
         userName: userName[0].toUpperCase()+userName.slice(1),
         email: email,
@@ -88,10 +82,9 @@ function handleName({target})
         State_:State_
       
     }
-    console.log(variables)
+
       RegisterService(variables).then(res => {
         if (res) {
-          console.log(res)
            if(res.status==="error"){
               toast.error(res.error)
             }else{

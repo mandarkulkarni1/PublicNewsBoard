@@ -21,7 +21,6 @@ const Login = () => {
 
   function handleInputChange({ target }) {
     const { name, value } = target;
-    console.log(name, value);
     seFormData({ ...FormData, [name]: value });
   }
 
@@ -35,7 +34,6 @@ const Login = () => {
       toast.warning("please choose role");
     } else {
       // setLogin(true);
-      console.log(FormData);
       LoginService(FormData).then((res) => {
         if (res["status"] === "success") {
               setLogin(true)
@@ -44,12 +42,10 @@ const Login = () => {
             sessionStorage.setItem("admin", JSON.stringify(res.data));
             sessionStorage.setItem("token",res.data.token)
             sessionStorage.setItem("role","admin");
-            console.log(sessionStorage.getItem("token"));
             history.push("/admin");
           } else if (FormData.role === "Reporter") {
             sessionStorage.setItem("reporter", JSON.stringify(res.data));
             sessionStorage.setItem("token",res.data.token)
-            console.log(sessionStorage.getItem("token"));
             history.push("/reporter");
           } else if (FormData.role === "Reader") {
             sessionStorage.setItem("reader", JSON.stringify(res.data));
@@ -59,7 +55,6 @@ const Login = () => {
             history.push("/");
           }
         } else {
-          console.log(res["error"]);
           toast.error(res["error"]);
           history.push("/login");
         }

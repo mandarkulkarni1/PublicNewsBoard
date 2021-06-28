@@ -63,7 +63,6 @@ function Reporter() {
       .then(res => res.json())
       .then(result => {
         setData(result)
-        console.log(result);
       });
     }
     fetchData();
@@ -75,18 +74,15 @@ function Reporter() {
 
   function filterNews(value){
     const filterNews=getFilteredNews(news,reporter.city)
-    console.log("local"+filterNews)
     setNews(filterNews)
    
 
    }
    function seeAllNews(){
-    console.log("full news"+tempData)
      setNews(tempData)
    }
    function seeReporterNews(value){
      const filterNews=getReporterNews(tempData,reporter.reporterId)
-     console.log("on id "+filterNews)
      setNews(filterNews)
      
    }

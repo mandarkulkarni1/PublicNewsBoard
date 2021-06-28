@@ -31,7 +31,7 @@ router.post('/signup', (request, response) => {
     isApproved: false,  //Server is doing logic for this
     city: request.body.city
   };
-  console.log(reporters)
+ 
   // const encryptedPassword = crypto.SHA256(password)
   const statement = `select email from reporters where email='${request.body.email}'`
   dbData.query(statement, (err, data) => {
@@ -46,7 +46,7 @@ router.post('/signup', (request, response) => {
         .then(data => {
           result['status'] = 'success'
           result['data'] = data
-          console.log(result)
+         
         })
         .catch(err => {
           result['status'] = 'error'
@@ -56,12 +56,11 @@ router.post('/signup', (request, response) => {
 
     }
     else {
-      console.log(data)
+    
       result['status'] = "error"
       result['error'] = "Already registered with this email address"
     }
 
-    console.log(result)
     response.send(result)
 
   })
@@ -73,7 +72,7 @@ router.post("/signin", (req, res) => {
   result = {};
   const encryptedPassword = crypto.SHA256(password);
   const statement = `select * from reporters where email = '${email}' and password = '${encryptedPassword}'`;
-  console.log(statement);
+
   dbData.query(statement, (err, data) => {
     if (err) {
       result["status"] = "error";
@@ -138,9 +137,7 @@ router.post("/addNews/:reporterId", upload.single('image'), (req, res) => {
 
 router.get('/image/:filename', (request, response) => {
   const { filename } = request.params
-
   const path = __dirname + '/../../images/' + filename
-  console.log(path)
   const data = fs.readFileSync(path)
   response.send(data)
 })
@@ -176,8 +173,6 @@ router.post("/videoUpload", (req, res) => {
 
 
 router.post("/video", (request, response) => {
-
-  console.log(request.body.reporterId)
   const video = {
     reporterId: request.body.reporterId,
     title: request.body.title,
@@ -187,7 +182,6 @@ router.post("/video", (request, response) => {
 
   };
 
-  console.log(video)
 
   Videos.create(video)
     .then(data => {
@@ -208,7 +202,6 @@ router.get('/videos/:filename', (request, response) => {
   const { filename } = request.params
 
   const path = __dirname + '/../../videos/' + filename
-  console.log(path)
   const data = fs.readFileSync(path)
   response.send(data)
 })
@@ -233,7 +226,6 @@ router.get("/reporterNews/:id", (req, res) => {
 });
 
 router.get("/news/top20", (req, res) => {
-  console.log("inside top ne")
   const statement = "SELECT * FROM news ORDER BY views desc limit 20";
   dbData.query(statement, (err, data) => {
     res.send(utils.createResult(err, data));

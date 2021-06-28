@@ -75,7 +75,6 @@ export default function SimpleModal({ openModal }) {
       return alert("Please first fill all the fields");
     }
     const token = sessionStorage.getItem("token");
-    console.log(token);
     const reporter = JSON.parse(sessionStorage.getItem("reporter"));
 
     const variables = {
@@ -85,7 +84,6 @@ export default function SimpleModal({ openModal }) {
       category: Categories,
       city: city[0].toUpperCase() + city.slice(1),
     };
-    console.log(variables);
 
     axios
       .post("http://localhost:8080/reporters/video", variables, {
@@ -125,7 +123,6 @@ export default function SimpleModal({ openModal }) {
 
   const onDrop = (files) => {
     const token = sessionStorage.getItem("token");
-    console.log(token);
     let formData = new FormData();
     const config = {
       headers: { "content-type": "multipart/form-data", token: token },
