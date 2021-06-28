@@ -1,21 +1,15 @@
 import React, { useState } from "react";
-import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  TextareaAutosize,
-  Select,
-  Button,
-  InputLabel,
-} from "@material-ui/core";
+import { TextareaAutosize, Select, Button } from "@material-ui/core";
 import "./AddNews.styles.css";
 import { useHistory } from "react-router";
 import axios from "axios";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import Fab from "@material-ui/core/Fab";
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -45,7 +39,6 @@ const styles = {
 };
 // Add news Function Component
 function AddNews() {
-
   const classes = useStyles();
   const history = useHistory();
 
@@ -59,25 +52,23 @@ function AddNews() {
     image: [null],
   });
 
-
   //State for Word counter for counting artical words
   //{ content, wordCount }
   const [{ content, wordCount }, setContent] = useState({
     content: news.article,
-    wordCount: 0
+    wordCount: 0,
   });
   //Handling onChange Event
   function handleInputChange(e) {
-
     //only for counting words in article
     if (e.target.name === "article") {
       const limit = 450;
-      let words = (e.target.value).split(' ').filter(Boolean);
+      let words = e.target.value.split(" ").filter(Boolean);
       if (words.length > limit) {
-        Swal.fire("Word limit is Over")
+        Swal.fire("Word limit is Over");
         setContent({
-          content: words.slice(0, limit).join(' '),
-          wordCount: limit
+          content: words.slice(0, limit).join(" "),
+          wordCount: limit,
         });
       } else {
         setContent({ content: e.target.value, wordCount: words.length });
@@ -101,7 +92,6 @@ function AddNews() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(news);
-
 
     //appending image file and other data
     const formData = new FormData();
@@ -135,7 +125,7 @@ function AddNews() {
     const config = {
       headers: {
         "content-type": "multipart/form-data",
-        "token": token
+        token: token,
       },
     };
 
@@ -146,7 +136,7 @@ function AddNews() {
         config
       )
       .then((res) => {
-        Swal.fire("News Article Added Successfully")
+        Swal.fire("News Article Added Successfully");
         history.push("/reporter");
       })
       .catch((error) => {
@@ -156,133 +146,133 @@ function AddNews() {
 
   return (
     <>
-      <div data-testid="form" className={classes.layout}><div className="container p-2">
-        <div className="border border-info m-2 p-3 card shadow">
-          <h2 className="text-center">Add News</h2>
-          <hr />
-          <form onSubmit={handleSubmit} action="">
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <>Enter Title</>
-                <TextField
-                  data-testid="title"
-                  required
-                  id="title"
-                  name="title"
-                  label="Heading/Title"
-                  style={styles}
-                  defaultValue={news.title}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <>Article</>
-                <br /><br />
-                <TextareaAutosize
-                  data-testid="article"
-                  required
-                  style={styles}
-                  // maxLength={450}
-                  id="article"
-                  name="article"
-                  aria-label="Article"
-                  placeholder="You can add only 450 words"
-                  defaultValue={news.article}
-                  onChange={handleInputChange}
-                />
-                <span className="counter">{wordCount}/450</span>
-                <hr />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Select
-                  required
-                  style={styles}
-                  data-testid="category"
-                  native
-                  name="category"
-                  inputProps={{
-                    id: "outlined-age-native-simple",
-                  }}
-                  defaultValue={news.category}
-                  onChange={handleInputChange}
-                >
-                  <option label="Choose Category" defaultValue="" />
-                  <option defaultValue="economics">Economics</option>
-                  <option defaultValue="cars">Cars</option>
-                  <option defaultValue="entertainment">Entertainment</option>
-                  <option defaultValue="health">Health</option>
-                  <option defaultValue="politics">Politics</option>
-                  <option defaultValue="sports">Sports</option>
-                  <option defaultValue="science">Science</option>
-                </Select>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <div className="text-center">
-                  <p>Add Image for your News</p>
-
-                  <input
-                    data-testid="image"
+      <div data-testid="form" className={classes.layout}>
+        <div className="container p-2">
+          <div className="border border-info m-2 p-3 card shadow">
+            <h2 className="text-center">Add News</h2>
+            <hr />
+            <form onSubmit={handleSubmit} action="">
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={12}>
+                  <>Enter Title</>
+                  <TextField
+                    data-testid="title"
                     required
-                    name="image"
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                    onChange={handleUploadClick}
+                    id="title"
+                    name="title"
+                    label="Heading/Title"
+                    style={styles}
+                    defaultValue={news.title}
+                    onChange={handleInputChange}
                   />
-                  <label htmlFor="contained-button-file">
-                    <Fab component="span" className={classes.button}>
-                      <AddPhotoAlternateIcon />
-                    </Fab>
-                  </label>
-                </div>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <>Article</>
+                  <br />
+                  <br />
+                  <TextareaAutosize
+                    data-testid="article"
+                    required
+                    style={styles}
+                    // maxLength={450}
+                    id="article"
+                    name="article"
+                    aria-label="Article"
+                    placeholder="You can add only 450 words"
+                    defaultValue={content}
+                    onChange={handleInputChange}
+                  />
+                  <span className="counter">{wordCount}/450</span>
+                  <hr />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Select
+                    required
+                    style={styles}
+                    data-testid="category"
+                    native
+                    name="category"
+                    inputProps={{
+                      id: "outlined-age-native-simple",
+                    }}
+                    defaultValue={news.category}
+                    onChange={handleInputChange}
+                  >
+                    <option label="Choose Category" defaultValue="" />
+                    <option defaultValue="economics">Economics</option>
+                    <option defaultValue="cars">Cars</option>
+                    <option defaultValue="entertainment">Entertainment</option>
+                    <option defaultValue="health">Health</option>
+                    <option defaultValue="politics">Politics</option>
+                    <option defaultValue="sports">Sports</option>
+                    <option defaultValue="science">Science</option>
+                  </Select>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <div className="text-center">
+                    <p>Add Image for your News</p>
+
+                    <input
+                      data-testid="image"
+                      required
+                      name="image"
+                      accept="image/*"
+                      className={classes.input}
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={handleUploadClick}
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Fab component="span" className={classes.button}>
+                        <AddPhotoAlternateIcon />
+                      </Fab>
+                    </label>
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    data-testid="city"
+                    required
+                    id="city"
+                    name="city"
+                    label="City"
+                    style={styles}
+                    defaultValue={news.city}
+                    onChange={handleInputChange}
+                  ></TextField>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    data-testid="locality"
+                    required
+                    id="locality"
+                    name="locality"
+                    label="Locality"
+                    style={styles}
+                    defaultValue={news.locality}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={12} md={9}>
+                  <Button className={classes.button}>
+                    <Link to="/reporter">Back</Link>
+                  </Button>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  data-testid="city"
-                  required
-                  id="city"
-                  name="city"
-                  label="City"
-                  style={styles}
-                  defaultValue={news.city}
-                  onChange={handleInputChange}
-                ></TextField>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  data-testid="locality"
-                  required
-                  id="locality"
-                  name="locality"
-                  label="Locality"
-                  style={styles}
-                  defaultValue={news.locality}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Button className={classes.button}>
-                  <a className="back" href="/reporter">
-                    Back
-                  </a>
-                </Button>
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
     </>
   );

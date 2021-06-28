@@ -1,35 +1,33 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import App from './App';
+import { act, fireEvent,  render } from "@testing-library/react";
+import AddNews from "./AddNews";
 
-describe("UiForm Component", () => {
+describe("Form testing", () => {
+  it("renders form without crashing", () => {
+    const div = document.createElement("div");
+    render(<AddNews />, div);
+  });
 
-it('check if form displays', () => {
-  const { getByTestId } = render(<App />);
-  const form = getByTestId('form');
-  const label = getByTestId('label');
-  const nameInput = getByTestId('nameInput');
-  const submit = getByTestId('submit');
+  describe("With all inpunts", () => {
+    it("calls onSubmit function", async () => {
+      const mockOnSubmit = jest.fn();
+      const { getByLabelText, getByRole, getAllByTestId } = render(
+        <AddNews onSubmit={mockOnSubmit} />
+      );
 
-  expect(form).toBeInTheDocument();
-  expect(label).toHaveTextContent('Enter Name');
-  expect(nameInput).toHaveValue('');
-  expect(submit).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.change(getByLabelText("Heading/Title"), { target: { value: "" } });
+        fireEvent.change(getAllByTestId("article"), { target: { value: "" } });
+        fireEvent.change(getAllByTestId("category"), { target: { value: "" } });
+        fireEvent.change(getAllByTestId("image"), { target: { value: "" } });
+        fireEvent.change(getByLabelText("City*"), { target: { value: "" } });
+        fireEvent.change(getByLabelText("Locality *"), { target: { value: "" } });
+      });
+
+      await act(async () => {
+        fireEvent.click(getByRole("button"));
+      });
+
+      expect(mockOnSubmit).toHaveBeenCalled();
+    });
+  });
 });
-
-it('should check if message is displayed when button is clicked', () => {
-  const { getByTestId } = render(<App />);
-  const output = getByTestId('output');
-  const nameInput = getByTestId('nameInput');
-  const submit = getByTestId('submit');
-
-  expect(output).toBeEmpty('');
-  expect(nameInput).toHaveValue('');
-
-  fireEvent.change(nameInput, { target: { value: 'Sama' } });
-  fireEvent.click(submit);
-  expect(nameInput).toHaveValue('Sama');
-  expect(output).not.toBeEmpty('');
-});
-})
