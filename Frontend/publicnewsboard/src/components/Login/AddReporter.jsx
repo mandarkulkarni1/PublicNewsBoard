@@ -25,18 +25,37 @@ const AddReporter = () => {
   }
 
  function handleChange({target}) {
-    const {name,value}=target
-    console.log(name,value)
-    var reg = /^[a-z]*$/;
-    var test = reg.test(value);
-    if (test) {
-      console.log("pass")
-       setFormData({...FormData,[name]:value})
-    }else{
-      toast.warn("pass should be in small letters")
-    }        
+  
+  const {name,value}=target
+  console.log(name,value)
+  ///^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  var reg = /^[a-zA-Z0-9#?!@$%^&*-]*$/;
+  //var regrex=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  var test = reg.test(value);
+  if (test) {
+    console.log("pass")
+     setFormData({...FormData,[name]:value})
+  }else{
+    toast.warn("pass should be in small and capital letters")
+  }        
 }
-
+function handleName({target})
+    
+      { 
+        const {name,value}=target
+        console.log(name,value)
+      var letters = /^[a-zA-Z]*$/;
+      if(value.match(letters))
+      {
+        setFormData({...FormData,[name]:value})
+        return true;
+      }
+      else
+      {
+      toast.warn("Please enter letters only in Reporter name ")
+       return false;
+      }
+      }
   function handleFormSubmit(e) {
     e.preventDefault();
     console.log(FormData)
@@ -109,9 +128,12 @@ const AddReporter = () => {
             placeholder="Reporter Name"
             name="userName"
             value={userName}
-            onChange={handleInputChange}
+            onChange={handleName}
           />
         </div>
+        {(userName==="") && <small id="passwordHelpInline" className="text-muted">
+             Reporter Name must be letters only *
+            </small>}
         <div className="form-row">
           <div className="form-group col-md-12">
             <label>Password</label>
@@ -125,7 +147,7 @@ const AddReporter = () => {
               onChange={handleChange}
             />
            {(password==="" || password.length<6) && <small id="passwordHelpInline" className="text-muted">
-              Must be 6-20 small characters long.
+              Must be 6-20  small characters long.
             </small>}
           </div>
           <div className="form-group col-md-12">
@@ -148,10 +170,11 @@ const AddReporter = () => {
               type="email"
               className="form-control"
               id="inputEmail4"
-              placeholder="Email"
               name="email"
               value={email}
+              pattern="\S+@\S+\.\S+"
               onChange={handleInputChange}
+              placeholder="anystring@anystring.anystring"
             />
           </div>
           <div className="form-group col-md-12">

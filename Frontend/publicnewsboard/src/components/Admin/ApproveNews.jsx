@@ -28,7 +28,7 @@ const ApproveNews = () => {
     } else {
       history.push("/login");
     }
-  });
+  },[]);
 
   function handleClick(id) {
     history.push("/adminNews/" + id);
@@ -62,13 +62,16 @@ const ApproveNews = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Reject it!",
           }).then((result) => {
-            axios.post("http://localhost:8080/admin/rejected", {
-              method: "GET",
-              headers: { token: token },
+            const body={
               newsId: id,
               reporterId: rid,
               reason: login,
               title: title,
+            }
+            axios.post("http://localhost:8080/admin/rejected", body,{
+              
+              headers: { token: token },
+            
             });
 
             if (result.isConfirmed) {
@@ -88,6 +91,11 @@ const ApproveNews = () => {
 
   function approve(id, rid, title) {
     const token = sessionStorage.getItem("token");
+    const body={
+      newsId: id,
+      reporterId: rid,
+      title: title,
+    }
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -97,12 +105,12 @@ const ApproveNews = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
+
       if (result.isConfirmed) {
-        axios.post("http://localhost:8080/admin/accepted", {
-          Headers: { token: token },
-          newsId: id,
-          reporterId: rid,
-          title: title,
+        
+        axios.post("http://localhost:8080/admin/accepted",body, {
+          headers: { token: token },
+      
         });
         Swal.fire("Approved", "Post has been approved.", "success").then(() => {
           fetching();

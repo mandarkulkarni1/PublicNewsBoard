@@ -28,7 +28,7 @@ const ParticularReporterNews = ({ match: { params } }) => {
     } else {
       history.push("/login");
     }
-  });
+  },[]);
 
   function handleClick(id) {
     history.push("/adminNews/" + id);

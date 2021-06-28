@@ -232,9 +232,9 @@ router.get("/reporterNews/:id", (req, res) => {
 
 });
 
-router.get("/news/top10", (req, res) => {
+router.get("/news/top20", (req, res) => {
   console.log("inside top ne")
-  const statement = "SELECT * FROM news ORDER BY views desc limit 10";
+  const statement = "SELECT * FROM news ORDER BY views desc limit 20";
   dbData.query(statement, (err, data) => {
     res.send(utils.createResult(err, data));
   });

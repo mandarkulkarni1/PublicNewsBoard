@@ -105,11 +105,11 @@ router.post("/accepted", (req, res) => {
     const id = req.body.newsId;
     const reporterId = req.body.reporterId;
     const title = req.body.title;
-
+     
     const statement = `UPDATE news
     SET isApproved = true
     WHERE newsId=${id}`;
-
+   console.log(statement)
     dbData.query(statement, (err, result) => {
         console.log(result);
     });

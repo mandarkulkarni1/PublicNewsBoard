@@ -28,7 +28,7 @@ function AdminNavbar(props) {
           <div className="container " style={{ width: "80%" }}>
             <div className="navbar-nav ">
               <NavLink
-                className="nav-item nav-link  mr-3 "
+                className="nav-item high nav-link  mr-3 "
                 to="/admin"
                 activeClassName="active"
                 exact={true}
@@ -36,7 +36,7 @@ function AdminNavbar(props) {
                 <li>Home</li>
               </NavLink>
               <NavLink
-                className="nav-item nav-link mr-3 "
+                className="nav-item high nav-link mr-3 "
                 activeClassName="active"
                 to="/approveNews"
                 exact={true}
@@ -44,28 +44,28 @@ function AdminNavbar(props) {
                 <li>Approve News</li>
               </NavLink>
               <NavLink
-                className="nav-link nav-item  mr-3   "
+                className="nav-link high nav-item  mr-3   "
                 activeClassName="active"
                 to="/reporterApprove"
               >
                 <li> Approve Reporter</li>
               </NavLink>
               <NavLink
-                className="nav-item nav-link mr-3   "
+                className="nav-item high nav-link mr-3   "
                 activeClassName="active"
                 to="/reportedNews"
               >
                 <li>Reported News</li>
               </NavLink>
               <NavLink
-                className="nav-item nav-link mr-3    "
+                className="nav-item high nav-link mr-3    "
                 activeClassName="active"
                 to="/getAllReader"
               >
                 <li>All Reader</li>
               </NavLink>
               <NavLink
-                className="nav-item nav-link mr-3   "
+                className="nav-item high nav-link mr-3   "
                 activeClassName="active"
                 to="/getAllReporter"
               >

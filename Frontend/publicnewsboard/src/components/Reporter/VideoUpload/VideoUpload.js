@@ -140,6 +140,7 @@ export default function SimpleModal({ openModal }) {
             filePath: response.data.filePath,
             fileName: response.data.fileName,
           };
+          
           setFilePath(response.data.filePath);
 
           //gerenate thumbnail with this filepath !
@@ -164,16 +165,17 @@ export default function SimpleModal({ openModal }) {
                     </div>
                   )}
                 </Dropzone>
-              <div style={{ width: "100px", color: "gray" }}>{FilePath}</div>
+                
+              
             </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
+            <div className="p-2">{FilePath}</div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="form-group">
                   <label for="">Title:</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     name="title"
                     value={title}
                     onChange={handleChangeTitle}
@@ -181,13 +183,13 @@ export default function SimpleModal({ openModal }) {
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="form-group">
                   <label for="">City:</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     name="city"
                     value={city}
                     onChange={handleChangeCity}
@@ -195,12 +197,12 @@ export default function SimpleModal({ openModal }) {
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="form-group">
                   <label for="">Category:</label>
                   <select
-                    class="form-control"
+                    className="form-control"
                     value={Categories}
                     name="role"
                     onChange={handleChangeTwo}
@@ -213,11 +215,11 @@ export default function SimpleModal({ openModal }) {
                   </select>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button class="btn btn-danger right" onClick={handleClose}>
+              <div className="modal-footer">
+                <button className="btn btn-danger right" onClick={handleClose}>
                   Cancel
                 </button>
-                <button class="btn btn-info right" type="submit">
+                <button className="btn btn-info right" type="submit">
                   Add
                 </button>
               </div>

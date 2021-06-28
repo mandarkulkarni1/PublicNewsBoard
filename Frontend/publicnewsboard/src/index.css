@@ -9,3 +9,7 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+.high.active {
+    border-bottom: 4px solid rgb(15, 184, 190) !important;
+}
+

@@ -18,7 +18,7 @@ export async function GetNews() {
 export async function GetNewsTop() {
     const token=sessionStorage.getItem("token")
     // Default options are marked with *
-    const data=await fetch('http://localhost:8080/reporters/news/top10',{
+    const data=await fetch('http://localhost:8080/reporters/news/top20',{
         headers : { 
             'Content-Type': 'application/json',
             'Accept': 'application/json',

@@ -7,7 +7,9 @@ import { GetVideos } from '../Service/GetNewsService';
 import { getFilteredNews, getReporterNews } from './FilterNews';
 import Link from '@material-ui/core/Link';
 import { useState, useEffect } from 'react';
-import Video from '../newsElements/videoElement/Video'
+ import Video from '../newsElements/videoElement/Video'
+ import Weather from './Weather'
+ import ReporterNavbar from '../ReporterNavbar/NavBar'
 function Reporter() {
 
   const [news, setNews] = useState([])
@@ -18,6 +20,9 @@ function Reporter() {
   const [readMore, setReadMore] = useState(false);
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [videos, setVideos] = useState([])
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
+  const [data, setData] = useState([]);
   const history = useHistory()
   function displayDiv(index) {
     setReadMore({ ...readMore, [index]: !readMore[index] });
@@ -47,66 +52,61 @@ function Reporter() {
 
     }
   }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        setLat(position.coords.latitude);
+        setLong(position.coords.longitude);
+      });
+
+      await fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
+      .then(res => res.json())
+      .then(result => {
+        setData(result)
+        console.log(result);
+      });
+    }
+    fetchData();
+  }, [lat, long]);
 
   function openModal() {
     history.push('/videoUpload')
   }
 
-  function filterNews() {
-    const filterNews = getFilteredNews(news, reporter.city)
-    console.log("local" + filterNews)
+  function filterNews(value){
+    const filterNews=getFilteredNews(news,reporter.city)
+    console.log("local"+filterNews)
     setNews(filterNews)
+   
 
-
-  }
-  function seeAllNews() {
-    console.log("full news" + tempData)
-    setNews(tempData)
-  }
-  function seeReporterNews() {
-    const filterNews = getReporterNews(tempData, reporter.reporterId)
-    console.log("on id " + filterNews)
-    setNews(filterNews)
-
-  }
-  function openArticle(newsId) {
-    history.push('/articlePage/' + newsId)
-  }
+   }
+   function seeAllNews(){
+    console.log("full news"+tempData)
+     setNews(tempData)
+   }
+   function seeReporterNews(value){
+     const filterNews=getReporterNews(tempData,reporter.reporterId)
+     console.log("on id "+filterNews)
+     setNews(filterNews)
+     
+   }
+   function openArticle(newsId){
+      history.push('/articlePage/'+newsId)
+   }
   return (
-
+    <>
+    <ReporterNavbar onChangeCity={filterNews} onChangeReporterNews={seeReporterNews} onChangeAllNews={seeAllNews}/>
     <div className="outerDiv">
       <div className="left">
-        <div className="p-2 text-center rounded shadow">
-          <h4 className="">Press Tools</h4><hr />
-          <div className="text-center">
-            <button className="btn btn-info text-center my-1" color="primary" onClick={() => { history.push('/addNews') }} >Upload News</button>
-            <button className="btn btn-info text-center my-1" onClick={openModal}>Upload Video</button>
-            <Link component="button" variant="body2" onClick={filterNews}>
-              See Local News
-            </Link>
-
-            <Link component="button" variant="body2" onClick={seeReporterNews} >
-              See Your News
-            </Link>
-
-            <Link component="button" variant="body2" onClick={seeAllNews} >
-              See All News
-            </Link>
-
-          </div>
-        </div>
-        <br />
-
+      
         <div className="card rounded shadow">
           <br />
           <h4 className="text-center bg-white sticky-top">Headlines</h4><hr />
           {topNews.map(data => (
             <>
-              <div className="p-2" style={{ cursor: "pointer" }} >
-                <Link onClick={(e) => { openArticle(data.newsId) }} />
-                {data.article.slice(0, 30)}...
-              </div>
-              <hr />
+                <div className="headline" style={{height:"90px"}}><Link style={{cursor:"pointer"}} onClick={(e)=>{openArticle(data.newsId)}}>{data.article.slice(0,30)}...
+                    
+                    </Link></div><br/>
             </>
           ))}
         </div>
@@ -140,19 +140,40 @@ function Reporter() {
         ))}
       </div>
       <div className="right text-center">
+      <div style={{height:"350px"}} className="headline">
+        <div className="time" style={{float:"right"}}>  {new Date().toLocaleString() + ""}
+           
+         </div>
+         <br></br>
+         <hr></hr>
+           {(typeof data.main != 'undefined') ? (
+           <Weather weatherData={data}/>
+            ): (
+          <div></div>
+         )}
+        </div>
+        <hr></hr>
         <div className="time shadow">
           <h4 className="text-center bg-white sticky-top p-1 ">Videos</h4>
           {videos.map((data) => (
             <React.Fragment>
-              <Video video={data}></Video>
-              <div>{data.title}</div>
-              <hr />
+               <div >
+                    
+                    <div style={{height:"200px"}} className="fakeimg">
+                    <video style={{height:"200px"}} className="fakeimg" controls src={`http://localhost:8080/reporters/${data.video}`}></video>
+                    </div>
+                    <h4>{data.title}</h4>
+                    <div>{data.city}</div>
+                    <div className="time"> Published On : {data.createdAt.split('T')[0]} {data.createdAt.split('T')[1]}</div>
+                    <hr></hr>
+                </div>
             </React.Fragment>
           ))}
         </div>
       </div>
       <ToastContainer />
     </div>
+    </>
 
   )
 }
