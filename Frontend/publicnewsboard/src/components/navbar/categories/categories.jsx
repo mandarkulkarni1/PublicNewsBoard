@@ -14,6 +14,7 @@ const Categories = () => {
     "Politics",
     "Sports",
     "Science",
+    "Local News",
     "ALL",
   ];
 
