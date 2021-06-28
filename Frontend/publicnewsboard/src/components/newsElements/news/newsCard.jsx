@@ -8,9 +8,10 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { AiOutlineEye } from "react-icons/ai";
+import { GiModernCity } from "react-icons/gi";
 
 const useStyles = makeStyles((theme) => ({
-
   root: {
     maxWidth: 375,
   },
@@ -34,7 +35,7 @@ export default function Cardd(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const handleClick = props.handleClick;
-  const news= props.news;
+  const news = props.news;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -43,21 +44,32 @@ export default function Cardd(props) {
   return (
     <div className="shadow-lg ">
       <Card className={classes.root}>
-        <div onClick={()=>{handleClick(news)}}>
-        <img
-          className="card-img-top"
-          src={`http://localhost:8080/reporters/image/${news.image}`}
-          height="200px"
-          alt="news"
-        ></img>
-        <CardContent>
-          <Typography variant="body1" color="textPrimary" component="p">
-            {news.title}
-          </Typography>
-        </CardContent>
+        <div
+          onClick={() => {
+            handleClick(news);
+          }}
+        >
+          <img
+            className="card-img-top"
+            src={`http://localhost:8080/reporters/image/${news.image}`}
+            height="200px"
+            alt="news"
+          ></img>
+          <CardContent>
+            <Typography variant="body1" color="textPrimary" component="p">
+              {news.title}
+            </Typography>
+          </CardContent>
+          <span className="mx-2 text-muted ">
+            <AiOutlineEye size="22px" />
+            &nbsp;Views: {news.views}
+          </span>
         </div>
         <CardActions disableSpacing>
-          <p className="mx-2">{news.city}</p>
+          <span className="mx-2 text-muted ">
+            <GiModernCity size="18px" />
+            &nbsp;City: {news.city}
+          </span>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -71,7 +83,7 @@ export default function Cardd(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography color="textSecondary" >{news.article}</Typography>
+            <Typography color="textSecondary">{news.article}</Typography>
           </CardContent>
         </Collapse>
       </Card>

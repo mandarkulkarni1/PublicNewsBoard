@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import filterUtil from "./filter";
 import { setViews } from "../counterServices";
 import Cardd from "./newsCard";
+import { ErrorBoundry } from "../../ErroryBoundry";
 
 const News = ({ value }) => {
   const [data, setData] = useState([]);
@@ -33,10 +34,13 @@ const News = ({ value }) => {
   return (
     <React.Fragment>
       <div className="container border border-info">
-        <div className=" m-2 justify-content-around" >
+        <div className=" m-2 justify-content-around">
           {news.map((news) => (
             <div key={news.newsId} className="d-inline-flex flex-row col-4 p-2">
-              <Cardd  news={news} handleClick={handleClick} />
+              <ErrorBoundry>
+                {" "}
+                <Cardd news={news} handleClick={handleClick} />
+              </ErrorBoundry>
             </div>
           ))}
         </div>
