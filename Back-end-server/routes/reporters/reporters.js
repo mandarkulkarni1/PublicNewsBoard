@@ -101,7 +101,6 @@ router.post("/signin", (req, res) => {
             token: token,
           };
         }
-        // console.log(result);
       }
     }
     res.send(result);

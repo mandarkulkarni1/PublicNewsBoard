@@ -41,13 +41,13 @@ export default function Cardd(props) {
   };
   console.log();
   return (
-    <div className="shadow">
+    <div className="shadow-lg ">
       <Card className={classes.root}>
         <div onClick={()=>{handleClick(news)}}>
         <img
           className="card-img-top"
           src={`http://localhost:8080/reporters/image/${news.image}`}
-          height="250px"
+          height="200px"
           alt="news"
         ></img>
         <CardContent>
