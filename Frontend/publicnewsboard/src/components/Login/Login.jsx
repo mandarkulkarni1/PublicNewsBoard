@@ -62,7 +62,7 @@ const Login = () => {
     <div className="container">
       <div className="row m-2">
         <form
-          className="col-md-5 col-lg-5  mx-auto border border-info p-4 rounded"
+          className="col-md-5 col-lg-5  mx-auto border border-info p-4 rounded shadow-lg"
           onSubmit={handleFormSubmit}
         >
           <div style={{ textAlign: "center" }}>

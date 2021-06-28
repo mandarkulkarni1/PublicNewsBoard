@@ -1,7 +1,7 @@
 import React from "react";
 import Data from '../../State.json'
-import { useState, useContext } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useState } from "react";
+import {  useHistory } from "react-router-dom";
 import { RegisterService } from "../Service/RegisterService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -93,9 +93,7 @@ function handleName({target})
                  history.push("/login");
                
             }
-          // console.log(res.status,res.error);
-        
-    
+          // console.log(res.status,res.error);  
         } else {
           toast.error(res["error"]);
         }
@@ -104,7 +102,7 @@ function handleName({target})
   }
   const { userName, email, password, phone, city, confirmPassword,State_ } = FormData;
   return (
-    <div className="container col-md-4 col-lg-4">
+    <div className="container col-md-4 col-lg-4 mx-auto border border-info p-4 rounded shadow-lg" style={{ margin: "5px" }}>
       <div style={{ textAlign: "center" }}>
         <img style={{height:"150px",borderRadius:"50%"}} src={require("../../Asset/reporterAvatar.jpg").default} alt="" />
         <span className="text-primary h2">

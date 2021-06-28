@@ -20,6 +20,8 @@ const FavNews = () => {
     init();
   }, []);
 
+  console.log(data);
+
   const handleclick = (news) => {
     setViews(news.newsId);
     history.push("/detailedNews/" + news.newsId);

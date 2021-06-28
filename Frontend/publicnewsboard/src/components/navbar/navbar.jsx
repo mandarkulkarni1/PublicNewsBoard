@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { BsFillBrightnessAltHighFill } from "react-icons/bs";
+
 import {
-  AiOutlineUser,
   AiOutlineSearch,
-  AiOutlineLogout,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { createRef } from "react";
@@ -102,7 +100,7 @@ class Navbar extends Component {
                 this.props.history.push("/");
               }}
             >
-              <i class="fa fa-sign-out  text-white" aria-hidden="true">
+              <i className="fa fa-sign-out  text-white" aria-hidden="true">
                 Logout
               </i>
             </button>
@@ -121,7 +119,7 @@ class Navbar extends Component {
                 data-bs-placement="top"
                 title="Log In"
               >
-                <i class="fa fa-sign-out" aria-hidden="true">
+                <i className="fa fa-sign-out" aria-hidden="true">
                   Login
                 </i>
               </button>

@@ -50,37 +50,37 @@ class ReporterApprove extends Component {
                 <h4 className="text-info" style={{ textAlign: "center" }}>
                   Reporters to Be Approved
                 </h4>
-                <table class="table  table-hover">
-                  <thead class="thead-light">
+                <table className="table  table-hover">
+                  <thead className="thead-light">
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">
                         Reporter Name <span>&nbsp;</span>
-                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <i className="fa fa-users" aria-hidden="true"></i>
                       </th>
                       <th scope="col">
                         Id <span>&nbsp;</span>
-                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                        <i className="fa fa-id-card" aria-hidden="true"></i>
                       </th>
 
                       <th scope="col">
-                        Email <i class="fa fa-envelope" aria-hidden="true"></i>
+                        Email <i className="fa fa-envelope" aria-hidden="true"></i>
                       </th>
                       <th scope="col">
                         Phone{" "}
-                        <i class="fa fa-phone-square" aria-hidden="true"></i>
+                        <i className="fa fa-phone-square" aria-hidden="true"></i>
                       </th>
                       <th scope="col">
                         City{" "}
-                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                        <i className="fa fa-location-arrow" aria-hidden="true"></i>
                       </th>
                       <th scope="col">
                         Approve{" "}
-                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                        <i className="fa fa-check-square" aria-hidden="true"></i>
                       </th>
                       <th scope="col">
                         Reject{" "}
-                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                        <i className="fa fa-check-square" aria-hidden="true"></i>
                       </th>
                     </tr>
                   </thead>
@@ -104,7 +104,7 @@ class ReporterApprove extends Component {
                               {" "}
                               Approve{" "}
                               <i
-                                class="fa fa-check-square-o"
+                                className="fa fa-check-square-o"
                                 aria-hidden="true"
                               ></i>
                             </button>
@@ -119,7 +119,7 @@ class ReporterApprove extends Component {
                               {" "}
                               Reject{" "}
                               <i
-                                class="fa fa-check-square-o"
+                                className="fa fa-check-square-o"
                                 aria-hidden="true"
                               ></i>
                             </button>

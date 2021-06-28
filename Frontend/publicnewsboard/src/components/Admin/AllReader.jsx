@@ -48,7 +48,7 @@ class AllReader extends Component {
               <h4 className="text-info" style={{ textAlign: "center" }}>
                 All Reader
               </h4>
-              <table class="table table-hover">
+              <table className="table table-hover">
                 <thead>
                   <tr>
                     <th>#</th>

@@ -106,37 +106,37 @@ const ReportedNews = () => {
                   <h4 className="text-info" style={{ textAlign: "center" }}>
                     Reported News
                   </h4>
-                  <table class="table  table-hover">
-                    <thead class="thead-light">
+                  <table className="table  table-hover">
+                    <thead className="thead-light">
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">
                           News Id{" "}
-                          <i class="fa fa-envelope" aria-hidden="true"></i>
+                          <i className="fa fa-envelope" aria-hidden="true"></i>
                         </th>
 
                         <th scope="col">
                           View News{" "}
-                          <i class="fa fa-envelope" aria-hidden="true"></i>
+                          <i className="fa fa-envelope" aria-hidden="true"></i>
                         </th>
                         <th scope="col">
                           Report Comments{" "}
-                          <i class="fa fa-envelope" aria-hidden="true"></i>
+                          <i className="fa fa-envelope" aria-hidden="true"></i>
                         </th>
                         <th scope="col">
                           Report Count{" "}
                           <i
-                            class="fa fa-location-arrow"
+                            className="fa fa-location-arrow"
                             aria-hidden="true"
                           ></i>
                         </th>
                         <th scope="col">
                           Ignore{" "}
-                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                          <i className="fa fa-check-square" aria-hidden="true"></i>
                         </th>
                         <th scope="col">
                           Action{" "}
-                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                          <i className="fa fa-check-square" aria-hidden="true"></i>
                         </th>
                       </tr>
                     </thead>
@@ -156,7 +156,7 @@ const ReportedNews = () => {
                               >
                                 {" "}
                                 View News{" "}
-                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                <i className="fa fa-eye" aria-hidden="true"></i>
                               </button>
                             </td>
                             <th scope="row">{repo.reportCount}</th>
@@ -179,7 +179,7 @@ const ReportedNews = () => {
                               >
                                 {" "}
                                 <i
-                                  class="fa fa-check-square-o"
+                                  className="fa fa-check-square-o"
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -192,7 +192,7 @@ const ReportedNews = () => {
                                 }}
                               >
                                 {" "}
-                                <i class="fa fa-times" aria-hidden="true"></i>
+                                <i className="fa fa-times" aria-hidden="true"></i>
                               </button>
                             </td>
                           </tr>

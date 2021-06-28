@@ -21,7 +21,7 @@ const ExpandedNews = () => {
       setData(data[0]);
     }
     init();
-  }, []);
+  }, [newsId]);
 
   const handleClick = (news) => {
     fakeNewsSelector(news);

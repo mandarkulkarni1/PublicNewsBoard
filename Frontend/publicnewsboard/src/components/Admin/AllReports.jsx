@@ -68,7 +68,7 @@ class AllReports extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8">
-              <table class="table table-hover">
+              <table className="table table-hover">
                 <thead>
                   <tr>
                     <th>#</th>

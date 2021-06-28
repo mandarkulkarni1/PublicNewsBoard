@@ -44,28 +44,28 @@ const TotalReporter = () => {
               <h4 className="text-info" style={{ textAlign: "center" }}>
                 All Reporter
               </h4>
-              <table class="table  table-hover">
-                <thead class="thead-light">
+              <table className="table  table-hover">
+                <thead className="thead-light">
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">
                       Reporter Name{" "}
-                      <i class="fa fa-envelope" aria-hidden="true"></i>
+                      <i className="fa fa-envelope" aria-hidden="true"></i>
                     </th>
 
                     <th scope="col">
-                      Email <i class="fa fa-envelope" aria-hidden="true"></i>
+                      Email <i className="fa fa-envelope" aria-hidden="true"></i>
                     </th>
                     <th scope="col">
-                      Phone <i class="fa fa-envelope" aria-hidden="true"></i>
+                      Phone <i className="fa fa-envelope" aria-hidden="true"></i>
                     </th>
                     <th scope="col">
                       City{" "}
-                      <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                      <i className="fa fa-location-arrow" aria-hidden="true"></i>
                     </th>
                     <th scope="col">
                       There News{" "}
-                      <i class="fa fa-check-square" aria-hidden="true"></i>
+                      <i className="fa fa-check-square" aria-hidden="true"></i>
                     </th>
                   </tr>
                 </thead>
@@ -88,7 +88,7 @@ const TotalReporter = () => {
                           >
                             {" "}
                             View News{" "}
-                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <i className="fa fa-eye" aria-hidden="true"></i>
                           </button>
                         </td>
                       </tr>
