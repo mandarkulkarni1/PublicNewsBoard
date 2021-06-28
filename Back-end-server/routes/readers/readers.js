@@ -53,7 +53,7 @@ router.get("/news/expandedNews/:newsId", (req, res) => {
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   const encryptedPassword = crypto.SHA256(password);
-  const statement = `select readerId, userName, email from readers where email = '${email}' and password = '${encryptedPassword}'`;
+  const statement = `select readerId, userName, email,city from readers where email = '${email}' and password = '${encryptedPassword}'`;
   dbData.query(statement, (error, data) => {
     if (error) {
       res.send({ status: "error", error: error });
@@ -87,7 +87,8 @@ router.post("/signup", (request, response) => {
   const readers = {
     userName: request.body.userName || "default",
     password: encryptedPassword,
-    email: request.body.email
+    email: request.body.email,
+    city:request.body.city
   };
   console.log(readers);
 

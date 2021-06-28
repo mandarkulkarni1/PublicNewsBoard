@@ -29,6 +29,8 @@ const RegisterReader = () => {
     }  
       else if (email.length === 0) {
       toast.warning("please enter email name");
+    }  else if (city.length === 0) {
+      toast.warning("please enter city name");
     } 
       else if (password.length === 0) {
       toast.warning("please enter password");
@@ -52,7 +54,7 @@ const RegisterReader = () => {
       });
     }
   }
-  const { userName, email, password, confirmPassword } = FormData;
+  const { userName, email, password, confirmPassword,city } = FormData;
   return (
     <div className="container col-md-4 col-lg-4">
       <div style={{ textAlign: "center" }}>
@@ -115,6 +117,18 @@ const RegisterReader = () => {
             />
           </div>
          
+        </div>
+        <div className="form-group">
+          <label>City Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputAddress"
+            placeholder="City Name"
+            name="city"
+            value={city}
+            onChange={handleInputChange}
+          />
         </div>
 
         <button type="submit" className="btn btn-primary mt-2 mb-3">
