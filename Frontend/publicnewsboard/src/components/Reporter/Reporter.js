@@ -66,7 +66,7 @@ function Reporter() {
       });
     }
     fetchData();
-  }, [lat, long]);
+  });
 
   function openModal() {
     history.push('/videoUpload')
@@ -87,7 +87,7 @@ function Reporter() {
      
    }
    function openArticle(newsId){
-      history.push('/articlePage/'+newsId)
+      history.push("/detailedNews/" + newsId)
    }
   return (
     <>

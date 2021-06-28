@@ -6,12 +6,15 @@ import { Button } from "@material-ui/core";
 import { fakeNewsSelector } from "../counterServices";
 import ReportFake from "./ReportFake";
 import "./style.css";
+import { useHistory } from "react-router-dom";
 
 const ExpandedNews = () => {
   const { newsId } = useParams();
   const [data, setData] = useState([]);
-  const user = window.sessionStorage.getItem("reader");
-
+  const user =
+    window.sessionStorage.getItem("reader") ||
+    window.sessionStorage.getItem("reporter");
+  const history = useHistory();
   useEffect(() => {
     async function init() {
       const { data } = await fetchData(newsId);
@@ -54,9 +57,9 @@ const ExpandedNews = () => {
     );
   } else
     return (
-      <h1 className="container text-center mt-4 p-3 border border-danger">
-        Please Login First
-      </h1>
+      <div>
+        {history.push("/login")}
+      </div>
     );
 };
 
