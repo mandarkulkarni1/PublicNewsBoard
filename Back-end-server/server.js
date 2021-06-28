@@ -31,9 +31,7 @@ function authorized(request, response, next) {
     } else {
       try {
         const data = jwt.verify(token, secretKey.secret);
-        // console.log(data.id)
         request.reporterId = data.id;
-        // console.log(userId,data.id)
         next();
       } catch (ex) {
         response.status(401);

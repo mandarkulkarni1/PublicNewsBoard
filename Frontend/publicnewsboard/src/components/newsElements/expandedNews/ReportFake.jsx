@@ -22,12 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReportFake({data}) {
+export default function ReportFake({ data }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [category, setCategory] = React.useState("");
-  console.log(data);
-
   const handleChange = (event) => {
     setCategory(event.target.value);
   };
@@ -40,11 +38,10 @@ export default function ReportFake({data}) {
     setOpen(false);
   };
 
- const handleOk = () => {
-    fakeNewsSelector({...data,category:category});
+  const handleOk = () => {
+    fakeNewsSelector({ ...data, category: category });
     setOpen(false);
-};
-
+  };
 
   return (
     <div>

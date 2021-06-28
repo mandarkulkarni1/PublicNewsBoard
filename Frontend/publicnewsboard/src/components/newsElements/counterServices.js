@@ -1,9 +1,6 @@
 export function fakeNewsSelector(news) {
-    let { newsId, category, readerId } = news;
-
-    //This line to be removed after making use of session storage
-    readerId = readerId || 1;
-    console.log(newsId, category, readerId);
+    let { newsId, category } = news;
+    const readerId = JSON.parse(sessionStorage.getItem("reader"))
     fetch('http://localhost:8080/readers/reportnews', {
         method: 'POST',
         headers: {
@@ -12,20 +9,17 @@ export function fakeNewsSelector(news) {
         body: JSON.stringify({
             newsId: newsId,
             category: category,
-            readerId: readerId
+            readerId: readerId[0].readerId  
         })
     })
         .then(res => res.json())
         .catch(error => {
-            // enter your logic for when there is an error (ex. error toast)
             console.log(error)
         })
     return;
 }
 
 export function setViews(newsId) {
-    // const newsId = data[0].newsId
-
     fetch('http://localhost:8080/readers/views', {
         method: 'POST',
         headers: {
@@ -37,7 +31,6 @@ export function setViews(newsId) {
     })
         .then(res => res.json())
         .catch(error => {
-            // enter your logic for when there is an error (ex. error toast)
             console.log(error)
         })
     return;

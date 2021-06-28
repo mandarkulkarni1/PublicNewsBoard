@@ -2,14 +2,11 @@ import React from "react";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { LoginService } from "../Service/LoginService";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AddReporter from "./AddReporter";
-import RegisterReader from "../Reader/RegisterReader";
 import LoginContext from "../Login/LoginContext";
+
 const Login = () => {
-  //   const {setLogin}=useContext(LoginContext);
   const { setLogin } = useContext(LoginContext);
   const history = useHistory();
   const [FormData, seFormData] = useState({
@@ -33,7 +30,6 @@ const Login = () => {
     } else if (role === "") {
       toast.warning("please choose role");
     } else {
-      // setLogin(true);
       LoginService(FormData).then((res) => {
         if (res["status"] === "success") {
               setLogin(true)
@@ -60,8 +56,6 @@ const Login = () => {
         }
       });
     }
-
-    //   history.push('/reporter')
   }
 
   return (
