@@ -39,11 +39,15 @@ class AllReader extends Component {
       <div>
         <AdminNavbar />
         <div className="container">
-          <div className="row" style={{ textAlign: "center" }}>
-            <div className="col-md-8">
+          <div className="row">
+            <div
+              className="col-md-8 col-lg-8 mx-auto"
+              style={{ textAlign: "center" }}
+            >
               <br />
-              <b className="text-info">All Reader</b>
-              <br />
+              <h4 className="text-info" style={{ textAlign: "center" }}>
+                All Reader
+              </h4>
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -57,7 +61,7 @@ class AllReader extends Component {
                 <tbody>
                   {this.state.data.map((repo, index) => {
                     return (
-                      <tr>
+                      <tr key={repo.readerId}>
                         <th> {index + 1} </th>
                         <th>{repo.userName}</th>
                         <td>{repo.email}</td>

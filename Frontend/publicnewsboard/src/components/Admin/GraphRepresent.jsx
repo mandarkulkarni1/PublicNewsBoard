@@ -32,31 +32,13 @@ class GraphRepresent extends Component {
         <AdminNavbar />
         <div className="container">
           <div className="row ">
-            <div className="col-md-9 mx-auto">
-              <Bar
-                data={this.state.state}
-                options={{
-                  title: {
-                    display: false,
-                    text: "Average Rainfall per month",
-                    fontSize: 20,
-                  },
-                  legend: {
-                    display: true,
-                    position: "right",
-                  },
-                }}
-              />
-            </div>
-            <br />
-            <br />
-            <div className="col-md-5 mx-auto">
+            <div className="col-md-7 mx-auto">
               <Pie
                 data={this.state.state}
                 options={{
                   title: {
                     display: true,
-                    text: "Average Rainfall per month",
+                    text: "News Read Count Graph",
                     fontSize: 30,
                   },
                   legend: {
@@ -66,15 +48,14 @@ class GraphRepresent extends Component {
                 }}
               />
             </div>
-            <br />
-            <br />
+
             <br />
             <div className="col-md-5 mx-auto">
               <Doughnut
                 data={this.state.state}
                 options={{
                   title: {
-                    text: "Average Rainfall per month",
+                    text: "News Read Count Graph",
                     fontSize: 20,
                   },
                   legend: {
@@ -84,6 +65,37 @@ class GraphRepresent extends Component {
                 }}
               />
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div className="col-md-11 mx-auto">
+              <Bar
+                data={this.state.state}
+                options={{
+                  title: {
+                    display: true,
+                    text: "News Read Count Graph",
+                    fontSize: 10,
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                    },
+                  },
+                  legend: {
+                    display: false,
+                    position: "center",
+                  },
+                }}
+              />
+            </div>
+            <br />
+            <br />
           </div>
         </div>
       </div>

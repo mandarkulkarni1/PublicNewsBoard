@@ -39,7 +39,11 @@ class ReporterApprove extends Component {
         <div className="container">
           {this.state.product.length === 0 ||
           this.state.product.toString === "" ? (
-            <div>No data Available to Display</div>
+            <div style={{ textAlign: "center" }}>
+              <br />
+              <br />
+              <b>No Data Available</b>
+            </div>
           ) : (
             <div className="row">
               <div className="col-md-11 col-lg-11 mx-auto">
@@ -71,7 +75,11 @@ class ReporterApprove extends Component {
                         <i class="fa fa-location-arrow" aria-hidden="true"></i>
                       </th>
                       <th scope="col">
-                        Action{" "}
+                        Approve{" "}
+                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                      </th>
+                      <th scope="col">
+                        Reject{" "}
                         <i class="fa fa-check-square" aria-hidden="true"></i>
                       </th>
                     </tr>
@@ -79,7 +87,7 @@ class ReporterApprove extends Component {
                   <tbody>
                     {this.state.product.map((repo, index) => {
                       return (
-                        <tr>
+                        <tr key={repo.reporterId}>
                           <th scope="row">{index + 1}</th>
                           <td>{repo.userName}</td>
                           <th scope="row">{repo.reporterId}</th>
@@ -95,6 +103,21 @@ class ReporterApprove extends Component {
                             >
                               {" "}
                               Approve{" "}
+                              <i
+                                class="fa fa-check-square-o"
+                                aria-hidden="true"
+                              ></i>
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => {
+                                this.reject(repo.userName, repo.reporterId);
+                              }}
+                            >
+                              {" "}
+                              Reject{" "}
                               <i
                                 class="fa fa-check-square-o"
                                 aria-hidden="true"
@@ -120,6 +143,29 @@ class ReporterApprove extends Component {
       headers: { token: token },
     });
     Swal.fire("Approved", name + " is now Reporter", "success").then(() => {
+      const url = "http://localhost:8080/admin/approvedRepo";
+      var promise = fetch(url, {
+        method: "GET",
+        headers: { token: token },
+      });
+      promise.then((response) => {
+        console.log(response);
+
+        var promise2 = response.json();
+        promise2.then((prod) => {
+          console.log(prod.data);
+          this.setState({ product: prod.data });
+        });
+      });
+    });
+  };
+  reject = (name, id) => {
+    const token = sessionStorage.getItem("token");
+    fetch("http://localhost:8080/admin/repoReject/" + id, {
+      method: "GET",
+      headers: { token: token },
+    });
+    Swal.fire(name + " is Rejected", "Rejected").then(() => {
       const url = "http://localhost:8080/admin/approvedRepo";
       var promise = fetch(url, {
         method: "GET",

@@ -72,7 +72,7 @@ const TotalReporter = () => {
                 <tbody>
                   {data.map((repo, index) => {
                     return (
-                      <tr>
+                      <tr key={repo.reporterId}>
                         <th scope="row">{index + 1}</th>
                         <th scope="row">{repo.userName}</th>
                         <td>{repo.email}</td>

@@ -105,11 +105,11 @@ router.post("/accepted", (req, res) => {
     const id = req.body.newsId;
     const reporterId = req.body.reporterId;
     const title = req.body.title;
-     
+
     const statement = `UPDATE news
     SET isApproved = true
     WHERE newsId=${id}`;
-   console.log(statement)
+    console.log(statement);
     dbData.query(statement, (err, result) => {
         console.log(result);
     });
@@ -176,7 +176,7 @@ router.get("/mostlyReadNews", (req, res) => {
     const statement = `select views,title
     from news
     order by views desc
-    limit 10`;
+    limit 7`;
 
     dbData.query(statement, (err, data) => {
         data.forEach((element) => {
@@ -310,15 +310,20 @@ router.get("/getParticularNews/:id", (req, res) => {
 });
 
 router.get("/approvedRepo", (req, res) => {
+    const query = `select * from reporters where isApproved=false`;
 
-  const query = `select * from reporters where isApproved=false`;
+    dbData.query(query, (err, data) => {
+        res.send(utils.createResult(err, data));
+    });
+});
 
-  dbData.query(query, (err, data) => {
+router.get("/repoReject/:id", (req, res) => {
+    const { id } = req.params;
+    const query = `delete from reporters where reporterId=${id}`;
 
-      res.send(utils.createResult(err, data));
-
-  });
-
+    dbData.query(query, (err, data) => {
+        res.send(utils.createResult(err, data));
+    });
 });
 
 module.exports = router;

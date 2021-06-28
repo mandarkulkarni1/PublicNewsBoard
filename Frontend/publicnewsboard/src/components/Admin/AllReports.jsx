@@ -81,7 +81,7 @@ class AllReports extends Component {
                 <tbody>
                   {this.state.data.map((repo, index) => {
                     return (
-                      <tr>
+                      <tr key={repo.readerId}>
                         <td>{index + 1}</td>
                         <td>{repo.category}</td>
 

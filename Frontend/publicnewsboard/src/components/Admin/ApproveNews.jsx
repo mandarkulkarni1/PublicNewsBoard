@@ -11,7 +11,7 @@ const ApproveNews = () => {
   async function fetching() {
     const token = sessionStorage.getItem("token");
     const url = "http://localhost:8080/admin/toBeApprov";
-    const response = await fetch(url,{
+    const response = await fetch(url, {
       method: "GET",
       headers: { token: token },
     });
@@ -28,7 +28,7 @@ const ApproveNews = () => {
     } else {
       history.push("/login");
     }
-  },[]);
+  }, []);
 
   function handleClick(id) {
     history.push("/adminNews/" + id);
@@ -37,7 +37,7 @@ const ApproveNews = () => {
   function reject(id, rid, title) {
     const token = sessionStorage.getItem("token");
     Swal.fire({
-      title: "Reson to Reject News",
+      title: "Reason to Reject News",
       input: "text",
       inputAttributes: {
         autocapitalize: "off",
@@ -62,16 +62,14 @@ const ApproveNews = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Reject it!",
           }).then((result) => {
-            const body={
+            const body = {
               newsId: id,
               reporterId: rid,
               reason: login,
               title: title,
-            }
-            axios.post("http://localhost:8080/admin/rejected", body,{
-              
+            };
+            axios.post("http://localhost:8080/admin/rejected", body, {
               headers: { token: token },
-            
             });
 
             if (result.isConfirmed) {
@@ -91,11 +89,11 @@ const ApproveNews = () => {
 
   function approve(id, rid, title) {
     const token = sessionStorage.getItem("token");
-    const body={
+    const body = {
       newsId: id,
       reporterId: rid,
       title: title,
-    }
+    };
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -105,12 +103,9 @@ const ApproveNews = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
-
       if (result.isConfirmed) {
-        
-        axios.post("http://localhost:8080/admin/accepted",body, {
+        axios.post("http://localhost:8080/admin/accepted", body, {
           headers: { token: token },
-      
         });
         Swal.fire("Approved", "Post has been approved.", "success").then(() => {
           fetching();
@@ -169,7 +164,7 @@ const ApproveNews = () => {
                   <tbody>
                     {data.map((repo, index) => {
                       return (
-                        <tr>
+                        <tr key={repo.newsId}>
                           <th scope="row">{index + 1}</th>
                           <td>{repo.title}</td>
                           <th scope="row">{repo.newsId}</th>

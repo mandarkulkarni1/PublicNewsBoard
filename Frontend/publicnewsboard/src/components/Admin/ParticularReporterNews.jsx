@@ -28,7 +28,7 @@ const ParticularReporterNews = ({ match: { params } }) => {
     } else {
       history.push("/login");
     }
-  },[]);
+  }, []);
 
   function handleClick(id) {
     history.push("/adminNews/" + id);
@@ -63,7 +63,7 @@ const ParticularReporterNews = ({ match: { params } }) => {
                 <tbody>
                   {dat.map((repo, index) => {
                     return (
-                      <tr>
+                      <tr key={repo.newsId}>
                         <td>{index + 1}</td>
                         <td>{repo.title}</td>
                         <td>{repo.newsId}</td>
