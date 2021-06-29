@@ -31,8 +31,29 @@ class GraphRepresent extends Component {
       <div>
         <AdminNavbar />
         <div className="container">
+                <div className="col-md-12 p-1 border border-info rounded">
+                  <Bar
+                    data={this.state.state}
+                    options={{
+                      title: {
+                        display: true,
+                        text: "News Read Count Graph",
+                        fontSize: 6,
+                      },
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                        },
+                      },
+                      legend: {
+                        display: false,
+                        position: "center",
+                      },
+                    }}
+                  />
+                </div>
           <div className="row ">
-            <div className="col-md-7 mx-auto">
+            <div className="col-md-7 p-1 border border-info rounded">
               <Pie
                 data={this.state.state}
                 options={{
@@ -50,7 +71,7 @@ class GraphRepresent extends Component {
             </div>
 
             <br />
-            <div className="col-md-5 mx-auto">
+            <div className="col-md-5 p-1 border border-info rounded">
               <Doughnut
                 data={this.state.state}
                 options={{
@@ -73,27 +94,6 @@ class GraphRepresent extends Component {
             <br />
             <br />
             <br />
-            <div className="col-md-11 mx-auto">
-              <Bar
-                data={this.state.state}
-                options={{
-                  title: {
-                    display: true,
-                    text: "News Read Count Graph",
-                    fontSize: 10,
-                  },
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                    },
-                  },
-                  legend: {
-                    display: false,
-                    position: "center",
-                  },
-                }}
-              />
-            </div>
             <br />
             <br />
           </div>

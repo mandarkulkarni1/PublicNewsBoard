@@ -60,13 +60,13 @@ export default function Cardd(props) {
               {news.title}
             </Typography>
           </CardContent>
-          <span className="mx-2 text-muted ">
+          <span className="mx-2 text-muted sm">
             <AiOutlineEye size="22px" />
             &nbsp;Views: {news.views}
           </span>
         </div>
         <CardActions disableSpacing>
-          <span className="mx-2 text-muted ">
+          <span className="mx-2">
             <GiModernCity size="18px" />
             &nbsp;City: {news.city}
           </span>

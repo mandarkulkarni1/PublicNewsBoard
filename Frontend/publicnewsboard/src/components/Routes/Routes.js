@@ -5,13 +5,11 @@ import AddReader from "../Reader/RegisterReader";
 import VideoUpload from '../Reporter/VideoUpload/VideoUpload'
 import Reporter from "../Reporter/Reporter";
 import AddNews from "../Reporter/AddNews/AddNews";
-import News from "../newsElements/news/news";
 import FavNews from "../newsElements/favNews/favNews";
-// import ReaderAddUser from "../Login/ReaderAddUser";
 import GraphRepresent from "../Admin/GraphRepresent";
 import ReporterApprove from "../Admin/ReporterApprove";
 import Article from "../Admin/Article";
-import ApproveNews from "../Admin/ApproveNews";
+import ApproveNews from "../Admin/ApproveNews"; 
 import ReportedNews from "../Admin/ReportedNews";
 import AllReports from "../Admin/AllReports";
 import AllReader from "../Admin/AllReader";
@@ -22,10 +20,12 @@ import ExpandedNews from "../newsElements/expandedNews/expandedNews";
 import Categories from "../navbar/categories/categories";
 import Search from "../Reader/Search";
 import Videobar from "../newsElements/videoElement/VideoElement";
+import { ErrorBoundry } from "../ErroryBoundry";
 
 
 function Routes() {
   return (
+    <ErrorBoundry>
     <Switch>
       <Route exact path="/">
         <FavNews />
@@ -83,6 +83,7 @@ function Routes() {
         <Search />
       </Route>
     </Switch>
+    </ErrorBoundry>
   );
 }
 export default Routes;

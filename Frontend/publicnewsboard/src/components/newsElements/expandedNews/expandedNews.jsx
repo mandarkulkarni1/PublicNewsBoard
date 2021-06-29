@@ -44,6 +44,8 @@ const ExpandedNews = () => {
               </h3>
               <h6 className="card-text text-white">{data.article}</h6>
               <h5 className="card-text text-secondary">{data.city}</h5>
+
+                <span className="text-white">Views: {data.views}</span>
               <div className="text-center">
                 <Share newsId={data.title} title={data.title} />
                 <Button variant="contained" color="secondary">
@@ -55,12 +57,7 @@ const ExpandedNews = () => {
         </div>
       </div>
     );
-  } else
-    return (
-      <div>
-        {history.push("/login")}
-      </div>
-    );
+  } else return <div>{history.push("/login")}</div>;
 };
 
 export default ExpandedNews;

@@ -53,7 +53,6 @@ function AddNews() {
   });
 
   //State for Word counter for counting artical words
-  //{ content, wordCount }
   const [{ content, wordCount }, setContent] = useState({
     content: news.article,
     wordCount: 0,
@@ -91,7 +90,6 @@ function AddNews() {
   //handling form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(news);
 
     //appending image file and other data
     const formData = new FormData();
